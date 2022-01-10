@@ -1,0 +1,67 @@
+- name: Setup basic for ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Add Docker GPG key
+      shell: curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor -o "/usr/share/keyrings/docker-archive-keyring.gpg"
+
+    - name: Get Architecture
+      command: dpkg --print-architecture
+      register: architecture
+
+    - name: Get Release
+      command: lsb_release -cs
+      register: release
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: "deb [arch={{ architecture.stdout }} signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ release.stdout }} stable"
+        state: present
+        update_cache: no
+
+    - name: install dependencies
+      apt:
+        name:
+          - sudo
+          - curl
+          - wget
+          - vim
+          - ca-certificates
+          - gnupg
+          - lsb-release
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: true
+
+    - name: Check docker status
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Create Docker group
+      group:
+        state: present
+        name: docker
+
+    - name: Add user to group
+      user:
+        name: "{{ ansible_user }}"
+        groups:
+          - docker
+        append: yes
+
+    - name: Install Docker-Compose binary
+      command: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+    - name: Make docker-compose executable
+      file:
+        name: /usr/local/bin/docker-compose
+        mode: 0751
+        group: docker
+        owner: "{{ ansible_user }}"
+
+
+

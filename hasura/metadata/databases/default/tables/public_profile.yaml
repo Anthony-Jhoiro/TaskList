@@ -1,0 +1,11 @@
+table:
+  name: profile
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - created_at
+    - image
+    - name
+    filter: {}
+  role: user

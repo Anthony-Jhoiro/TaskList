@@ -1,0 +1,76 @@
+fragment UserForAuth on user {
+    id
+    email
+    emailVerified
+    image
+    createdAt
+    updatedAt
+    name
+}
+
+query getUserById($id: uuid!) {
+    user_by_pk(id: $id) {
+        ...UserForAuth
+    }
+}
+
+query getUserByEmail($email: String!) {
+    user(where: { email: { _eq: $email } }) {
+        ...UserForAuth
+    }
+}
+
+query getUserByProviderAccountId(
+    $providerId: String!
+    $providerAccountId: String!
+) {
+    account(where: {_and: [
+        {provider: {_eq: $providerId}},
+        {provider_account_id: {_eq: $providerAccountId}}
+    ]}) {
+        user {
+            ...UserForAuth
+        }
+    }
+}
+
+mutation deleteUser($id: uuid!) {
+    delete_user_by_pk(id: $id) {
+        id
+    }
+}
+
+mutation linkAccount($account: account_insert_input!) {
+    insert_account_one(
+        object: $account
+        on_conflict: { constraint: account_pkey, update_columns: [] }
+    ) {
+        id
+    }
+}
+
+query getVerificationRequestByIdentifierAndToken($identifier: String! $token: String!) {
+    verification_token(where: {_and: [
+        {identifier: {_eq: $identifier}},
+        {token: {_eq: $token}}
+    ]}) {
+        expires
+        token
+        identifier
+    }
+}
+
+mutation createVerificationToken($config: verification_token_insert_input!) {
+    insert_verification_token_one(object: $config) {
+        expires
+        token
+        identifier
+    }
+}
+
+mutation createUser($user: user_insert_input!) {
+    insert_user_one(object: $user) {
+        ...UserForAuth
+    }
+}
+

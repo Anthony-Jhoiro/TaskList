@@ -1,0 +1,31 @@
+table:
+  name: user
+  schema: public
+configuration:
+  custom_column_names:
+    created_at: createdAt
+    email_verified: emailVerified
+    updated_at: updatedAt
+  custom_root_fields: {}
+array_relationships:
+- name: accounts
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: account
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - name
+    - created_at
+    - updated_at
+    - image
+    - email
+    - email_verified
+    - id
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
