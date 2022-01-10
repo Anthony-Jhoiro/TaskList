@@ -6,11 +6,3 @@
       isolation_level: read-committed
       use_prepared_statements: false
   tables: "!include default/tables/tables.yaml"
-- name: ndi
-  kind: postgres
-  configuration:
-    connection_info:
-      database_url: postgres://postgres:postgrespassword@postgres:5432/ndi
-      isolation_level: read-committed
-      use_prepared_statements: false
-  tables: "!include ndi/tables/tables.yaml"

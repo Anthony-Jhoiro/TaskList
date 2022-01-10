@@ -15,6 +15,34 @@ array_relationships:
       table:
         name: account
         schema: public
+- name: groups
+  using:
+    foreign_key_constraint_on:
+      column: created_by
+      table:
+        name: group
+        schema: public
+- name: tasks
+  using:
+    foreign_key_constraint_on:
+      column: created_by
+      table:
+        name: task
+        schema: public
+- name: tasksByUpdatedBy
+  using:
+    foreign_key_constraint_on:
+      column: updated_by
+      table:
+        name: task
+        schema: public
+- name: user_groups
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: user_group
+        schema: public
 select_permissions:
 - permission:
     columns:

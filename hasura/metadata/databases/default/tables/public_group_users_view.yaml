@@ -1,0 +1,3 @@
+table:
+  name: group_users_view
+  schema: public

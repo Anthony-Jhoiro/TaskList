@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE OR REPLACE VIEW "public"."group_users_view" AS
+--  SELECT group_id, u.* FROM user_group ug LEFT JOIN "user" u on u.id = ug.user_id;
