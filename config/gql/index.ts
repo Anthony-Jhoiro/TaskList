@@ -2,6 +2,8 @@ import { GraphQLClient } from 'graphql-request';
 import { getSdk } from '../../generated/config-schemas';
 import {getEnv} from "../../utils/getEnv";
 
+// This configuration applies for server only
+
 const HTTP_BASE_URL = getEnv('HASURA_URL', '');
 const ENDPOINT = '/v1/graphql';
 

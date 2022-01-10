@@ -7,6 +7,9 @@ const environmentConfiguration: { [key: string]: Environment } = {
   HASURA_URL: {
     required: true,
   },
+  NEXT_PUBLIC_HASURA_URL: {
+    required: true,
+  },
   HASURA_ADMIN: {
     required: true,
   },
@@ -26,6 +29,8 @@ export const loadEnv = () => {
   const requiredEnvironment = Object.getOwnPropertyNames(environmentConfiguration).reduce<{ [key: string]: string }>((ac, e) => {
     if (typeof window !== 'undefined' && !e.startsWith('NEXT_PUBLIC')) return ac;
 
+    console.log(process.env)
+
     const config = environmentConfiguration[e];
     if (config.required) {
       const env = process.env[e]
@@ -43,9 +48,9 @@ export const loadEnv = () => {
   }
 }
 
-const environment = loadEnv();
+// const environment = loadEnv();
 
 export function getEnv(envName: string, defaultValue: string) {
-  return environment[envName] ?? defaultValue;
+  return process.env[envName] ?? defaultValue;
 }
 

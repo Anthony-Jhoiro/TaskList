@@ -6,6 +6,7 @@ import React from "react";
 import {useCurrentUser} from "../hooks/useCurrentUser";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useTranslation} from "next-i18next";
+import { signIn } from "next-auth/react"
 
 const Home: NextPage<ComponentWithAlerts> = () => {
   const {user, error, fetching} = useCurrentUser();
@@ -27,6 +28,7 @@ const Home: NextPage<ComponentWithAlerts> = () => {
 
       <h1>{t('hello')}</h1>
 
+      {user ? <p>{JSON.stringify(user)}</p> : <button onClick={() => signIn()}>Login</button>}
       <button onClick={notify}>Make me a toast</button>
       <br/>
       <p>Error {JSON.stringify(error)}</p>

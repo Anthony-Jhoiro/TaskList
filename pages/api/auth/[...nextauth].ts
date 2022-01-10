@@ -5,7 +5,9 @@ import {sign, verify} from 'jsonwebtoken';
 import {HasuraAdapter} from "../../../config/next-auth/HasuraAdapter";
 import {getEnv} from "../../../utils/getEnv";
 
-const JWT_SECRET = getEnv('JWT_SECRET', '');
+const JWT_SECRET = (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n");
+
+console.log(JWT_SECRET)
 
 export default NextAuth({
   // Configure one or more authentication providers

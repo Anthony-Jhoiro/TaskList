@@ -13,6 +13,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  jsonb: any;
   timestamptz: any;
   uuid: string;
 };
@@ -495,6 +496,381 @@ export type Account_Variance_Order_By = {
   id?: InputMaybe<Order_By>;
 };
 
+/** columns and relationships of "group" */
+export type Group = {
+  __typename?: 'group';
+  created_at: Scalars['timestamptz'];
+  created_by: Scalars['uuid'];
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+  /** An array relationship */
+  tasks: Array<Task>;
+  /** An aggregate relationship */
+  tasks_aggregate: Task_Aggregate;
+  updated_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user: User;
+  /** An array relationship */
+  user_groups: Array<User_Group>;
+  /** An aggregate relationship */
+  user_groups_aggregate: User_Group_Aggregate;
+};
+
+
+/** columns and relationships of "group" */
+export type GroupTasksArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group" */
+export type GroupTasks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group" */
+export type GroupUser_GroupsArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group" */
+export type GroupUser_Groups_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+/** aggregated selection of "group" */
+export type Group_Aggregate = {
+  __typename?: 'group_aggregate';
+  aggregate?: Maybe<Group_Aggregate_Fields>;
+  nodes: Array<Group>;
+};
+
+/** aggregate fields of "group" */
+export type Group_Aggregate_Fields = {
+  __typename?: 'group_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Max_Fields>;
+  min?: Maybe<Group_Min_Fields>;
+};
+
+
+/** aggregate fields of "group" */
+export type Group_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Group_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group" */
+export type Group_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Group_Max_Order_By>;
+  min?: InputMaybe<Group_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group" */
+export type Group_Arr_Rel_Insert_Input = {
+  data: Array<Group_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Group_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group". All fields are combined with a logical 'AND'. */
+export type Group_Bool_Exp = {
+  _and?: InputMaybe<Array<Group_Bool_Exp>>;
+  _not?: InputMaybe<Group_Bool_Exp>;
+  _or?: InputMaybe<Array<Group_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_by?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  tasks?: InputMaybe<Task_Bool_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_groups?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "group" */
+export enum Group_Constraint {
+  /** unique or primary key constraint */
+  GroupPkey = 'group_pkey'
+}
+
+/** input type for inserting data into table "group" */
+export type Group_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  created_by?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  tasks?: InputMaybe<Task_Arr_Rel_Insert_Input>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_groups?: InputMaybe<User_Group_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Group_Max_Fields = {
+  __typename?: 'group_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group" */
+export type Group_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Min_Fields = {
+  __typename?: 'group_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group" */
+export type Group_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "group" */
+export type Group_Mutation_Response = {
+  __typename?: 'group_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group>;
+};
+
+/** input type for inserting object relation for remote table "group" */
+export type Group_Obj_Rel_Insert_Input = {
+  data: Group_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Group_On_Conflict>;
+};
+
+/** on conflict condition type for table "group" */
+export type Group_On_Conflict = {
+  constraint: Group_Constraint;
+  update_columns?: Array<Group_Update_Column>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group". */
+export type Group_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  tasks_aggregate?: InputMaybe<Task_Aggregate_Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_groups_aggregate?: InputMaybe<User_Group_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: group */
+export type Group_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group" */
+export enum Group_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group" */
+export type Group_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  created_by?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group" */
+export enum Group_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** columns and relationships of "group_users_view" */
+export type Group_Users_View = {
+  __typename?: 'group_users_view';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregated selection of "group_users_view" */
+export type Group_Users_View_Aggregate = {
+  __typename?: 'group_users_view_aggregate';
+  aggregate?: Maybe<Group_Users_View_Aggregate_Fields>;
+  nodes: Array<Group_Users_View>;
+};
+
+/** aggregate fields of "group_users_view" */
+export type Group_Users_View_Aggregate_Fields = {
+  __typename?: 'group_users_view_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Users_View_Max_Fields>;
+  min?: Maybe<Group_Users_View_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_users_view" */
+export type Group_Users_View_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "group_users_view". All fields are combined with a logical 'AND'. */
+export type Group_Users_View_Bool_Exp = {
+  _and?: InputMaybe<Array<Group_Users_View_Bool_Exp>>;
+  _not?: InputMaybe<Group_Users_View_Bool_Exp>;
+  _or?: InputMaybe<Array<Group_Users_View_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  email?: InputMaybe<String_Comparison_Exp>;
+  email_verified?: InputMaybe<Timestamptz_Comparison_Exp>;
+  group_id?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  image?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Group_Users_View_Max_Fields = {
+  __typename?: 'group_users_view_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Group_Users_View_Min_Fields = {
+  __typename?: 'group_users_view_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** Ordering options when selecting data from "group_users_view". */
+export type Group_Users_View_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  email_verified?: InputMaybe<Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "group_users_view" */
+export enum Group_Users_View_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  EmailVerified = 'email_verified',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
+export type Jsonb_Comparison_Exp = {
+  /** is the column contained in the given json value */
+  _contained_in?: InputMaybe<Scalars['jsonb']>;
+  /** does the column contain the given json value at the top level */
+  _contains?: InputMaybe<Scalars['jsonb']>;
+  _eq?: InputMaybe<Scalars['jsonb']>;
+  _gt?: InputMaybe<Scalars['jsonb']>;
+  _gte?: InputMaybe<Scalars['jsonb']>;
+  /** does the string exist as a top-level key in the column */
+  _has_key?: InputMaybe<Scalars['String']>;
+  /** do all of these strings exist as top-level keys in the column */
+  _has_keys_all?: InputMaybe<Array<Scalars['String']>>;
+  /** do any of these strings exist as top-level keys in the column */
+  _has_keys_any?: InputMaybe<Array<Scalars['String']>>;
+  _in?: InputMaybe<Array<Scalars['jsonb']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['jsonb']>;
+  _lte?: InputMaybe<Scalars['jsonb']>;
+  _neq?: InputMaybe<Scalars['jsonb']>;
+  _nin?: InputMaybe<Array<Scalars['jsonb']>>;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
@@ -502,12 +878,24 @@ export type Mutation_Root = {
   delete_account?: Maybe<Account_Mutation_Response>;
   /** delete single row from the table: "account" */
   delete_account_by_pk?: Maybe<Account>;
+  /** delete data from the table: "group" */
+  delete_group?: Maybe<Group_Mutation_Response>;
+  /** delete single row from the table: "group" */
+  delete_group_by_pk?: Maybe<Group>;
   /** delete data from the table: "profile" */
   delete_profile?: Maybe<Profile_Mutation_Response>;
+  /** delete data from the table: "task" */
+  delete_task?: Maybe<Task_Mutation_Response>;
+  /** delete single row from the table: "task" */
+  delete_task_by_pk?: Maybe<Task>;
   /** delete data from the table: "user" */
   delete_user?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "user" */
   delete_user_by_pk?: Maybe<User>;
+  /** delete data from the table: "user_group" */
+  delete_user_group?: Maybe<User_Group_Mutation_Response>;
+  /** delete single row from the table: "user_group" */
+  delete_user_group_by_pk?: Maybe<User_Group>;
   /** delete data from the table: "verification_token" */
   delete_verification_token?: Maybe<Verification_Token_Mutation_Response>;
   /** delete single row from the table: "verification_token" */
@@ -516,12 +904,24 @@ export type Mutation_Root = {
   insert_account?: Maybe<Account_Mutation_Response>;
   /** insert a single row into the table: "account" */
   insert_account_one?: Maybe<Account>;
+  /** insert data into the table: "group" */
+  insert_group?: Maybe<Group_Mutation_Response>;
+  /** insert a single row into the table: "group" */
+  insert_group_one?: Maybe<Group>;
   /** insert data into the table: "profile" */
   insert_profile?: Maybe<Profile_Mutation_Response>;
   /** insert a single row into the table: "profile" */
   insert_profile_one?: Maybe<Profile>;
+  /** insert data into the table: "task" */
+  insert_task?: Maybe<Task_Mutation_Response>;
+  /** insert a single row into the table: "task" */
+  insert_task_one?: Maybe<Task>;
   /** insert data into the table: "user" */
   insert_user?: Maybe<User_Mutation_Response>;
+  /** insert data into the table: "user_group" */
+  insert_user_group?: Maybe<User_Group_Mutation_Response>;
+  /** insert a single row into the table: "user_group" */
+  insert_user_group_one?: Maybe<User_Group>;
   /** insert a single row into the table: "user" */
   insert_user_one?: Maybe<User>;
   /** insert data into the table: "verification_token" */
@@ -532,12 +932,24 @@ export type Mutation_Root = {
   update_account?: Maybe<Account_Mutation_Response>;
   /** update single row of the table: "account" */
   update_account_by_pk?: Maybe<Account>;
+  /** update data of the table: "group" */
+  update_group?: Maybe<Group_Mutation_Response>;
+  /** update single row of the table: "group" */
+  update_group_by_pk?: Maybe<Group>;
   /** update data of the table: "profile" */
   update_profile?: Maybe<Profile_Mutation_Response>;
+  /** update data of the table: "task" */
+  update_task?: Maybe<Task_Mutation_Response>;
+  /** update single row of the table: "task" */
+  update_task_by_pk?: Maybe<Task>;
   /** update data of the table: "user" */
   update_user?: Maybe<User_Mutation_Response>;
   /** update single row of the table: "user" */
   update_user_by_pk?: Maybe<User>;
+  /** update data of the table: "user_group" */
+  update_user_group?: Maybe<User_Group_Mutation_Response>;
+  /** update single row of the table: "user_group" */
+  update_user_group_by_pk?: Maybe<User_Group>;
   /** update data of the table: "verification_token" */
   update_verification_token?: Maybe<Verification_Token_Mutation_Response>;
   /** update single row of the table: "verification_token" */
@@ -558,8 +970,32 @@ export type Mutation_RootDelete_Account_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_GroupArgs = {
+  where: Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_ProfileArgs = {
   where: Profile_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_TaskArgs = {
+  where: Task_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Task_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -572,6 +1008,18 @@ export type Mutation_RootDelete_UserArgs = {
 /** mutation root */
 export type Mutation_RootDelete_User_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_GroupArgs = {
+  where: User_Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Group_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -602,6 +1050,20 @@ export type Mutation_RootInsert_Account_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_GroupArgs = {
+  objects: Array<Group_Insert_Input>;
+  on_conflict?: InputMaybe<Group_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_OneArgs = {
+  object: Group_Insert_Input;
+  on_conflict?: InputMaybe<Group_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_ProfileArgs = {
   objects: Array<Profile_Insert_Input>;
 };
@@ -614,9 +1076,37 @@ export type Mutation_RootInsert_Profile_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_TaskArgs = {
+  objects: Array<Task_Insert_Input>;
+  on_conflict?: InputMaybe<Task_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Task_OneArgs = {
+  object: Task_Insert_Input;
+  on_conflict?: InputMaybe<Task_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_UserArgs = {
   objects: Array<User_Insert_Input>;
   on_conflict?: InputMaybe<User_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_GroupArgs = {
+  objects: Array<User_Group_Insert_Input>;
+  on_conflict?: InputMaybe<User_Group_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Group_OneArgs = {
+  object: User_Group_Insert_Input;
+  on_conflict?: InputMaybe<User_Group_On_Conflict>;
 };
 
 
@@ -658,9 +1148,47 @@ export type Mutation_RootUpdate_Account_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_GroupArgs = {
+  _set?: InputMaybe<Group_Set_Input>;
+  where: Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_By_PkArgs = {
+  _set?: InputMaybe<Group_Set_Input>;
+  pk_columns: Group_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ProfileArgs = {
   _set?: InputMaybe<Profile_Set_Input>;
   where: Profile_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_TaskArgs = {
+  _append?: InputMaybe<Task_Append_Input>;
+  _delete_at_path?: InputMaybe<Task_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Task_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Task_Delete_Key_Input>;
+  _prepend?: InputMaybe<Task_Prepend_Input>;
+  _set?: InputMaybe<Task_Set_Input>;
+  where: Task_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Task_By_PkArgs = {
+  _append?: InputMaybe<Task_Append_Input>;
+  _delete_at_path?: InputMaybe<Task_Delete_At_Path_Input>;
+  _delete_elem?: InputMaybe<Task_Delete_Elem_Input>;
+  _delete_key?: InputMaybe<Task_Delete_Key_Input>;
+  _prepend?: InputMaybe<Task_Prepend_Input>;
+  _set?: InputMaybe<Task_Set_Input>;
+  pk_columns: Task_Pk_Columns_Input;
 };
 
 
@@ -675,6 +1203,22 @@ export type Mutation_RootUpdate_UserArgs = {
 export type Mutation_RootUpdate_User_By_PkArgs = {
   _set?: InputMaybe<User_Set_Input>;
   pk_columns: User_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_GroupArgs = {
+  _inc?: InputMaybe<User_Group_Inc_Input>;
+  _set?: InputMaybe<User_Group_Set_Input>;
+  where: User_Group_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Group_By_PkArgs = {
+  _inc?: InputMaybe<User_Group_Inc_Input>;
+  _set?: InputMaybe<User_Group_Set_Input>;
+  pk_columns: User_Group_Pk_Columns_Input;
 };
 
 
@@ -820,16 +1364,42 @@ export type Query_Root = {
   account_aggregate: Account_Aggregate;
   /** fetch data from the table: "account" using primary key columns */
   account_by_pk?: Maybe<Account>;
+  /** fetch data from the table: "group" */
+  group: Array<Group>;
+  /** fetch aggregated fields from the table: "group" */
+  group_aggregate: Group_Aggregate;
+  /** fetch data from the table: "group" using primary key columns */
+  group_by_pk?: Maybe<Group>;
+  /** fetch data from the table: "group_users_view" */
+  group_users_view: Array<Group_Users_View>;
+  /** fetch aggregated fields from the table: "group_users_view" */
+  group_users_view_aggregate: Group_Users_View_Aggregate;
   /** fetch data from the table: "profile" */
   profile: Array<Profile>;
   /** fetch aggregated fields from the table: "profile" */
   profile_aggregate: Profile_Aggregate;
+  /** fetch data from the table: "task" */
+  task: Array<Task>;
+  /** fetch aggregated fields from the table: "task" */
+  task_aggregate: Task_Aggregate;
+  /** fetch data from the table: "task" using primary key columns */
+  task_by_pk?: Maybe<Task>;
   /** fetch data from the table: "user" */
   user: Array<User>;
   /** fetch aggregated fields from the table: "user" */
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
+  /** fetch data from the table: "user_group" */
+  user_group: Array<User_Group>;
+  /** fetch aggregated fields from the table: "user_group" */
+  user_group_aggregate: User_Group_Aggregate;
+  /** fetch data from the table: "user_group" using primary key columns */
+  user_group_by_pk?: Maybe<User_Group>;
+  /** fetch data from the table: "user_groups_view" */
+  user_groups_view: Array<User_Groups_View>;
+  /** fetch aggregated fields from the table: "user_groups_view" */
+  user_groups_view_aggregate: User_Groups_View_Aggregate;
   /** fetch data from the table: "verification_token" */
   verification_token: Array<Verification_Token>;
   /** fetch aggregated fields from the table: "verification_token" */
@@ -862,6 +1432,47 @@ export type Query_RootAccount_By_PkArgs = {
 };
 
 
+export type Query_RootGroupArgs = {
+  distinct_on?: InputMaybe<Array<Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Order_By>>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Order_By>>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootGroup_Users_ViewArgs = {
+  distinct_on?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Users_View_Order_By>>;
+  where?: InputMaybe<Group_Users_View_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Users_View_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Users_View_Order_By>>;
+  where?: InputMaybe<Group_Users_View_Bool_Exp>;
+};
+
+
 export type Query_RootProfileArgs = {
   distinct_on?: InputMaybe<Array<Profile_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -877,6 +1488,29 @@ export type Query_RootProfile_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Profile_Order_By>>;
   where?: InputMaybe<Profile_Bool_Exp>;
+};
+
+
+export type Query_RootTaskArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+export type Query_RootTask_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+export type Query_RootTask_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -900,6 +1534,47 @@ export type Query_RootUser_AggregateArgs = {
 
 export type Query_RootUser_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+export type Query_RootUser_GroupArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Group_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Group_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootUser_Groups_ViewArgs = {
+  distinct_on?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
+  where?: InputMaybe<User_Groups_View_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Groups_View_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
+  where?: InputMaybe<User_Groups_View_Bool_Exp>;
 };
 
 
@@ -933,16 +1608,42 @@ export type Subscription_Root = {
   account_aggregate: Account_Aggregate;
   /** fetch data from the table: "account" using primary key columns */
   account_by_pk?: Maybe<Account>;
+  /** fetch data from the table: "group" */
+  group: Array<Group>;
+  /** fetch aggregated fields from the table: "group" */
+  group_aggregate: Group_Aggregate;
+  /** fetch data from the table: "group" using primary key columns */
+  group_by_pk?: Maybe<Group>;
+  /** fetch data from the table: "group_users_view" */
+  group_users_view: Array<Group_Users_View>;
+  /** fetch aggregated fields from the table: "group_users_view" */
+  group_users_view_aggregate: Group_Users_View_Aggregate;
   /** fetch data from the table: "profile" */
   profile: Array<Profile>;
   /** fetch aggregated fields from the table: "profile" */
   profile_aggregate: Profile_Aggregate;
+  /** fetch data from the table: "task" */
+  task: Array<Task>;
+  /** fetch aggregated fields from the table: "task" */
+  task_aggregate: Task_Aggregate;
+  /** fetch data from the table: "task" using primary key columns */
+  task_by_pk?: Maybe<Task>;
   /** fetch data from the table: "user" */
   user: Array<User>;
   /** fetch aggregated fields from the table: "user" */
   user_aggregate: User_Aggregate;
   /** fetch data from the table: "user" using primary key columns */
   user_by_pk?: Maybe<User>;
+  /** fetch data from the table: "user_group" */
+  user_group: Array<User_Group>;
+  /** fetch aggregated fields from the table: "user_group" */
+  user_group_aggregate: User_Group_Aggregate;
+  /** fetch data from the table: "user_group" using primary key columns */
+  user_group_by_pk?: Maybe<User_Group>;
+  /** fetch data from the table: "user_groups_view" */
+  user_groups_view: Array<User_Groups_View>;
+  /** fetch aggregated fields from the table: "user_groups_view" */
+  user_groups_view_aggregate: User_Groups_View_Aggregate;
   /** fetch data from the table: "verification_token" */
   verification_token: Array<Verification_Token>;
   /** fetch aggregated fields from the table: "verification_token" */
@@ -975,6 +1676,47 @@ export type Subscription_RootAccount_By_PkArgs = {
 };
 
 
+export type Subscription_RootGroupArgs = {
+  distinct_on?: InputMaybe<Array<Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Order_By>>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Order_By>>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootGroup_Users_ViewArgs = {
+  distinct_on?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Users_View_Order_By>>;
+  where?: InputMaybe<Group_Users_View_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Users_View_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Users_View_Order_By>>;
+  where?: InputMaybe<Group_Users_View_Bool_Exp>;
+};
+
+
 export type Subscription_RootProfileArgs = {
   distinct_on?: InputMaybe<Array<Profile_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -990,6 +1732,29 @@ export type Subscription_RootProfile_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Profile_Order_By>>;
   where?: InputMaybe<Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootTaskArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+export type Subscription_RootTask_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+export type Subscription_RootTask_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -1016,6 +1781,47 @@ export type Subscription_RootUser_By_PkArgs = {
 };
 
 
+export type Subscription_RootUser_GroupArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Group_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Group_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootUser_Groups_ViewArgs = {
+  distinct_on?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
+  where?: InputMaybe<User_Groups_View_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Groups_View_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
+  where?: InputMaybe<User_Groups_View_Bool_Exp>;
+};
+
+
 export type Subscription_RootVerification_TokenArgs = {
   distinct_on?: InputMaybe<Array<Verification_Token_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1038,6 +1844,278 @@ export type Subscription_RootVerification_Token_By_PkArgs = {
   token: Scalars['String'];
 };
 
+/** columns and relationships of "task" */
+export type Task = {
+  __typename?: 'task';
+  content: Scalars['jsonb'];
+  created_at: Scalars['timestamptz'];
+  created_by: Scalars['uuid'];
+  /** An object relationship */
+  group: Group;
+  group_id: Scalars['uuid'];
+  icon: Scalars['String'];
+  id: Scalars['uuid'];
+  title: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+  updated_by: Scalars['uuid'];
+  /** An object relationship */
+  user: User;
+  /** An object relationship */
+  userByUpdatedBy: User;
+};
+
+
+/** columns and relationships of "task" */
+export type TaskContentArgs = {
+  path?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregated selection of "task" */
+export type Task_Aggregate = {
+  __typename?: 'task_aggregate';
+  aggregate?: Maybe<Task_Aggregate_Fields>;
+  nodes: Array<Task>;
+};
+
+/** aggregate fields of "task" */
+export type Task_Aggregate_Fields = {
+  __typename?: 'task_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Task_Max_Fields>;
+  min?: Maybe<Task_Min_Fields>;
+};
+
+
+/** aggregate fields of "task" */
+export type Task_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Task_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "task" */
+export type Task_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Task_Max_Order_By>;
+  min?: InputMaybe<Task_Min_Order_By>;
+};
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type Task_Append_Input = {
+  content?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** input type for inserting array relation for remote table "task" */
+export type Task_Arr_Rel_Insert_Input = {
+  data: Array<Task_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Task_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "task". All fields are combined with a logical 'AND'. */
+export type Task_Bool_Exp = {
+  _and?: InputMaybe<Array<Task_Bool_Exp>>;
+  _not?: InputMaybe<Task_Bool_Exp>;
+  _or?: InputMaybe<Array<Task_Bool_Exp>>;
+  content?: InputMaybe<Jsonb_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_by?: InputMaybe<Uuid_Comparison_Exp>;
+  group?: InputMaybe<Group_Bool_Exp>;
+  group_id?: InputMaybe<Uuid_Comparison_Exp>;
+  icon?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  updated_by?: InputMaybe<Uuid_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  userByUpdatedBy?: InputMaybe<User_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "task" */
+export enum Task_Constraint {
+  /** unique or primary key constraint */
+  TaskPkey = 'task_pkey'
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type Task_Delete_At_Path_Input = {
+  content?: InputMaybe<Array<Scalars['String']>>;
+};
+
+/** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+export type Task_Delete_Elem_Input = {
+  content?: InputMaybe<Scalars['Int']>;
+};
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type Task_Delete_Key_Input = {
+  content?: InputMaybe<Scalars['String']>;
+};
+
+/** input type for inserting data into table "task" */
+export type Task_Insert_Input = {
+  content?: InputMaybe<Scalars['jsonb']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  created_by?: InputMaybe<Scalars['uuid']>;
+  group?: InputMaybe<Group_Obj_Rel_Insert_Input>;
+  group_id?: InputMaybe<Scalars['uuid']>;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  updated_by?: InputMaybe<Scalars['uuid']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  userByUpdatedBy?: InputMaybe<User_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Task_Max_Fields = {
+  __typename?: 'task_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  icon?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  updated_by?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "task" */
+export type Task_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  icon?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  updated_by?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Task_Min_Fields = {
+  __typename?: 'task_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  icon?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  title?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  updated_by?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "task" */
+export type Task_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  icon?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  updated_by?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "task" */
+export type Task_Mutation_Response = {
+  __typename?: 'task_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Task>;
+};
+
+/** on conflict condition type for table "task" */
+export type Task_On_Conflict = {
+  constraint: Task_Constraint;
+  update_columns?: Array<Task_Update_Column>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "task". */
+export type Task_Order_By = {
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  group?: InputMaybe<Group_Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  icon?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  updated_by?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  userByUpdatedBy?: InputMaybe<User_Order_By>;
+};
+
+/** primary key columns input for table: task */
+export type Task_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type Task_Prepend_Input = {
+  content?: InputMaybe<Scalars['jsonb']>;
+};
+
+/** select columns of table "task" */
+export enum Task_Select_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Icon = 'icon',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UpdatedBy = 'updated_by'
+}
+
+/** input type for updating data in table "task" */
+export type Task_Set_Input = {
+  content?: InputMaybe<Scalars['jsonb']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  created_by?: InputMaybe<Scalars['uuid']>;
+  group_id?: InputMaybe<Scalars['uuid']>;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  title?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  updated_by?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "task" */
+export enum Task_Update_Column {
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Icon = 'icon',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UpdatedBy = 'updated_by'
+}
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']>;
@@ -1052,7 +2130,7 @@ export type Timestamptz_Comparison_Exp = {
 };
 
 /**
- * The User model is for information such as the user's name and email address.  Email address is optional, but if one is specified for a User then it must be unique.
+ * NULL
  *
  *
  * columns and relationships of "user"
@@ -1067,15 +2145,31 @@ export type User = {
   createdAt: Scalars['timestamptz'];
   email: Scalars['String'];
   emailVerified?: Maybe<Scalars['timestamptz']>;
+  /** An array relationship */
+  groups: Array<Group>;
+  /** An aggregate relationship */
+  groups_aggregate: Group_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  tasks: Array<Task>;
+  /** An array relationship */
+  tasksByUpdatedBy: Array<Task>;
+  /** An aggregate relationship */
+  tasksByUpdatedBy_aggregate: Task_Aggregate;
+  /** An aggregate relationship */
+  tasks_aggregate: Task_Aggregate;
   updatedAt: Scalars['timestamptz'];
+  /** An array relationship */
+  user_groups: Array<User_Group>;
+  /** An aggregate relationship */
+  user_groups_aggregate: User_Group_Aggregate;
 };
 
 
 /**
- * The User model is for information such as the user's name and email address.  Email address is optional, but if one is specified for a User then it must be unique.
+ * NULL
  *
  *
  * columns and relationships of "user"
@@ -1091,7 +2185,7 @@ export type UserAccountsArgs = {
 
 
 /**
- * The User model is for information such as the user's name and email address.  Email address is optional, but if one is specified for a User then it must be unique.
+ * NULL
  *
  *
  * columns and relationships of "user"
@@ -1103,6 +2197,134 @@ export type UserAccounts_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Account_Order_By>>;
   where?: InputMaybe<Account_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserGroupsArgs = {
+  distinct_on?: InputMaybe<Array<Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Order_By>>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserGroups_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Order_By>>;
+  where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserTasksArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserTasksByUpdatedByArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserTasksByUpdatedBy_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserTasks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Task_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Task_Order_By>>;
+  where?: InputMaybe<Task_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserUser_GroupsArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserUser_Groups_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Group_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Group_Order_By>>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
 };
 
 /** aggregated selection of "user" */
@@ -1136,10 +2358,14 @@ export type User_Bool_Exp = {
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   emailVerified?: InputMaybe<Timestamptz_Comparison_Exp>;
+  groups?: InputMaybe<Group_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   image?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  tasks?: InputMaybe<Task_Bool_Exp>;
+  tasksByUpdatedBy?: InputMaybe<Task_Bool_Exp>;
   updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user_groups?: InputMaybe<User_Group_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "user" */
@@ -1152,16 +2378,387 @@ export enum User_Constraint {
   UserIdKey = 'user_id_key'
 }
 
+/** columns and relationships of "user_group" */
+export type User_Group = {
+  __typename?: 'user_group';
+  /** An object relationship */
+  group: Group;
+  group_id: Scalars['uuid'];
+  id: Scalars['Int'];
+  /** An object relationship */
+  user: User;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_group" */
+export type User_Group_Aggregate = {
+  __typename?: 'user_group_aggregate';
+  aggregate?: Maybe<User_Group_Aggregate_Fields>;
+  nodes: Array<User_Group>;
+};
+
+/** aggregate fields of "user_group" */
+export type User_Group_Aggregate_Fields = {
+  __typename?: 'user_group_aggregate_fields';
+  avg?: Maybe<User_Group_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<User_Group_Max_Fields>;
+  min?: Maybe<User_Group_Min_Fields>;
+  stddev?: Maybe<User_Group_Stddev_Fields>;
+  stddev_pop?: Maybe<User_Group_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<User_Group_Stddev_Samp_Fields>;
+  sum?: Maybe<User_Group_Sum_Fields>;
+  var_pop?: Maybe<User_Group_Var_Pop_Fields>;
+  var_samp?: Maybe<User_Group_Var_Samp_Fields>;
+  variance?: Maybe<User_Group_Variance_Fields>;
+};
+
+
+/** aggregate fields of "user_group" */
+export type User_Group_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Group_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user_group" */
+export type User_Group_Aggregate_Order_By = {
+  avg?: InputMaybe<User_Group_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Group_Max_Order_By>;
+  min?: InputMaybe<User_Group_Min_Order_By>;
+  stddev?: InputMaybe<User_Group_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Group_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Group_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Group_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Group_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Group_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Group_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_group" */
+export type User_Group_Arr_Rel_Insert_Input = {
+  data: Array<User_Group_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<User_Group_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type User_Group_Avg_Fields = {
+  __typename?: 'user_group_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "user_group" */
+export type User_Group_Avg_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "user_group". All fields are combined with a logical 'AND'. */
+export type User_Group_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Group_Bool_Exp>>;
+  _not?: InputMaybe<User_Group_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Group_Bool_Exp>>;
+  group?: InputMaybe<Group_Bool_Exp>;
+  group_id?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  user?: InputMaybe<User_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_group" */
+export enum User_Group_Constraint {
+  /** unique or primary key constraint */
+  UserGroupPkey = 'user_group_pkey',
+  /** unique or primary key constraint */
+  UserGroupUserIdGroupIdKey = 'user_group_user_id_group_id_key'
+}
+
+/** input type for incrementing numeric columns in table "user_group" */
+export type User_Group_Inc_Input = {
+  id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "user_group" */
+export type User_Group_Insert_Input = {
+  group?: InputMaybe<Group_Obj_Rel_Insert_Input>;
+  group_id?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<User_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Group_Max_Fields = {
+  __typename?: 'user_group_max_fields';
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "user_group" */
+export type User_Group_Max_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Group_Min_Fields = {
+  __typename?: 'user_group_min_fields';
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['Int']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_group" */
+export type User_Group_Min_Order_By = {
+  group_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_group" */
+export type User_Group_Mutation_Response = {
+  __typename?: 'user_group_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Group>;
+};
+
+/** on conflict condition type for table "user_group" */
+export type User_Group_On_Conflict = {
+  constraint: User_Group_Constraint;
+  update_columns?: Array<User_Group_Update_Column>;
+  where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_group". */
+export type User_Group_Order_By = {
+  group?: InputMaybe<Group_Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user?: InputMaybe<User_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_group */
+export type User_Group_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "user_group" */
+export enum User_Group_Select_Column {
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "user_group" */
+export type User_Group_Set_Input = {
+  group_id?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type User_Group_Stddev_Fields = {
+  __typename?: 'user_group_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "user_group" */
+export type User_Group_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type User_Group_Stddev_Pop_Fields = {
+  __typename?: 'user_group_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "user_group" */
+export type User_Group_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type User_Group_Stddev_Samp_Fields = {
+  __typename?: 'user_group_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "user_group" */
+export type User_Group_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type User_Group_Sum_Fields = {
+  __typename?: 'user_group_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "user_group" */
+export type User_Group_Sum_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "user_group" */
+export enum User_Group_Update_Column {
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** aggregate var_pop on columns */
+export type User_Group_Var_Pop_Fields = {
+  __typename?: 'user_group_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "user_group" */
+export type User_Group_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type User_Group_Var_Samp_Fields = {
+  __typename?: 'user_group_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "user_group" */
+export type User_Group_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type User_Group_Variance_Fields = {
+  __typename?: 'user_group_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "user_group" */
+export type User_Group_Variance_Order_By = {
+  id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "user_groups_view" */
+export type User_Groups_View = {
+  __typename?: 'user_groups_view';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregated selection of "user_groups_view" */
+export type User_Groups_View_Aggregate = {
+  __typename?: 'user_groups_view_aggregate';
+  aggregate?: Maybe<User_Groups_View_Aggregate_Fields>;
+  nodes: Array<User_Groups_View>;
+};
+
+/** aggregate fields of "user_groups_view" */
+export type User_Groups_View_Aggregate_Fields = {
+  __typename?: 'user_groups_view_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Groups_View_Max_Fields>;
+  min?: Maybe<User_Groups_View_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_groups_view" */
+export type User_Groups_View_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_groups_view". All fields are combined with a logical 'AND'. */
+export type User_Groups_View_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Groups_View_Bool_Exp>>;
+  _not?: InputMaybe<User_Groups_View_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Groups_View_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_by?: InputMaybe<Uuid_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type User_Groups_View_Max_Fields = {
+  __typename?: 'user_groups_view_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type User_Groups_View_Min_Fields = {
+  __typename?: 'user_groups_view_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  created_by?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** Ordering options when selecting data from "user_groups_view". */
+export type User_Groups_View_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "user_groups_view" */
+export enum User_Groups_View_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
   accounts?: InputMaybe<Account_Arr_Rel_Insert_Input>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   email?: InputMaybe<Scalars['String']>;
   emailVerified?: InputMaybe<Scalars['timestamptz']>;
+  groups?: InputMaybe<Group_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  tasks?: InputMaybe<Task_Arr_Rel_Insert_Input>;
+  tasksByUpdatedBy?: InputMaybe<Task_Arr_Rel_Insert_Input>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  user_groups?: InputMaybe<User_Group_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -1217,10 +2814,14 @@ export type User_Order_By = {
   createdAt?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   emailVerified?: InputMaybe<Order_By>;
+  groups_aggregate?: InputMaybe<Group_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   image?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  tasksByUpdatedBy_aggregate?: InputMaybe<Task_Aggregate_Order_By>;
+  tasks_aggregate?: InputMaybe<Task_Aggregate_Order_By>;
   updatedAt?: InputMaybe<Order_By>;
+  user_groups_aggregate?: InputMaybe<User_Group_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: user */

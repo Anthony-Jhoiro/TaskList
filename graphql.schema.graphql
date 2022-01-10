@@ -567,6 +567,449 @@ input account_variance_order_by {
   id: order_by
 }
 
+"""
+columns and relationships of "group"
+"""
+type group {
+  created_at: timestamptz!
+  created_by: uuid!
+  id: uuid!
+  name: String!
+
+  """An array relationship"""
+  tasks(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): [task!]!
+
+  """An aggregate relationship"""
+  tasks_aggregate(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): task_aggregate!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: user!
+
+  """An array relationship"""
+  user_groups(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): [user_group!]!
+
+  """An aggregate relationship"""
+  user_groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): user_group_aggregate!
+}
+
+"""
+aggregated selection of "group"
+"""
+type group_aggregate {
+  aggregate: group_aggregate_fields
+  nodes: [group!]!
+}
+
+"""
+aggregate fields of "group"
+"""
+type group_aggregate_fields {
+  count(columns: [group_select_column!], distinct: Boolean): Int!
+  max: group_max_fields
+  min: group_min_fields
+}
+
+"""
+order by aggregate values of table "group"
+"""
+input group_aggregate_order_by {
+  count: order_by
+  max: group_max_order_by
+  min: group_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group"
+"""
+input group_arr_rel_insert_input {
+  data: [group_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: group_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group". All fields are combined with a logical 'AND'.
+"""
+input group_bool_exp {
+  _and: [group_bool_exp!]
+  _not: group_bool_exp
+  _or: [group_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  created_by: uuid_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+  tasks: task_bool_exp
+  updated_at: timestamptz_comparison_exp
+  user: user_bool_exp
+  user_groups: user_group_bool_exp
+}
+
+"""
+unique or primary key constraints on table "group"
+"""
+enum group_constraint {
+  """unique or primary key constraint"""
+  group_pkey
+}
+
+"""
+input type for inserting data into table "group"
+"""
+input group_insert_input {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  tasks: task_arr_rel_insert_input
+  updated_at: timestamptz
+  user: user_obj_rel_insert_input
+  user_groups: user_group_arr_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type group_max_fields {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "group"
+"""
+input group_max_order_by {
+  created_at: order_by
+  created_by: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type group_min_fields {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "group"
+"""
+input group_min_order_by {
+  created_at: order_by
+  created_by: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "group"
+"""
+type group_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [group!]!
+}
+
+"""
+input type for inserting object relation for remote table "group"
+"""
+input group_obj_rel_insert_input {
+  data: group_insert_input!
+
+  """on conflict condition"""
+  on_conflict: group_on_conflict
+}
+
+"""
+on conflict condition type for table "group"
+"""
+input group_on_conflict {
+  constraint: group_constraint!
+  update_columns: [group_update_column!]! = []
+  where: group_bool_exp
+}
+
+"""Ordering options when selecting data from "group"."""
+input group_order_by {
+  created_at: order_by
+  created_by: order_by
+  id: order_by
+  name: order_by
+  tasks_aggregate: task_aggregate_order_by
+  updated_at: order_by
+  user: user_order_by
+  user_groups_aggregate: user_group_aggregate_order_by
+}
+
+"""primary key columns input for table: group"""
+input group_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group"
+"""
+enum group_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "group"
+"""
+input group_set_input {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "group"
+"""
+enum group_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+columns and relationships of "group_users_view"
+"""
+type group_users_view {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  group_id: uuid
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregated selection of "group_users_view"
+"""
+type group_users_view_aggregate {
+  aggregate: group_users_view_aggregate_fields
+  nodes: [group_users_view!]!
+}
+
+"""
+aggregate fields of "group_users_view"
+"""
+type group_users_view_aggregate_fields {
+  count(columns: [group_users_view_select_column!], distinct: Boolean): Int!
+  max: group_users_view_max_fields
+  min: group_users_view_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "group_users_view". All fields are combined with a logical 'AND'.
+"""
+input group_users_view_bool_exp {
+  _and: [group_users_view_bool_exp!]
+  _not: group_users_view_bool_exp
+  _or: [group_users_view_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  email_verified: timestamptz_comparison_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  image: String_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""aggregate max on columns"""
+type group_users_view_max_fields {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  group_id: uuid
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate min on columns"""
+type group_users_view_min_fields {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  group_id: uuid
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""Ordering options when selecting data from "group_users_view"."""
+input group_users_view_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  group_id: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "group_users_view"
+"""
+enum group_users_view_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  email_verified
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+scalar jsonb
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  """is the column contained in the given json value"""
+  _contained_in: jsonb
+
+  """does the column contain the given json value at the top level"""
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """does the string exist as a top-level key in the column"""
+  _has_key: String
+
+  """do all of these strings exist as top-level keys in the column"""
+  _has_keys_all: [String!]
+
+  """do any of these strings exist as top-level keys in the column"""
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
 """mutation root"""
 type mutation_root {
   """
@@ -583,12 +1026,38 @@ type mutation_root {
   delete_account_by_pk(id: Int!): account
 
   """
+  delete data from the table: "group"
+  """
+  delete_group(
+    """filter the rows which have to be deleted"""
+    where: group_bool_exp!
+  ): group_mutation_response
+
+  """
+  delete single row from the table: "group"
+  """
+  delete_group_by_pk(id: uuid!): group
+
+  """
   delete data from the table: "profile"
   """
   delete_profile(
     """filter the rows which have to be deleted"""
     where: profile_bool_exp!
   ): profile_mutation_response
+
+  """
+  delete data from the table: "task"
+  """
+  delete_task(
+    """filter the rows which have to be deleted"""
+    where: task_bool_exp!
+  ): task_mutation_response
+
+  """
+  delete single row from the table: "task"
+  """
+  delete_task_by_pk(id: uuid!): task
 
   """
   delete data from the table: "user"
@@ -602,6 +1071,19 @@ type mutation_root {
   delete single row from the table: "user"
   """
   delete_user_by_pk(id: uuid!): user
+
+  """
+  delete data from the table: "user_group"
+  """
+  delete_user_group(
+    """filter the rows which have to be deleted"""
+    where: user_group_bool_exp!
+  ): user_group_mutation_response
+
+  """
+  delete single row from the table: "user_group"
+  """
+  delete_user_group_by_pk(id: Int!): user_group
 
   """
   delete data from the table: "verification_token"
@@ -639,6 +1121,28 @@ type mutation_root {
   ): account
 
   """
+  insert data into the table: "group"
+  """
+  insert_group(
+    """the rows to be inserted"""
+    objects: [group_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_on_conflict
+  ): group_mutation_response
+
+  """
+  insert a single row into the table: "group"
+  """
+  insert_group_one(
+    """the row to be inserted"""
+    object: group_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_on_conflict
+  ): group
+
+  """
   insert data into the table: "profile"
   """
   insert_profile(
@@ -655,6 +1159,28 @@ type mutation_root {
   ): profile
 
   """
+  insert data into the table: "task"
+  """
+  insert_task(
+    """the rows to be inserted"""
+    objects: [task_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: task_on_conflict
+  ): task_mutation_response
+
+  """
+  insert a single row into the table: "task"
+  """
+  insert_task_one(
+    """the row to be inserted"""
+    object: task_insert_input!
+
+    """on conflict condition"""
+    on_conflict: task_on_conflict
+  ): task
+
+  """
   insert data into the table: "user"
   """
   insert_user(
@@ -664,6 +1190,28 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: user_on_conflict
   ): user_mutation_response
+
+  """
+  insert data into the table: "user_group"
+  """
+  insert_user_group(
+    """the rows to be inserted"""
+    objects: [user_group_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: user_group_on_conflict
+  ): user_group_mutation_response
+
+  """
+  insert a single row into the table: "user_group"
+  """
+  insert_user_group_one(
+    """the row to be inserted"""
+    object: user_group_insert_input!
+
+    """on conflict condition"""
+    on_conflict: user_group_on_conflict
+  ): user_group
 
   """
   insert a single row into the table: "user"
@@ -725,6 +1273,26 @@ type mutation_root {
   ): account
 
   """
+  update data of the table: "group"
+  """
+  update_group(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_bool_exp!
+  ): group_mutation_response
+
+  """
+  update single row of the table: "group"
+  """
+  update_group_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_set_input
+    pk_columns: group_pk_columns_input!
+  ): group
+
+  """
   update data of the table: "profile"
   """
   update_profile(
@@ -734,6 +1302,68 @@ type mutation_root {
     """filter the rows which have to be updated"""
     where: profile_bool_exp!
   ): profile_mutation_response
+
+  """
+  update data of the table: "task"
+  """
+  update_task(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: task_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: task_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: task_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: task_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: task_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: task_set_input
+
+    """filter the rows which have to be updated"""
+    where: task_bool_exp!
+  ): task_mutation_response
+
+  """
+  update single row of the table: "task"
+  """
+  update_task_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: task_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: task_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: task_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: task_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: task_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: task_set_input
+    pk_columns: task_pk_columns_input!
+  ): task
 
   """
   update data of the table: "user"
@@ -754,6 +1384,32 @@ type mutation_root {
     _set: user_set_input
     pk_columns: user_pk_columns_input!
   ): user
+
+  """
+  update data of the table: "user_group"
+  """
+  update_user_group(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: user_group_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_group_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_group_bool_exp!
+  ): user_group_mutation_response
+
+  """
+  update single row of the table: "user_group"
+  """
+  update_user_group_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: user_group_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_group_set_input
+    pk_columns: user_group_pk_columns_input!
+  ): user_group
 
   """
   update data of the table: "verification_token"
@@ -954,6 +1610,89 @@ type query_root {
   account_by_pk(id: Int!): account
 
   """
+  fetch data from the table: "group"
+  """
+  group(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): [group!]!
+
+  """
+  fetch aggregated fields from the table: "group"
+  """
+  group_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): group_aggregate!
+
+  """fetch data from the table: "group" using primary key columns"""
+  group_by_pk(id: uuid!): group
+
+  """
+  fetch data from the table: "group_users_view"
+  """
+  group_users_view(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): [group_users_view!]!
+
+  """
+  fetch aggregated fields from the table: "group_users_view"
+  """
+  group_users_view_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): group_users_view_aggregate!
+
+  """
   fetch data from the table: "profile"
   """
   profile(
@@ -992,6 +1731,49 @@ type query_root {
     """filter the rows returned"""
     where: profile_bool_exp
   ): profile_aggregate!
+
+  """
+  fetch data from the table: "task"
+  """
+  task(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): [task!]!
+
+  """
+  fetch aggregated fields from the table: "task"
+  """
+  task_aggregate(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): task_aggregate!
+
+  """fetch data from the table: "task" using primary key columns"""
+  task_by_pk(id: uuid!): task
 
   """
   fetch data from the table: "user"
@@ -1035,6 +1817,89 @@ type query_root {
 
   """fetch data from the table: "user" using primary key columns"""
   user_by_pk(id: uuid!): user
+
+  """
+  fetch data from the table: "user_group"
+  """
+  user_group(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): [user_group!]!
+
+  """
+  fetch aggregated fields from the table: "user_group"
+  """
+  user_group_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): user_group_aggregate!
+
+  """fetch data from the table: "user_group" using primary key columns"""
+  user_group_by_pk(id: Int!): user_group
+
+  """
+  fetch data from the table: "user_groups_view"
+  """
+  user_groups_view(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): [user_groups_view!]!
+
+  """
+  fetch aggregated fields from the table: "user_groups_view"
+  """
+  user_groups_view_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): user_groups_view_aggregate!
 
   """
   fetch data from the table: "verification_token"
@@ -1127,6 +1992,89 @@ type subscription_root {
   account_by_pk(id: Int!): account
 
   """
+  fetch data from the table: "group"
+  """
+  group(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): [group!]!
+
+  """
+  fetch aggregated fields from the table: "group"
+  """
+  group_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): group_aggregate!
+
+  """fetch data from the table: "group" using primary key columns"""
+  group_by_pk(id: uuid!): group
+
+  """
+  fetch data from the table: "group_users_view"
+  """
+  group_users_view(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): [group_users_view!]!
+
+  """
+  fetch aggregated fields from the table: "group_users_view"
+  """
+  group_users_view_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): group_users_view_aggregate!
+
+  """
   fetch data from the table: "profile"
   """
   profile(
@@ -1165,6 +2113,49 @@ type subscription_root {
     """filter the rows returned"""
     where: profile_bool_exp
   ): profile_aggregate!
+
+  """
+  fetch data from the table: "task"
+  """
+  task(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): [task!]!
+
+  """
+  fetch aggregated fields from the table: "task"
+  """
+  task_aggregate(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): task_aggregate!
+
+  """fetch data from the table: "task" using primary key columns"""
+  task_by_pk(id: uuid!): task
 
   """
   fetch data from the table: "user"
@@ -1208,6 +2199,89 @@ type subscription_root {
 
   """fetch data from the table: "user" using primary key columns"""
   user_by_pk(id: uuid!): user
+
+  """
+  fetch data from the table: "user_group"
+  """
+  user_group(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): [user_group!]!
+
+  """
+  fetch aggregated fields from the table: "user_group"
+  """
+  user_group_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): user_group_aggregate!
+
+  """fetch data from the table: "user_group" using primary key columns"""
+  user_group_by_pk(id: Int!): user_group
+
+  """
+  fetch data from the table: "user_groups_view"
+  """
+  user_groups_view(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): [user_groups_view!]!
+
+  """
+  fetch aggregated fields from the table: "user_groups_view"
+  """
+  user_groups_view_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): user_groups_view_aggregate!
 
   """
   fetch data from the table: "verification_token"
@@ -1255,6 +2329,319 @@ type subscription_root {
   verification_token_by_pk(token: String!): verification_token
 }
 
+"""
+columns and relationships of "task"
+"""
+type task {
+  content(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  created_at: timestamptz!
+  created_by: uuid!
+
+  """An object relationship"""
+  group: group!
+  group_id: uuid!
+  icon: String!
+  id: uuid!
+  title: String!
+  updated_at: timestamptz!
+  updated_by: uuid!
+
+  """An object relationship"""
+  user: user!
+
+  """An object relationship"""
+  userByUpdatedBy: user!
+}
+
+"""
+aggregated selection of "task"
+"""
+type task_aggregate {
+  aggregate: task_aggregate_fields
+  nodes: [task!]!
+}
+
+"""
+aggregate fields of "task"
+"""
+type task_aggregate_fields {
+  count(columns: [task_select_column!], distinct: Boolean): Int!
+  max: task_max_fields
+  min: task_min_fields
+}
+
+"""
+order by aggregate values of table "task"
+"""
+input task_aggregate_order_by {
+  count: order_by
+  max: task_max_order_by
+  min: task_min_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input task_append_input {
+  content: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "task"
+"""
+input task_arr_rel_insert_input {
+  data: [task_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: task_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "task". All fields are combined with a logical 'AND'.
+"""
+input task_bool_exp {
+  _and: [task_bool_exp!]
+  _not: task_bool_exp
+  _or: [task_bool_exp!]
+  content: jsonb_comparison_exp
+  created_at: timestamptz_comparison_exp
+  created_by: uuid_comparison_exp
+  group: group_bool_exp
+  group_id: uuid_comparison_exp
+  icon: String_comparison_exp
+  id: uuid_comparison_exp
+  title: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  updated_by: uuid_comparison_exp
+  user: user_bool_exp
+  userByUpdatedBy: user_bool_exp
+}
+
+"""
+unique or primary key constraints on table "task"
+"""
+enum task_constraint {
+  """unique or primary key constraint"""
+  task_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input task_delete_at_path_input {
+  content: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input task_delete_elem_input {
+  content: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input task_delete_key_input {
+  content: String
+}
+
+"""
+input type for inserting data into table "task"
+"""
+input task_insert_input {
+  content: jsonb
+  created_at: timestamptz
+  created_by: uuid
+  group: group_obj_rel_insert_input
+  group_id: uuid
+  icon: String
+  id: uuid
+  title: String
+  updated_at: timestamptz
+  updated_by: uuid
+  user: user_obj_rel_insert_input
+  userByUpdatedBy: user_obj_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type task_max_fields {
+  created_at: timestamptz
+  created_by: uuid
+  group_id: uuid
+  icon: String
+  id: uuid
+  title: String
+  updated_at: timestamptz
+  updated_by: uuid
+}
+
+"""
+order by max() on columns of table "task"
+"""
+input task_max_order_by {
+  created_at: order_by
+  created_by: order_by
+  group_id: order_by
+  icon: order_by
+  id: order_by
+  title: order_by
+  updated_at: order_by
+  updated_by: order_by
+}
+
+"""aggregate min on columns"""
+type task_min_fields {
+  created_at: timestamptz
+  created_by: uuid
+  group_id: uuid
+  icon: String
+  id: uuid
+  title: String
+  updated_at: timestamptz
+  updated_by: uuid
+}
+
+"""
+order by min() on columns of table "task"
+"""
+input task_min_order_by {
+  created_at: order_by
+  created_by: order_by
+  group_id: order_by
+  icon: order_by
+  id: order_by
+  title: order_by
+  updated_at: order_by
+  updated_by: order_by
+}
+
+"""
+response of any mutation on the table "task"
+"""
+type task_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [task!]!
+}
+
+"""
+on conflict condition type for table "task"
+"""
+input task_on_conflict {
+  constraint: task_constraint!
+  update_columns: [task_update_column!]! = []
+  where: task_bool_exp
+}
+
+"""Ordering options when selecting data from "task"."""
+input task_order_by {
+  content: order_by
+  created_at: order_by
+  created_by: order_by
+  group: group_order_by
+  group_id: order_by
+  icon: order_by
+  id: order_by
+  title: order_by
+  updated_at: order_by
+  updated_by: order_by
+  user: user_order_by
+  userByUpdatedBy: user_order_by
+}
+
+"""primary key columns input for table: task"""
+input task_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input task_prepend_input {
+  content: jsonb
+}
+
+"""
+select columns of table "task"
+"""
+enum task_select_column {
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  group_id
+
+  """column name"""
+  icon
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  updated_by
+}
+
+"""
+input type for updating data in table "task"
+"""
+input task_set_input {
+  content: jsonb
+  created_at: timestamptz
+  created_by: uuid
+  group_id: uuid
+  icon: String
+  id: uuid
+  title: String
+  updated_at: timestamptz
+  updated_by: uuid
+}
+
+"""
+update columns of table "task"
+"""
+enum task_update_column {
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  group_id
+
+  """column name"""
+  icon
+
+  """column name"""
+  id
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  updated_by
+}
+
 scalar timestamptz
 
 """
@@ -1273,7 +2660,7 @@ input timestamptz_comparison_exp {
 }
 
 """
-The User model is for information such as the user's name and email address.  Email address is optional, but if one is specified for a User then it must be unique.
+NULL
 
 
 columns and relationships of "user"
@@ -1318,10 +2705,154 @@ type user {
   createdAt: timestamptz!
   email: String!
   emailVerified: timestamptz
+
+  """An array relationship"""
+  groups(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): [group!]!
+
+  """An aggregate relationship"""
+  groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): group_aggregate!
   id: uuid!
   image: String
   name: String
+
+  """An array relationship"""
+  tasks(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): [task!]!
+
+  """An array relationship"""
+  tasksByUpdatedBy(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): [task!]!
+
+  """An aggregate relationship"""
+  tasksByUpdatedBy_aggregate(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): task_aggregate!
+
+  """An aggregate relationship"""
+  tasks_aggregate(
+    """distinct select on columns"""
+    distinct_on: [task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [task_order_by!]
+
+    """filter the rows returned"""
+    where: task_bool_exp
+  ): task_aggregate!
   updatedAt: timestamptz!
+
+  """An array relationship"""
+  user_groups(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): [user_group!]!
+
+  """An aggregate relationship"""
+  user_groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): user_group_aggregate!
 }
 
 """
@@ -1352,10 +2883,14 @@ input user_bool_exp {
   createdAt: timestamptz_comparison_exp
   email: String_comparison_exp
   emailVerified: timestamptz_comparison_exp
+  groups: group_bool_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
   name: String_comparison_exp
+  tasks: task_bool_exp
+  tasksByUpdatedBy: task_bool_exp
   updatedAt: timestamptz_comparison_exp
+  user_groups: user_group_bool_exp
 }
 
 """
@@ -1373,6 +2908,411 @@ enum user_constraint {
 }
 
 """
+columns and relationships of "user_group"
+"""
+type user_group {
+  """An object relationship"""
+  group: group!
+  group_id: uuid!
+  id: Int!
+
+  """An object relationship"""
+  user: user!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "user_group"
+"""
+type user_group_aggregate {
+  aggregate: user_group_aggregate_fields
+  nodes: [user_group!]!
+}
+
+"""
+aggregate fields of "user_group"
+"""
+type user_group_aggregate_fields {
+  avg: user_group_avg_fields
+  count(columns: [user_group_select_column!], distinct: Boolean): Int!
+  max: user_group_max_fields
+  min: user_group_min_fields
+  stddev: user_group_stddev_fields
+  stddev_pop: user_group_stddev_pop_fields
+  stddev_samp: user_group_stddev_samp_fields
+  sum: user_group_sum_fields
+  var_pop: user_group_var_pop_fields
+  var_samp: user_group_var_samp_fields
+  variance: user_group_variance_fields
+}
+
+"""
+order by aggregate values of table "user_group"
+"""
+input user_group_aggregate_order_by {
+  avg: user_group_avg_order_by
+  count: order_by
+  max: user_group_max_order_by
+  min: user_group_min_order_by
+  stddev: user_group_stddev_order_by
+  stddev_pop: user_group_stddev_pop_order_by
+  stddev_samp: user_group_stddev_samp_order_by
+  sum: user_group_sum_order_by
+  var_pop: user_group_var_pop_order_by
+  var_samp: user_group_var_samp_order_by
+  variance: user_group_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "user_group"
+"""
+input user_group_arr_rel_insert_input {
+  data: [user_group_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: user_group_on_conflict
+}
+
+"""aggregate avg on columns"""
+type user_group_avg_fields {
+  id: Float
+}
+
+"""
+order by avg() on columns of table "user_group"
+"""
+input user_group_avg_order_by {
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "user_group". All fields are combined with a logical 'AND'.
+"""
+input user_group_bool_exp {
+  _and: [user_group_bool_exp!]
+  _not: user_group_bool_exp
+  _or: [user_group_bool_exp!]
+  group: group_bool_exp
+  group_id: uuid_comparison_exp
+  id: Int_comparison_exp
+  user: user_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "user_group"
+"""
+enum user_group_constraint {
+  """unique or primary key constraint"""
+  user_group_pkey
+
+  """unique or primary key constraint"""
+  user_group_user_id_group_id_key
+}
+
+"""
+input type for incrementing numeric columns in table "user_group"
+"""
+input user_group_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "user_group"
+"""
+input user_group_insert_input {
+  group: group_obj_rel_insert_input
+  group_id: uuid
+  id: Int
+  user: user_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type user_group_max_fields {
+  group_id: uuid
+  id: Int
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "user_group"
+"""
+input user_group_max_order_by {
+  group_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type user_group_min_fields {
+  group_id: uuid
+  id: Int
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "user_group"
+"""
+input user_group_min_order_by {
+  group_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "user_group"
+"""
+type user_group_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [user_group!]!
+}
+
+"""
+on conflict condition type for table "user_group"
+"""
+input user_group_on_conflict {
+  constraint: user_group_constraint!
+  update_columns: [user_group_update_column!]! = []
+  where: user_group_bool_exp
+}
+
+"""Ordering options when selecting data from "user_group"."""
+input user_group_order_by {
+  group: group_order_by
+  group_id: order_by
+  id: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: user_group"""
+input user_group_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "user_group"
+"""
+enum user_group_select_column {
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "user_group"
+"""
+input user_group_set_input {
+  group_id: uuid
+  id: Int
+  user_id: uuid
+}
+
+"""aggregate stddev on columns"""
+type user_group_stddev_fields {
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "user_group"
+"""
+input user_group_stddev_order_by {
+  id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type user_group_stddev_pop_fields {
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "user_group"
+"""
+input user_group_stddev_pop_order_by {
+  id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type user_group_stddev_samp_fields {
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "user_group"
+"""
+input user_group_stddev_samp_order_by {
+  id: order_by
+}
+
+"""aggregate sum on columns"""
+type user_group_sum_fields {
+  id: Int
+}
+
+"""
+order by sum() on columns of table "user_group"
+"""
+input user_group_sum_order_by {
+  id: order_by
+}
+
+"""
+update columns of table "user_group"
+"""
+enum user_group_update_column {
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  user_id
+}
+
+"""aggregate var_pop on columns"""
+type user_group_var_pop_fields {
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "user_group"
+"""
+input user_group_var_pop_order_by {
+  id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type user_group_var_samp_fields {
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "user_group"
+"""
+input user_group_var_samp_order_by {
+  id: order_by
+}
+
+"""aggregate variance on columns"""
+type user_group_variance_fields {
+  id: Float
+}
+
+"""
+order by variance() on columns of table "user_group"
+"""
+input user_group_variance_order_by {
+  id: order_by
+}
+
+"""
+columns and relationships of "user_groups_view"
+"""
+type user_groups_view {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+aggregated selection of "user_groups_view"
+"""
+type user_groups_view_aggregate {
+  aggregate: user_groups_view_aggregate_fields
+  nodes: [user_groups_view!]!
+}
+
+"""
+aggregate fields of "user_groups_view"
+"""
+type user_groups_view_aggregate_fields {
+  count(columns: [user_groups_view_select_column!], distinct: Boolean): Int!
+  max: user_groups_view_max_fields
+  min: user_groups_view_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "user_groups_view". All fields are combined with a logical 'AND'.
+"""
+input user_groups_view_bool_exp {
+  _and: [user_groups_view_bool_exp!]
+  _not: user_groups_view_bool_exp
+  _or: [user_groups_view_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  created_by: uuid_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user_id: uuid_comparison_exp
+}
+
+"""aggregate max on columns"""
+type user_groups_view_max_fields {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""aggregate min on columns"""
+type user_groups_view_min_fields {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""Ordering options when selecting data from "user_groups_view"."""
+input user_groups_view_order_by {
+  created_at: order_by
+  created_by: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "user_groups_view"
+"""
+enum user_groups_view_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  created_by
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
 input type for inserting data into table "user"
 """
 input user_insert_input {
@@ -1380,10 +3320,14 @@ input user_insert_input {
   createdAt: timestamptz
   email: String
   emailVerified: timestamptz
+  groups: group_arr_rel_insert_input
   id: uuid
   image: String
   name: String
+  tasks: task_arr_rel_insert_input
+  tasksByUpdatedBy: task_arr_rel_insert_input
   updatedAt: timestamptz
+  user_groups: user_group_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -1444,10 +3388,14 @@ input user_order_by {
   createdAt: order_by
   email: order_by
   emailVerified: order_by
+  groups_aggregate: group_aggregate_order_by
   id: order_by
   image: order_by
   name: order_by
+  tasksByUpdatedBy_aggregate: task_aggregate_order_by
+  tasks_aggregate: task_aggregate_order_by
   updatedAt: order_by
+  user_groups_aggregate: user_group_aggregate_order_by
 }
 
 """primary key columns input for table: user"""
