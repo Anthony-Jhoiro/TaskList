@@ -49,6 +49,7 @@ export const createAuthClient = () => {
           if (!authState?.token) {
             return operation;
           }
+          console.log({authState, operation})
           const fetchOptions =
             typeof operation.context.fetchOptions === 'function'
               ? operation.context.fetchOptions()

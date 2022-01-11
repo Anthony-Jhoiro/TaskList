@@ -7,8 +7,6 @@ import {getEnv} from "../../../utils/getEnv";
 
 const JWT_SECRET = (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n");
 
-console.log(JWT_SECRET)
-
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -24,7 +22,7 @@ export default NextAuth({
   secret: JWT_SECRET,
 
   session: {
-    jwt: true,
+    strategy: 'jwt',
     // In next version, replace by : strategy: 'jwt',
 
     maxAge: 30 * 24 * 60 * 60, // 30 days
