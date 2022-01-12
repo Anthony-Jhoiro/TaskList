@@ -15,12 +15,21 @@ array_relationships:
       table:
         name: account
         schema: public
-- name: groups
+- name: createdGroups
   using:
     foreign_key_constraint_on:
       column: created_by
       table:
         name: group
+        schema: public
+- name: groups
+  using:
+    manual_configuration:
+      column_mapping:
+        id: user_id
+      insertion_order: null
+      remote_table:
+        name: user_groups_view
         schema: public
 - name: tasks
   using:

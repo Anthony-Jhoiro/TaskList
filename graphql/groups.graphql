@@ -1,0 +1,22 @@
+
+fragment PublicUser on user {
+    id
+    name
+    image
+}
+
+fragment PublicGroup on group {
+    created_at
+    id
+    name
+    user {
+        ...PublicUser
+    }
+}
+
+
+query getGroups {
+    group {
+        ...PublicGroup
+    }
+}

@@ -7,6 +7,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                'background': '#ebe6e6',
                 'secondary': {
                     DEFAULT: '#B34F30',
                     '50': '#EABEB1',
@@ -83,6 +84,7 @@ module.exports = {
     plugins: [
         require("@tailwindcss/forms")({
             strategy: 'class'
-        })
+        }),
+        require('tw-elements/dist/plugin')
     ],
 }

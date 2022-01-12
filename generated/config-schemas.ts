@@ -514,6 +514,10 @@ export type Group = {
   user_groups: Array<User_Group>;
   /** An aggregate relationship */
   user_groups_aggregate: User_Group_Aggregate;
+  /** An array relationship */
+  users: Array<Group_Users_View>;
+  /** An aggregate relationship */
+  users_aggregate: Group_Users_View_Aggregate;
 };
 
 
@@ -554,6 +558,26 @@ export type GroupUser_Groups_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<User_Group_Order_By>>;
   where?: InputMaybe<User_Group_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group" */
+export type GroupUsersArgs = {
+  distinct_on?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Users_View_Order_By>>;
+  where?: InputMaybe<Group_Users_View_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group" */
+export type GroupUsers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Group_Users_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Group_Users_View_Order_By>>;
+  where?: InputMaybe<Group_Users_View_Bool_Exp>;
 };
 
 /** aggregated selection of "group" */
@@ -605,6 +629,7 @@ export type Group_Bool_Exp = {
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<User_Bool_Exp>;
   user_groups?: InputMaybe<User_Group_Bool_Exp>;
+  users?: InputMaybe<Group_Users_View_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "group" */
@@ -623,6 +648,7 @@ export type Group_Insert_Input = {
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<User_Obj_Rel_Insert_Input>;
   user_groups?: InputMaybe<User_Group_Arr_Rel_Insert_Input>;
+  users?: InputMaybe<Group_Users_View_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -696,6 +722,7 @@ export type Group_Order_By = {
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<User_Order_By>;
   user_groups_aggregate?: InputMaybe<User_Group_Aggregate_Order_By>;
+  users_aggregate?: InputMaybe<Group_Users_View_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: group */
@@ -775,6 +802,18 @@ export type Group_Users_View_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "group_users_view" */
+export type Group_Users_View_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Group_Users_View_Max_Order_By>;
+  min?: InputMaybe<Group_Users_View_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_users_view" */
+export type Group_Users_View_Arr_Rel_Insert_Input = {
+  data: Array<Group_Users_View_Insert_Input>;
+};
+
 /** Boolean expression to filter rows from the table "group_users_view". All fields are combined with a logical 'AND'. */
 export type Group_Users_View_Bool_Exp = {
   _and?: InputMaybe<Array<Group_Users_View_Bool_Exp>>;
@@ -790,6 +829,18 @@ export type Group_Users_View_Bool_Exp = {
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
+/** input type for inserting data into table "group_users_view" */
+export type Group_Users_View_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  email?: InputMaybe<Scalars['String']>;
+  email_verified?: InputMaybe<Scalars['timestamptz']>;
+  group_id?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  image?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
 /** aggregate max on columns */
 export type Group_Users_View_Max_Fields = {
   __typename?: 'group_users_view_max_fields';
@@ -803,6 +854,18 @@ export type Group_Users_View_Max_Fields = {
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by max() on columns of table "group_users_view" */
+export type Group_Users_View_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  email_verified?: InputMaybe<Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Group_Users_View_Min_Fields = {
   __typename?: 'group_users_view_min_fields';
@@ -814,6 +877,18 @@ export type Group_Users_View_Min_Fields = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_users_view" */
+export type Group_Users_View_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  email_verified?: InputMaybe<Order_By>;
+  group_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** Ordering options when selecting data from "group_users_view". */
@@ -2143,12 +2218,16 @@ export type User = {
   /** An aggregate relationship */
   accounts_aggregate: Account_Aggregate;
   createdAt: Scalars['timestamptz'];
+  /** An array relationship */
+  createdGroups: Array<Group>;
+  /** An aggregate relationship */
+  createdGroups_aggregate: Group_Aggregate;
   email: Scalars['String'];
   emailVerified?: Maybe<Scalars['timestamptz']>;
   /** An array relationship */
-  groups: Array<Group>;
+  groups: Array<User_Groups_View>;
   /** An aggregate relationship */
-  groups_aggregate: Group_Aggregate;
+  groups_aggregate: User_Groups_View_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -2207,7 +2286,7 @@ export type UserAccounts_AggregateArgs = {
  * columns and relationships of "user"
  *
  */
-export type UserGroupsArgs = {
+export type UserCreatedGroupsArgs = {
   distinct_on?: InputMaybe<Array<Group_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -2223,12 +2302,44 @@ export type UserGroupsArgs = {
  * columns and relationships of "user"
  *
  */
-export type UserGroups_AggregateArgs = {
+export type UserCreatedGroups_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Group_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Group_Order_By>>;
   where?: InputMaybe<Group_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserGroupsArgs = {
+  distinct_on?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
+  where?: InputMaybe<User_Groups_View_Bool_Exp>;
+};
+
+
+/**
+ * NULL
+ *
+ *
+ * columns and relationships of "user"
+ *
+ */
+export type UserGroups_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Groups_View_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
+  where?: InputMaybe<User_Groups_View_Bool_Exp>;
 };
 
 
@@ -2356,9 +2467,10 @@ export type User_Bool_Exp = {
   _or?: InputMaybe<Array<User_Bool_Exp>>;
   accounts?: InputMaybe<Account_Bool_Exp>;
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  createdGroups?: InputMaybe<Group_Bool_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   emailVerified?: InputMaybe<Timestamptz_Comparison_Exp>;
-  groups?: InputMaybe<Group_Bool_Exp>;
+  groups?: InputMaybe<User_Groups_View_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   image?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -2684,6 +2796,18 @@ export type User_Groups_View_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "user_groups_view" */
+export type User_Groups_View_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Groups_View_Max_Order_By>;
+  min?: InputMaybe<User_Groups_View_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_groups_view" */
+export type User_Groups_View_Arr_Rel_Insert_Input = {
+  data: Array<User_Groups_View_Insert_Input>;
+};
+
 /** Boolean expression to filter rows from the table "user_groups_view". All fields are combined with a logical 'AND'. */
 export type User_Groups_View_Bool_Exp = {
   _and?: InputMaybe<Array<User_Groups_View_Bool_Exp>>;
@@ -2697,6 +2821,16 @@ export type User_Groups_View_Bool_Exp = {
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
+/** input type for inserting data into table "user_groups_view" */
+export type User_Groups_View_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  created_by?: InputMaybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
 /** aggregate max on columns */
 export type User_Groups_View_Max_Fields = {
   __typename?: 'user_groups_view_max_fields';
@@ -2708,6 +2842,16 @@ export type User_Groups_View_Max_Fields = {
   user_id?: Maybe<Scalars['uuid']>;
 };
 
+/** order by max() on columns of table "user_groups_view" */
+export type User_Groups_View_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type User_Groups_View_Min_Fields = {
   __typename?: 'user_groups_view_min_fields';
@@ -2717,6 +2861,16 @@ export type User_Groups_View_Min_Fields = {
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_groups_view" */
+export type User_Groups_View_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** Ordering options when selecting data from "user_groups_view". */
@@ -2749,9 +2903,10 @@ export enum User_Groups_View_Select_Column {
 export type User_Insert_Input = {
   accounts?: InputMaybe<Account_Arr_Rel_Insert_Input>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
+  createdGroups?: InputMaybe<Group_Arr_Rel_Insert_Input>;
   email?: InputMaybe<Scalars['String']>;
   emailVerified?: InputMaybe<Scalars['timestamptz']>;
-  groups?: InputMaybe<Group_Arr_Rel_Insert_Input>;
+  groups?: InputMaybe<User_Groups_View_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2812,9 +2967,10 @@ export type User_On_Conflict = {
 export type User_Order_By = {
   accounts_aggregate?: InputMaybe<Account_Aggregate_Order_By>;
   createdAt?: InputMaybe<Order_By>;
+  createdGroups_aggregate?: InputMaybe<Group_Aggregate_Order_By>;
   email?: InputMaybe<Order_By>;
   emailVerified?: InputMaybe<Order_By>;
-  groups_aggregate?: InputMaybe<Group_Aggregate_Order_By>;
+  groups_aggregate?: InputMaybe<User_Groups_View_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   image?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;

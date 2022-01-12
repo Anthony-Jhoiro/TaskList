@@ -11,3 +11,53 @@ object_relationships:
 - name: userByUpdatedBy
   using:
     foreign_key_constraint_on: updated_by
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      group:
+        user_groups:
+          user_id:
+            _eq: X-Hasura-User-Id
+    columns:
+    - content
+    - group_id
+    - icon
+    - title
+    set:
+      created_by: x-hasura-User-Id
+      updated_by: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - icon
+    - title
+    - content
+    - created_at
+    - updated_at
+    - created_by
+    - group_id
+    - id
+    - updated_by
+    filter:
+      group:
+        user_groups:
+          user_id:
+            _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - content
+    - icon
+    - title
+    filter:
+      group:
+        user_groups:
+          user_id:
+            _eq: X-Hasura-User-Id
+    set:
+      updated_by: x-hasura-User-Id
+  role: user

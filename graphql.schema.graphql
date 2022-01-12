@@ -651,6 +651,42 @@ type group {
     """filter the rows returned"""
     where: user_group_bool_exp
   ): user_group_aggregate!
+
+  """An array relationship"""
+  users(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): [group_users_view!]!
+
+  """An aggregate relationship"""
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): group_users_view_aggregate!
 }
 
 """
@@ -704,6 +740,7 @@ input group_bool_exp {
   updated_at: timestamptz_comparison_exp
   user: user_bool_exp
   user_groups: user_group_bool_exp
+  users: group_users_view_bool_exp
 }
 
 """
@@ -726,6 +763,7 @@ input group_insert_input {
   updated_at: timestamptz
   user: user_obj_rel_insert_input
   user_groups: user_group_arr_rel_insert_input
+  users: group_users_view_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -808,6 +846,7 @@ input group_order_by {
   updated_at: order_by
   user: user_order_by
   user_groups_aggregate: user_group_aggregate_order_by
+  users_aggregate: group_users_view_aggregate_order_by
 }
 
 """primary key columns input for table: group"""
@@ -898,6 +937,22 @@ type group_users_view_aggregate_fields {
 }
 
 """
+order by aggregate values of table "group_users_view"
+"""
+input group_users_view_aggregate_order_by {
+  count: order_by
+  max: group_users_view_max_order_by
+  min: group_users_view_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_users_view"
+"""
+input group_users_view_arr_rel_insert_input {
+  data: [group_users_view_insert_input!]!
+}
+
+"""
 Boolean expression to filter rows from the table "group_users_view". All fields are combined with a logical 'AND'.
 """
 input group_users_view_bool_exp {
@@ -914,6 +969,20 @@ input group_users_view_bool_exp {
   updated_at: timestamptz_comparison_exp
 }
 
+"""
+input type for inserting data into table "group_users_view"
+"""
+input group_users_view_insert_input {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  group_id: uuid
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
 """aggregate max on columns"""
 type group_users_view_max_fields {
   created_at: timestamptz
@@ -926,6 +995,20 @@ type group_users_view_max_fields {
   updated_at: timestamptz
 }
 
+"""
+order by max() on columns of table "group_users_view"
+"""
+input group_users_view_max_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  group_id: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  updated_at: order_by
+}
+
 """aggregate min on columns"""
 type group_users_view_min_fields {
   created_at: timestamptz
@@ -936,6 +1019,20 @@ type group_users_view_min_fields {
   image: String
   name: String
   updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "group_users_view"
+"""
+input group_users_view_min_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  group_id: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  updated_at: order_by
 }
 
 """Ordering options when selecting data from "group_users_view"."""
@@ -2703,11 +2800,9 @@ type user {
     where: account_bool_exp
   ): account_aggregate!
   createdAt: timestamptz!
-  email: String!
-  emailVerified: timestamptz
 
   """An array relationship"""
-  groups(
+  createdGroups(
     """distinct select on columns"""
     distinct_on: [group_select_column!]
 
@@ -2725,7 +2820,7 @@ type user {
   ): [group!]!
 
   """An aggregate relationship"""
-  groups_aggregate(
+  createdGroups_aggregate(
     """distinct select on columns"""
     distinct_on: [group_select_column!]
 
@@ -2741,6 +2836,44 @@ type user {
     """filter the rows returned"""
     where: group_bool_exp
   ): group_aggregate!
+  email: String!
+  emailVerified: timestamptz
+
+  """An array relationship"""
+  groups(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): [user_groups_view!]!
+
+  """An aggregate relationship"""
+  groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): user_groups_view_aggregate!
   id: uuid!
   image: String
   name: String
@@ -2881,9 +3014,10 @@ input user_bool_exp {
   _or: [user_bool_exp!]
   accounts: account_bool_exp
   createdAt: timestamptz_comparison_exp
+  createdGroups: group_bool_exp
   email: String_comparison_exp
   emailVerified: timestamptz_comparison_exp
-  groups: group_bool_exp
+  groups: user_groups_view_bool_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
   name: String_comparison_exp
@@ -3245,6 +3379,22 @@ type user_groups_view_aggregate_fields {
 }
 
 """
+order by aggregate values of table "user_groups_view"
+"""
+input user_groups_view_aggregate_order_by {
+  count: order_by
+  max: user_groups_view_max_order_by
+  min: user_groups_view_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "user_groups_view"
+"""
+input user_groups_view_arr_rel_insert_input {
+  data: [user_groups_view_insert_input!]!
+}
+
+"""
 Boolean expression to filter rows from the table "user_groups_view". All fields are combined with a logical 'AND'.
 """
 input user_groups_view_bool_exp {
@@ -3259,6 +3409,18 @@ input user_groups_view_bool_exp {
   user_id: uuid_comparison_exp
 }
 
+"""
+input type for inserting data into table "user_groups_view"
+"""
+input user_groups_view_insert_input {
+  created_at: timestamptz
+  created_by: uuid
+  id: uuid
+  name: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
 """aggregate max on columns"""
 type user_groups_view_max_fields {
   created_at: timestamptz
@@ -3269,6 +3431,18 @@ type user_groups_view_max_fields {
   user_id: uuid
 }
 
+"""
+order by max() on columns of table "user_groups_view"
+"""
+input user_groups_view_max_order_by {
+  created_at: order_by
+  created_by: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
 """aggregate min on columns"""
 type user_groups_view_min_fields {
   created_at: timestamptz
@@ -3277,6 +3451,18 @@ type user_groups_view_min_fields {
   name: String
   updated_at: timestamptz
   user_id: uuid
+}
+
+"""
+order by min() on columns of table "user_groups_view"
+"""
+input user_groups_view_min_order_by {
+  created_at: order_by
+  created_by: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+  user_id: order_by
 }
 
 """Ordering options when selecting data from "user_groups_view"."""
@@ -3318,9 +3504,10 @@ input type for inserting data into table "user"
 input user_insert_input {
   accounts: account_arr_rel_insert_input
   createdAt: timestamptz
+  createdGroups: group_arr_rel_insert_input
   email: String
   emailVerified: timestamptz
-  groups: group_arr_rel_insert_input
+  groups: user_groups_view_arr_rel_insert_input
   id: uuid
   image: String
   name: String
@@ -3386,9 +3573,10 @@ input user_on_conflict {
 input user_order_by {
   accounts_aggregate: account_aggregate_order_by
   createdAt: order_by
+  createdGroups_aggregate: group_aggregate_order_by
   email: order_by
   emailVerified: order_by
-  groups_aggregate: group_aggregate_order_by
+  groups_aggregate: user_groups_view_aggregate_order_by
   id: order_by
   image: order_by
   name: order_by

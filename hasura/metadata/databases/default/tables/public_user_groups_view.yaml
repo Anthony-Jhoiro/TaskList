@@ -1,3 +1,10 @@
 table:
   name: user_groups_view
   schema: public
+select_permissions:
+- permission:
+    columns: []
+    filter:
+      user_id:
+        _eq: X-Hasura-User-Id
+  role: user
