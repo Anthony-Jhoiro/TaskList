@@ -1,0 +1,22 @@
+
+fragment PublicTask on task {
+    id
+    icon
+    content
+    title
+    user {
+        ...PublicUser
+    }
+    userByUpdatedBy {
+        ...PublicUser
+    }
+    created_at
+    updated_at
+}
+
+query getGroupTask($groupId: uuid!) {
+    task (where: {group_id: {_eq: $groupId}}) {
+        ...PublicTask
+    }
+}
+

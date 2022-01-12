@@ -3178,6 +3178,22 @@ export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetGroupsQuery = { __typename?: 'query_root', group: Array<{ __typename?: 'group', created_at: any, id: string, name: string, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } }> };
 
+export type GetGroupByIdQueryVariables = Exact<{
+  groupId: Scalars['uuid'];
+}>;
+
+
+export type GetGroupByIdQuery = { __typename?: 'query_root', group: Array<{ __typename?: 'group', created_at: any, id: string, name: string, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } }> };
+
+export type PublicTaskFragment = { __typename?: 'task', id: string, icon: string, content: any, title: string, created_at: any, updated_at: any, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined }, userByUpdatedBy: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } };
+
+export type GetGroupTaskQueryVariables = Exact<{
+  groupId: Scalars['uuid'];
+}>;
+
+
+export type GetGroupTaskQuery = { __typename?: 'query_root', task: Array<{ __typename?: 'task', id: string, icon: string, content: any, title: string, created_at: any, updated_at: any, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined }, userByUpdatedBy: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } }> };
+
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3200,6 +3216,22 @@ export const PublicGroupFragmentDoc = gql`
   }
 }
     ${PublicUserFragmentDoc}`;
+export const PublicTaskFragmentDoc = gql`
+    fragment PublicTask on task {
+  id
+  icon
+  content
+  title
+  user {
+    ...PublicUser
+  }
+  userByUpdatedBy {
+    ...PublicUser
+  }
+  created_at
+  updated_at
+}
+    ${PublicUserFragmentDoc}`;
 export const GetGroupsDocument = gql`
     query getGroups {
   group {
@@ -3210,6 +3242,28 @@ export const GetGroupsDocument = gql`
 
 export function useGetGroupsQuery(options: Omit<Urql.UseQueryArgs<GetGroupsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<GetGroupsQuery>({ query: GetGroupsDocument, ...options });
+};
+export const GetGroupByIdDocument = gql`
+    query getGroupById($groupId: uuid!) {
+  group(where: {id: {_eq: $groupId}}) {
+    ...PublicGroup
+  }
+}
+    ${PublicGroupFragmentDoc}`;
+
+export function useGetGroupByIdQuery(options: Omit<Urql.UseQueryArgs<GetGroupByIdQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetGroupByIdQuery>({ query: GetGroupByIdDocument, ...options });
+};
+export const GetGroupTaskDocument = gql`
+    query getGroupTask($groupId: uuid!) {
+  task(where: {group_id: {_eq: $groupId}}) {
+    ...PublicTask
+  }
+}
+    ${PublicTaskFragmentDoc}`;
+
+export function useGetGroupTaskQuery(options: Omit<Urql.UseQueryArgs<GetGroupTaskQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetGroupTaskQuery>({ query: GetGroupTaskDocument, ...options });
 };
 export const GetCurrentUserDocument = gql`
     query getCurrentUser {
