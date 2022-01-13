@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import {useGetGroupsQuery} from "../../generated/data-schemas";
 import {GroupCard} from "../../components/GroupCard";
 import {useEffect} from "react";
+import Link from "next/link"
 
 
 const Groups: NextPage = () => {
@@ -27,9 +28,11 @@ const Groups: NextPage = () => {
   }
 
   return <main id={"group-list"} className="container mx-auto py-5">
-    {data.group.map(group => <div key={group.id} className={"mb-5"}>
-      <GroupCard group={group}/>
-    </div>)}
+    {data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
+      <div className={"mb-5"}>
+        <GroupCard group={group}/>
+      </div>
+    </Link>)}
   </main>;
 
 }
