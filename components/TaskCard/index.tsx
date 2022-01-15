@@ -19,7 +19,7 @@ export const TaskCard: React.VFC<TaskCardProps> = ({task, unread, onEdit}: TaskC
 
   return (
     <div>
-      <div className="bg-white p-5 shadow flex items-center group relative h-16" onClick={() => setExtended(!extended)}>
+      <div className="bg-white p-5 shadow flex items-center group relative h-16 cursor-pointer" onClick={() => setExtended(!extended)}>
 
         {/* Ping icon if unread */}
         {unread && <div className={"absolute -top-1 -right-1"}> <span className="flex h-3 w-3 ">
