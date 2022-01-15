@@ -39,7 +39,6 @@ export const createAuthClient = () => {
         getAuth: async (_) => {
           const session = await getSession();
           const maybeToken = session?.token as string;
-          console.log('[getAuth] new token : ', { session, maybeToken });
           if (!maybeToken) {
             return null;
           }
@@ -49,7 +48,6 @@ export const createAuthClient = () => {
           if (!authState?.token) {
             return operation;
           }
-          console.log({authState, operation})
           const fetchOptions =
             typeof operation.context.fetchOptions === 'function'
               ? operation.context.fetchOptions()
