@@ -29,8 +29,6 @@ export const loadEnv = () => {
   const requiredEnvironment = Object.getOwnPropertyNames(environmentConfiguration).reduce<{ [key: string]: string }>((ac, e) => {
     if (typeof window !== 'undefined' && !e.startsWith('NEXT_PUBLIC')) return ac;
 
-    console.log(process.env)
-
     const config = environmentConfiguration[e];
     if (config.required) {
       const env = process.env[e]

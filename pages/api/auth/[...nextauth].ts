@@ -1,18 +1,16 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import {JWT} from "next-auth/jwt";
-import {sign, verify} from 'jsonwebtoken';
+import {sign} from 'jsonwebtoken';
 import {HasuraAdapter} from "../../../config/next-auth/HasuraAdapter";
-import {getEnv} from "../../../utils/getEnv";
 
-const JWT_SECRET = (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n");
+const JWT_SECRET =(process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n");
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
-      clientId: getEnv('GOOGLE_CLIENT_ID', ''),
-      clientSecret: getEnv('GOOGLE_CLIENT_SECRET', '')
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     }),
     // ...add more providers here
   ],
@@ -30,30 +28,7 @@ export default NextAuth({
     updateAge: 24 * 60 * 60, // 24 hours
   },
 
-  jwt: {
-    secret: JWT_SECRET,
-  encode: async ({secret, token}) => {
-      // Refresh the token
-
-      if (!token || !token.sub) return "";
-
-      const jwtClaims = {
-        ...token,
-        "sub": token?.sub?.toString(),
-        "iat": Date.now() / 1000,
-        "exp": Math.floor(Date.now() / 1000) + 24 * 60 * 60, // 1 day
-
-      }
-
-      return sign(jwtClaims, secret, {algorithm: 'HS256'});
-    },
-
-    decode: async ({secret, token}) => {
-      if (!token) throw Error("No token provided");
-      const decoded = verify(token, secret, {algorithms: ['HS256']});
-      return decoded as JWT;
-    },
-  },
+  jwt: {},
 
 
   callbacks: {
@@ -101,7 +76,5 @@ export default NextAuth({
       return token;
     }
   },
-  adapter: HasuraAdapter({}, {})
-
-
+  adapter: HasuraAdapter({}, {}),
 })
