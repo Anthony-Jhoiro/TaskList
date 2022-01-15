@@ -1,48 +1,39 @@
 import {NextPage} from "next";
-import {useCurrentUser} from "../../hooks/useCurrentUser";
 import {FullScreenLoading} from "../../components/FullScreenLoading";
-import {NavBar} from "../../components/NavBar";
 import {useRouter} from "next/router";
 import {useGetGroupsQuery} from "../../generated/data-schemas";
 import {GroupCard} from "../../components/GroupCard";
 import {useEffect} from "react";
+import Link from "next/link"
 
 
 const Groups: NextPage = () => {
-  const {user, error, fetching} = useCurrentUser();
   const router = useRouter();
-  const [{fetching: groupsFetching, error: groupsError, data}] = useGetGroupsQuery();
+  const [{fetching, error, data}] = useGetGroupsQuery();
 
   useEffect(() => {
-    if (!(fetching || groupsFetching) && (error || !user || groupsError)) {
-      console.log({error, user, groupsError})
+    if (!fetching && error) {
       router.push("/").then();
     }
 
-  }, [fetching, groupsFetching, error, groupsError, router, user])
+  }, [fetching, error, router])
 
 
-  if (fetching || groupsFetching) {
+  if (fetching) {
     return <FullScreenLoading/>
   }
 
-  if (error || !user || groupsError) {
+  if (error || !data) {
     return <p>Error : Redirecting to home page...</p>
   }
 
-  return <div className={"bg-background min-h-screen"}>
-    <NavBar user={user} />
-
-    <div>
-      {error && <p className="text-error">Une erreur est survenue, je m&apos;en occupe dès que possible !</p>}
-    </div>
-
-    <main id={"group-list"} className="container mx-auto py-5">
-      {data && data.group.map(group => <div key={group.id} className={"mb-5"}>
-        <GroupCard group={group}  />
-      </div>)}
-      </main>
-  </div>
+  return <main id={"group-list"} className="container mx-auto py-5">
+    {data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
+      <div className={"mb-5"}>
+        <GroupCard group={group}/>
+      </div>
+    </Link>)}
+  </main>;
 
 }
 

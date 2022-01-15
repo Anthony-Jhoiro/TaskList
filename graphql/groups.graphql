@@ -20,3 +20,10 @@ query getGroups {
         ...PublicGroup
     }
 }
+
+query getGroupById($groupId: uuid!) {
+    group (where: {id: {_eq: $groupId}}) {
+        ...PublicGroup
+    }
+}
+

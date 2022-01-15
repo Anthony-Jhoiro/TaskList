@@ -6,7 +6,8 @@ import {SessionProvider} from "next-auth/react"
 import {AuthContextProvider} from "../hooks/useAuthContext";
 import {ClientProvider} from "../utils/GraphqlClientProvider";
 import {CurrentUserProvider} from "../hooks/useCurrentUser";
-import { appWithTranslation } from 'next-i18next';
+import {appWithTranslation} from 'next-i18next';
+import {DefaultLayout} from "../components/layouts/DefaultLayout";
 
 
 function MyApp({Component, pageProps: {session, ...pageProps}}: AppProps) {
@@ -16,7 +17,9 @@ function MyApp({Component, pageProps: {session, ...pageProps}}: AppProps) {
         <ClientProvider>
           <CurrentUserProvider>
             <Toaster/>
-            <Component {...pageProps} />
+            <DefaultLayout>
+              <Component {...pageProps} />
+            </DefaultLayout>
           </CurrentUserProvider>
         </ClientProvider>
       </AuthContextProvider>
