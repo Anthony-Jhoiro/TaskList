@@ -3194,6 +3194,26 @@ export type GetGroupTaskQueryVariables = Exact<{
 
 export type GetGroupTaskQuery = { __typename?: 'query_root', task: Array<{ __typename?: 'task', id: string, icon: string, content: any, title: string, created_at: any, updated_at: any, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined }, userByUpdatedBy: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } }> };
 
+export type InsertTaskMutationVariables = Exact<{
+  groupId: Scalars['uuid'];
+  icon: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+}>;
+
+
+export type InsertTaskMutation = { __typename?: 'mutation_root', insert_task_one?: { __typename?: 'task', id: string, icon: string, content: any, title: string, created_at: any, updated_at: any, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined }, userByUpdatedBy: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } } | null | undefined };
+
+export type UpdateTaskMutationVariables = Exact<{
+  taskId: Scalars['uuid'];
+  icon: Scalars['String'];
+  title: Scalars['String'];
+  content: Scalars['jsonb'];
+}>;
+
+
+export type UpdateTaskMutation = { __typename?: 'mutation_root', update_task_by_pk?: { __typename?: 'task', id: string, icon: string, content: any, title: string, created_at: any, updated_at: any, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined }, userByUpdatedBy: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } } | null | undefined };
+
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3264,6 +3284,33 @@ export const GetGroupTaskDocument = gql`
 
 export function useGetGroupTaskQuery(options: Omit<Urql.UseQueryArgs<GetGroupTaskQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<GetGroupTaskQuery>({ query: GetGroupTaskDocument, ...options });
+};
+export const InsertTaskDocument = gql`
+    mutation insertTask($groupId: uuid!, $icon: String!, $title: String!, $content: jsonb!) {
+  insert_task_one(
+    object: {group_id: $groupId, icon: $icon, title: $title, content: $content}
+  ) {
+    ...PublicTask
+  }
+}
+    ${PublicTaskFragmentDoc}`;
+
+export function useInsertTaskMutation() {
+  return Urql.useMutation<InsertTaskMutation, InsertTaskMutationVariables>(InsertTaskDocument);
+};
+export const UpdateTaskDocument = gql`
+    mutation updateTask($taskId: uuid!, $icon: String!, $title: String!, $content: jsonb!) {
+  update_task_by_pk(
+    _set: {content: $content, title: $title, icon: $icon}
+    pk_columns: {id: $taskId}
+  ) {
+    ...PublicTask
+  }
+}
+    ${PublicTaskFragmentDoc}`;
+
+export function useUpdateTaskMutation() {
+  return Urql.useMutation<UpdateTaskMutation, UpdateTaskMutationVariables>(UpdateTaskDocument);
 };
 export const GetCurrentUserDocument = gql`
     query getCurrentUser {

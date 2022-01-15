@@ -20,3 +20,27 @@ query getGroupTask($groupId: uuid!) {
     }
 }
 
+mutation insertTask($groupId: uuid!, $icon: String!, $title: String!, $content: jsonb!) {
+    insert_task_one(object: {
+        group_id: $groupId,
+        icon: $icon,
+        title: $title,
+        content: $content
+    }) {
+        ...PublicTask
+    }
+}
+
+mutation updateTask($taskId: uuid!, $icon: String!, $title: String!, $content: jsonb!) {
+    update_task_by_pk(
+        _set: {
+            content: $content,
+            title: $title,
+            icon: $icon
+        }
+        pk_columns: {id: $taskId}
+    ) {
+        ...PublicTask
+    }
+}
+
