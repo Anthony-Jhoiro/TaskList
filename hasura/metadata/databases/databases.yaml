@@ -11,7 +11,8 @@
   kind: postgres
   configuration:
     connection_info:
-      database_url: PG_DATABASE_URL1
+      database_url:
+        from_env: PG_DATABASE_URL1
       isolation_level: read-committed
       use_prepared_statements: false
   tables: "!include default/tables/tables.yaml"
