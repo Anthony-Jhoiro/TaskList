@@ -1,0 +1,26 @@
+name: Hasura migration
+on:
+  push:
+    branches:
+      - main
+jobs:
+  hasura_migration:
+    name: Hasura migration
+    runs-on: ubuntu-latest
+    env:
+      HASURA_ENDPOINT: ${{ secrets.HASURA_ENDPOINT }}
+      HASURA_ADMIN_SECRET: ${{ secrets.HASURA_ADMIN_SECRET }}
+      HASURA_WORKDIR: hasura # replace this by your own path if needed
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Apply hasura migrations
+        uses: tibotiber/hasura-action@master
+        with:
+          args: migrate apply
+
+      - name: Apply hasura metadata
+        uses: tibotiber/hasura-action@master
+        with:
+          args: metadata apply
