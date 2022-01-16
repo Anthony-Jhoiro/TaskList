@@ -17,10 +17,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
 
-      - name: Apply hasura migrations --database-name default
+      - name: Apply hasura migrations
         uses: tibotiber/hasura-action@master
         with:
-          args: migrate apply
+          args: migrate apply --database-name default
 
       - name: Apply hasura metadata
         uses: tibotiber/hasura-action@master
