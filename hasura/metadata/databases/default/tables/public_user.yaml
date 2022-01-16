@@ -7,6 +7,16 @@ configuration:
     email_verified: emailVerified
     updated_at: updatedAt
   custom_root_fields: {}
+object_relationships:
+- name: private_infos
+  using:
+    manual_configuration:
+      column_mapping:
+        id: id
+      insertion_order: null
+      remote_table:
+        name: user_private
+        schema: public
 array_relationships:
 - name: accounts
   using:
@@ -55,14 +65,8 @@ array_relationships:
 select_permissions:
 - permission:
     columns:
-    - name
-    - created_at
-    - updated_at
-    - image
-    - email
-    - email_verified
     - id
-    filter:
-      id:
-        _eq: X-Hasura-User-Id
+    - image
+    - name
+    filter: {}
   role: user

@@ -971,6 +971,8 @@ export type Mutation_Root = {
   delete_user_group?: Maybe<User_Group_Mutation_Response>;
   /** delete single row from the table: "user_group" */
   delete_user_group_by_pk?: Maybe<User_Group>;
+  /** delete data from the table: "user_private" */
+  delete_user_private?: Maybe<User_Private_Mutation_Response>;
   /** delete data from the table: "verification_token" */
   delete_verification_token?: Maybe<Verification_Token_Mutation_Response>;
   /** delete single row from the table: "verification_token" */
@@ -999,6 +1001,10 @@ export type Mutation_Root = {
   insert_user_group_one?: Maybe<User_Group>;
   /** insert a single row into the table: "user" */
   insert_user_one?: Maybe<User>;
+  /** insert data into the table: "user_private" */
+  insert_user_private?: Maybe<User_Private_Mutation_Response>;
+  /** insert a single row into the table: "user_private" */
+  insert_user_private_one?: Maybe<User_Private>;
   /** insert data into the table: "verification_token" */
   insert_verification_token?: Maybe<Verification_Token_Mutation_Response>;
   /** insert a single row into the table: "verification_token" */
@@ -1025,6 +1031,8 @@ export type Mutation_Root = {
   update_user_group?: Maybe<User_Group_Mutation_Response>;
   /** update single row of the table: "user_group" */
   update_user_group_by_pk?: Maybe<User_Group>;
+  /** update data of the table: "user_private" */
+  update_user_private?: Maybe<User_Private_Mutation_Response>;
   /** update data of the table: "verification_token" */
   update_verification_token?: Maybe<Verification_Token_Mutation_Response>;
   /** update single row of the table: "verification_token" */
@@ -1095,6 +1103,12 @@ export type Mutation_RootDelete_User_GroupArgs = {
 /** mutation root */
 export type Mutation_RootDelete_User_Group_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_PrivateArgs = {
+  where: User_Private_Bool_Exp;
 };
 
 
@@ -1189,6 +1203,18 @@ export type Mutation_RootInsert_User_Group_OneArgs = {
 export type Mutation_RootInsert_User_OneArgs = {
   object: User_Insert_Input;
   on_conflict?: InputMaybe<User_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_PrivateArgs = {
+  objects: Array<User_Private_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Private_OneArgs = {
+  object: User_Private_Insert_Input;
 };
 
 
@@ -1294,6 +1320,13 @@ export type Mutation_RootUpdate_User_Group_By_PkArgs = {
   _inc?: InputMaybe<User_Group_Inc_Input>;
   _set?: InputMaybe<User_Group_Set_Input>;
   pk_columns: User_Group_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_PrivateArgs = {
+  _set?: InputMaybe<User_Private_Set_Input>;
+  where: User_Private_Bool_Exp;
 };
 
 
@@ -1475,6 +1508,10 @@ export type Query_Root = {
   user_groups_view: Array<User_Groups_View>;
   /** fetch aggregated fields from the table: "user_groups_view" */
   user_groups_view_aggregate: User_Groups_View_Aggregate;
+  /** fetch data from the table: "user_private" */
+  user_private: Array<User_Private>;
+  /** fetch aggregated fields from the table: "user_private" */
+  user_private_aggregate: User_Private_Aggregate;
   /** fetch data from the table: "verification_token" */
   verification_token: Array<Verification_Token>;
   /** fetch aggregated fields from the table: "verification_token" */
@@ -1653,6 +1690,24 @@ export type Query_RootUser_Groups_View_AggregateArgs = {
 };
 
 
+export type Query_RootUser_PrivateArgs = {
+  distinct_on?: InputMaybe<Array<User_Private_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Private_Order_By>>;
+  where?: InputMaybe<User_Private_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Private_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Private_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Private_Order_By>>;
+  where?: InputMaybe<User_Private_Bool_Exp>;
+};
+
+
 export type Query_RootVerification_TokenArgs = {
   distinct_on?: InputMaybe<Array<Verification_Token_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1719,6 +1774,10 @@ export type Subscription_Root = {
   user_groups_view: Array<User_Groups_View>;
   /** fetch aggregated fields from the table: "user_groups_view" */
   user_groups_view_aggregate: User_Groups_View_Aggregate;
+  /** fetch data from the table: "user_private" */
+  user_private: Array<User_Private>;
+  /** fetch aggregated fields from the table: "user_private" */
+  user_private_aggregate: User_Private_Aggregate;
   /** fetch data from the table: "verification_token" */
   verification_token: Array<Verification_Token>;
   /** fetch aggregated fields from the table: "verification_token" */
@@ -1894,6 +1953,24 @@ export type Subscription_RootUser_Groups_View_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<User_Groups_View_Order_By>>;
   where?: InputMaybe<User_Groups_View_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_PrivateArgs = {
+  distinct_on?: InputMaybe<Array<User_Private_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Private_Order_By>>;
+  where?: InputMaybe<User_Private_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Private_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Private_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Private_Order_By>>;
+  where?: InputMaybe<User_Private_Bool_Exp>;
 };
 
 
@@ -2231,6 +2308,8 @@ export type User = {
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  private_infos?: Maybe<User_Private>;
   /** An array relationship */
   tasks: Array<Task>;
   /** An array relationship */
@@ -2474,6 +2553,7 @@ export type User_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   image?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  private_infos?: InputMaybe<User_Private_Bool_Exp>;
   tasks?: InputMaybe<Task_Bool_Exp>;
   tasksByUpdatedBy?: InputMaybe<Task_Bool_Exp>;
   updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -2910,6 +2990,7 @@ export type User_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  private_infos?: InputMaybe<User_Private_Obj_Rel_Insert_Input>;
   tasks?: InputMaybe<Task_Arr_Rel_Insert_Input>;
   tasksByUpdatedBy?: InputMaybe<Task_Arr_Rel_Insert_Input>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
@@ -2974,6 +3055,7 @@ export type User_Order_By = {
   id?: InputMaybe<Order_By>;
   image?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  private_infos?: InputMaybe<User_Private_Order_By>;
   tasksByUpdatedBy_aggregate?: InputMaybe<Task_Aggregate_Order_By>;
   tasks_aggregate?: InputMaybe<Task_Aggregate_Order_By>;
   updatedAt?: InputMaybe<Order_By>;
@@ -2983,6 +3065,143 @@ export type User_Order_By = {
 /** primary key columns input for table: user */
 export type User_Pk_Columns_Input = {
   id: Scalars['uuid'];
+};
+
+/** columns and relationships of "user_private" */
+export type User_Private = {
+  __typename?: 'user_private';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregated selection of "user_private" */
+export type User_Private_Aggregate = {
+  __typename?: 'user_private_aggregate';
+  aggregate?: Maybe<User_Private_Aggregate_Fields>;
+  nodes: Array<User_Private>;
+};
+
+/** aggregate fields of "user_private" */
+export type User_Private_Aggregate_Fields = {
+  __typename?: 'user_private_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Private_Max_Fields>;
+  min?: Maybe<User_Private_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_private" */
+export type User_Private_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Private_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_private". All fields are combined with a logical 'AND'. */
+export type User_Private_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Private_Bool_Exp>>;
+  _not?: InputMaybe<User_Private_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Private_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  email?: InputMaybe<String_Comparison_Exp>;
+  email_verified?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  image?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "user_private" */
+export type User_Private_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  email?: InputMaybe<Scalars['String']>;
+  email_verified?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  image?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type User_Private_Max_Fields = {
+  __typename?: 'user_private_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type User_Private_Min_Fields = {
+  __typename?: 'user_private_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "user_private" */
+export type User_Private_Mutation_Response = {
+  __typename?: 'user_private_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Private>;
+};
+
+/** input type for inserting object relation for remote table "user_private" */
+export type User_Private_Obj_Rel_Insert_Input = {
+  data: User_Private_Insert_Input;
+};
+
+/** Ordering options when selecting data from "user_private". */
+export type User_Private_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  email_verified?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "user_private" */
+export enum User_Private_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  EmailVerified = 'email_verified',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "user_private" */
+export type User_Private_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  email?: InputMaybe<Scalars['String']>;
+  email_verified?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  image?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
 };
 
 /** select columns of table "user" */

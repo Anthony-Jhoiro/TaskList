@@ -1,4 +1,3 @@
-
 fragment PublicUser on user {
     id
     name
@@ -25,5 +24,9 @@ query getGroupById($groupId: uuid!) {
     group (where: {id: {_eq: $groupId}}) {
         ...PublicGroup
     }
+}
+
+mutation addUserToGroup($groupId: uuid!, $userId: uuid!) {
+    insert_user_group_one(object: {group_id: $groupId, user_id: $userId}) {id}
 }
 

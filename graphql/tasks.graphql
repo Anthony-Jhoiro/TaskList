@@ -1,4 +1,3 @@
-
 fragment PublicTask on task {
     id
     icon
@@ -17,6 +16,14 @@ fragment PublicTask on task {
 query getGroupTask($groupId: uuid!) {
     task (where: {group_id: {_eq: $groupId}}) {
         ...PublicTask
+    }
+    group_by_pk (id: $groupId) {
+        ...PublicGroup
+        users {
+            name
+            image
+            id
+        }
     }
 }
 
