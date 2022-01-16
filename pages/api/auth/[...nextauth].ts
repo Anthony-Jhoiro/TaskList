@@ -16,7 +16,7 @@ export default NextAuth({
 
   debug: false,
 
-  secret: (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n"),
+  secret: process.env.JWT_SECRET as string,
 
   session: {
     strategy: 'jwt',
@@ -39,7 +39,7 @@ export default NextAuth({
     async session({session, token, user}) {
       const encodedToken = sign(
         token || user,
-        (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n"),
+        process.env.JWT_SECRET as string,
         { algorithm: 'RS512' },
       );
 
