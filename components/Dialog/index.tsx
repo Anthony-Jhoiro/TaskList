@@ -28,8 +28,7 @@ export const Dialog: React.VFC<DialogProps> = ({
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
         <div
-          className={`inline-block align-bottom bg-white text-left overflow-hidden shadow-xl w-screen h-screen sm:h-auto sm:align-middle sm:max-w-lg p-5`}
-          onBlur={onClose}>
+          className={`inline-block align-bottom bg-white text-left overflow-hidden shadow-xl w-screen h-screen sm:h-auto sm:align-middle sm:max-w-lg p-5`}>
           <div>
 
           </div>

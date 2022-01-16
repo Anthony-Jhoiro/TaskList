@@ -1,15 +1,26 @@
 
 
 query getCurrentUser {
-    user {
+    user_private {
         id
         name
-        createdAt
-        updatedAt
-        email
-        emailVerified
         image
+        created_at
+        updated_at
+        email
+        email_verified
     }
 }
 
+
+query searchUser($pattern: String!) {
+    profile(where: {
+        name: {_ilike: $pattern}
+    }
+    limit: 5)  {
+        name
+        image
+        id
+    }
+}
 
