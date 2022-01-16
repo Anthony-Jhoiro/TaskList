@@ -3,7 +3,6 @@ import GoogleProvider from "next-auth/providers/google"
 import {sign} from 'jsonwebtoken';
 import {HasuraAdapter} from "../../../config/next-auth/HasuraAdapter";
 
-const JWT_SECRET =(process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n");
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -17,7 +16,7 @@ export default NextAuth({
 
   debug: false,
 
-  secret: JWT_SECRET,
+  secret: (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n"),
 
   session: {
     strategy: 'jwt',
@@ -40,7 +39,7 @@ export default NextAuth({
     async session({session, token, user}) {
       const encodedToken = sign(
         token || user,
-        JWT_SECRET,
+        (process.env.JWT_SECRET ?? '').replaceAll("\\n", "\n"),
         { algorithm: 'RS512' },
       );
 
