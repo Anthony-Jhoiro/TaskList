@@ -1183,6 +1183,14 @@ type mutation_root {
   delete_user_group_by_pk(id: Int!): user_group
 
   """
+  delete data from the table: "user_private"
+  """
+  delete_user_private(
+    """filter the rows which have to be deleted"""
+    where: user_private_bool_exp!
+  ): user_private_mutation_response
+
+  """
   delete data from the table: "verification_token"
   """
   delete_verification_token(
@@ -1320,6 +1328,22 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: user_on_conflict
   ): user
+
+  """
+  insert data into the table: "user_private"
+  """
+  insert_user_private(
+    """the rows to be inserted"""
+    objects: [user_private_insert_input!]!
+  ): user_private_mutation_response
+
+  """
+  insert a single row into the table: "user_private"
+  """
+  insert_user_private_one(
+    """the row to be inserted"""
+    object: user_private_insert_input!
+  ): user_private
 
   """
   insert data into the table: "verification_token"
@@ -1507,6 +1531,17 @@ type mutation_root {
     _set: user_group_set_input
     pk_columns: user_group_pk_columns_input!
   ): user_group
+
+  """
+  update data of the table: "user_private"
+  """
+  update_user_private(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_private_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_private_bool_exp!
+  ): user_private_mutation_response
 
   """
   update data of the table: "verification_token"
@@ -1999,6 +2034,46 @@ type query_root {
   ): user_groups_view_aggregate!
 
   """
+  fetch data from the table: "user_private"
+  """
+  user_private(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): [user_private!]!
+
+  """
+  fetch aggregated fields from the table: "user_private"
+  """
+  user_private_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): user_private_aggregate!
+
+  """
   fetch data from the table: "verification_token"
   """
   verification_token(
@@ -2379,6 +2454,46 @@ type subscription_root {
     """filter the rows returned"""
     where: user_groups_view_bool_exp
   ): user_groups_view_aggregate!
+
+  """
+  fetch data from the table: "user_private"
+  """
+  user_private(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): [user_private!]!
+
+  """
+  fetch aggregated fields from the table: "user_private"
+  """
+  user_private_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): user_private_aggregate!
 
   """
   fetch data from the table: "verification_token"
@@ -2878,6 +2993,9 @@ type user {
   image: String
   name: String
 
+  """An object relationship"""
+  private_infos: user_private
+
   """An array relationship"""
   tasks(
     """distinct select on columns"""
@@ -3021,6 +3139,7 @@ input user_bool_exp {
   id: uuid_comparison_exp
   image: String_comparison_exp
   name: String_comparison_exp
+  private_infos: user_private_bool_exp
   tasks: task_bool_exp
   tasksByUpdatedBy: task_bool_exp
   updatedAt: timestamptz_comparison_exp
@@ -3511,6 +3630,7 @@ input user_insert_input {
   id: uuid
   image: String
   name: String
+  private_infos: user_private_obj_rel_insert_input
   tasks: task_arr_rel_insert_input
   tasksByUpdatedBy: task_arr_rel_insert_input
   updatedAt: timestamptz
@@ -3580,6 +3700,7 @@ input user_order_by {
   id: order_by
   image: order_by
   name: order_by
+  private_infos: user_private_order_by
   tasksByUpdatedBy_aggregate: task_aggregate_order_by
   tasks_aggregate: task_aggregate_order_by
   updatedAt: order_by
@@ -3589,6 +3710,155 @@ input user_order_by {
 """primary key columns input for table: user"""
 input user_pk_columns_input {
   id: uuid!
+}
+
+"""
+columns and relationships of "user_private"
+"""
+type user_private {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+aggregated selection of "user_private"
+"""
+type user_private_aggregate {
+  aggregate: user_private_aggregate_fields
+  nodes: [user_private!]!
+}
+
+"""
+aggregate fields of "user_private"
+"""
+type user_private_aggregate_fields {
+  count(columns: [user_private_select_column!], distinct: Boolean): Int!
+  max: user_private_max_fields
+  min: user_private_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "user_private". All fields are combined with a logical 'AND'.
+"""
+input user_private_bool_exp {
+  _and: [user_private_bool_exp!]
+  _not: user_private_bool_exp
+  _or: [user_private_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  email_verified: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  image: String_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+input type for inserting data into table "user_private"
+"""
+input user_private_insert_input {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type user_private_max_fields {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate min on columns"""
+type user_private_min_fields {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "user_private"
+"""
+type user_private_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [user_private!]!
+}
+
+"""
+input type for inserting object relation for remote table "user_private"
+"""
+input user_private_obj_rel_insert_input {
+  data: user_private_insert_input!
+}
+
+"""Ordering options when selecting data from "user_private"."""
+input user_private_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+select columns of table "user_private"
+"""
+enum user_private_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  email_verified
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "user_private"
+"""
+input user_private_set_input {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  name: String
+  updated_at: timestamptz
 }
 
 """

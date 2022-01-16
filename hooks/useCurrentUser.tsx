@@ -11,7 +11,9 @@ const useCurrentUserValue = () => {
       console.error("Fail to fetch the user", error.message);
   }
 
-  const maybeUser = data?.user?.[0];
+  const maybeUser = data?.user_private?.[0];
+  console.log({maybeUser, data})
+
   return { error, user: maybeUser, fetching, loading: fetching };
 };
 

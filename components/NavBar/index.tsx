@@ -1,8 +1,7 @@
-import {PublicUserFragment} from "../../generated/data-schemas";
 import Image from "next/image";
 
 export interface NavBarProps {
-  user: PublicUserFragment
+  user: any
 }
 
 export function NavBar({user}: NavBarProps) {
