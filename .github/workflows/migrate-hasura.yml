@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths: [ "hasura/**", ".github/workflows/migrate-hasura.yml" ]
+
 jobs:
   hasura_migration:
     name: Hasura migration
