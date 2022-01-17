@@ -12,6 +12,7 @@ import {Button} from "../../components/Button";
 import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {AddUserToGroupDialog} from "../../components/AddUserToGroupDialog";
 import Head from "next/head";
+import Image from "next/image";
 
 
 const TaskListPage: NextPage = () => {
@@ -49,10 +50,20 @@ const TaskListPage: NextPage = () => {
       <title>{data.group_by_pk?.name}</title>
     </Head>
 
-    <div className="container bg-gray-100 mx-auto my-0 sm:my-5 p-5 flex justify-between items-center ">
-      <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
+    <div className="container bg-gray-100 mx-auto my-0 sm:my-5 p-5 flex justify-between items-center">
+
+      <div className={"flex"}>
+        <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
+        {/* Member profile pictures */}
+        <div className={"ml-3"}>
+          {data.group_by_pk?.users.map(user => <div key={`pp_user_${user.id}`} className={"inline-block -ml-1"}>
+            <ProfilePicture user={user}/>
+          </div>)
+          }
+        </div>
+      </div>
       <div className={""}>
-        <Button icon={faUserPlus} onClick={() => setAddUserModalOpen(true)} >Ajouter des utilisateurs</Button>
+        <Button icon={faUserPlus} onClick={() => setAddUserModalOpen(true)}>Ajouter des utilisateurs</Button>
       </div>
     </div>
     <TaskList
@@ -64,9 +75,17 @@ const TaskListPage: NextPage = () => {
       createFetching={isInserting}
       updateFetching={isUpdating}
     />
-    <AddUserToGroupDialog groupId={groupId as string} open={addUserModalOpen} closable={true} onClose={() => setAddUserModalOpen(false)} />
+    <AddUserToGroupDialog groupId={groupId as string} open={addUserModalOpen} closable={true}
+                          onClose={() => setAddUserModalOpen(false)}/>
   </div>
 
+}
+
+const ProfilePicture = ({user}: { user: any }) => {
+  return <div className={"rounded-full h-8 w-8 bg-gray-200 overflow-hidden relative"}>
+    {user.image &&
+    <Image src={user.image} alt={`Photo de profil de ${user.name}`} objectFit={'cover'} layout={'fill'}/>}
+  </div>
 }
 
 

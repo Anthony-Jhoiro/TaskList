@@ -12,7 +12,6 @@ const useCurrentUserValue = () => {
   }
 
   const maybeUser = data?.user_private?.[0];
-  console.log({maybeUser, data})
 
   return { error, user: maybeUser, fetching, loading: fetching };
 };

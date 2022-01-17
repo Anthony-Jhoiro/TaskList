@@ -3412,6 +3412,13 @@ export type AddUserToGroupMutationVariables = Exact<{
 
 export type AddUserToGroupMutation = { __typename?: 'mutation_root', insert_user_group_one?: { __typename?: 'user_group', id: number } | null | undefined };
 
+export type InsertGroupMutationVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type InsertGroupMutation = { __typename?: 'mutation_root', insert_group_one?: { __typename?: 'group', created_at: any, id: string, name: string, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } } | null | undefined };
+
 export type PublicTaskFragment = { __typename?: 'task', id: string, icon: string, content: any, title: string, created_at: any, updated_at: any, user: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined }, userByUpdatedBy: { __typename?: 'user', id: string, name?: string | null | undefined, image?: string | null | undefined } };
 
 export type GetGroupTaskQueryVariables = Exact<{
@@ -3518,6 +3525,17 @@ export const AddUserToGroupDocument = gql`
 
 export function useAddUserToGroupMutation() {
   return Urql.useMutation<AddUserToGroupMutation, AddUserToGroupMutationVariables>(AddUserToGroupDocument);
+};
+export const InsertGroupDocument = gql`
+    mutation insertGroup($name: String!) {
+  insert_group_one(object: {name: $name}) {
+    ...PublicGroup
+  }
+}
+    ${PublicGroupFragmentDoc}`;
+
+export function useInsertGroupMutation() {
+  return Urql.useMutation<InsertGroupMutation, InsertGroupMutationVariables>(InsertGroupDocument);
 };
 export const GetGroupTaskDocument = gql`
     query getGroupTask($groupId: uuid!) {
