@@ -8,5 +8,15 @@ module.exports = {
         domains: [
             "lh3.googleusercontent.com"
         ]
-    }
+    },
+
+    async redirects() {
+        return [
+            {
+                source: '/',
+                destination: '/groups',
+                permanent: true,
+            },
+        ]
+    },
 }

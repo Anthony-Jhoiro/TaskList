@@ -11,6 +11,7 @@ import {TaskList} from "../../components/TaskList";
 import {Button} from "../../components/Button";
 import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {AddUserToGroupDialog} from "../../components/AddUserToGroupDialog";
+import Head from "next/head";
 
 
 const TaskListPage: NextPage = () => {
@@ -44,6 +45,9 @@ const TaskListPage: NextPage = () => {
 
 
   return <div className={""}>
+    <Head>
+      <title>{data.group_by_pk?.name}</title>
+    </Head>
 
     <div className="container bg-gray-100 mx-auto my-0 sm:my-5 p-5 flex justify-between items-center ">
       <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
