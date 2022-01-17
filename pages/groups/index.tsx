@@ -5,6 +5,7 @@ import {useGetGroupsQuery} from "../../generated/data-schemas";
 import {GroupCard} from "../../components/GroupCard";
 import {useEffect} from "react";
 import Link from "next/link"
+import Head from "next/head";
 
 
 const Groups: NextPage = () => {
@@ -27,13 +28,20 @@ const Groups: NextPage = () => {
     return <p>Error : Redirecting to home page...</p>
   }
 
-  return <main id={"group-list"} className="container mx-auto py-5">
-    {data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
-      <div className={"mb-5"}>
-        <GroupCard group={group}/>
-      </div>
-    </Link>)}
-  </main>;
+  return <div>
+    <Head>
+      <title>Liste de groupes</title>
+    </Head>
+    <main id={"group-list"} className="container mx-auto py-5">
+
+
+      {data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
+        <div className={"mb-5"}>
+          <GroupCard group={group}/>
+        </div>
+      </Link>)}
+    </main>
+  </div>
 
 }
 
