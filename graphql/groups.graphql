@@ -30,3 +30,11 @@ mutation addUserToGroup($groupId: uuid!, $userId: uuid!) {
     insert_user_group_one(object: {group_id: $groupId, user_id: $userId}) {id}
 }
 
+mutation insertGroup($name: String!) {
+    insert_group_one(object: {
+        name: $name
+    }) {
+        ...PublicGroup
+    }
+}
+

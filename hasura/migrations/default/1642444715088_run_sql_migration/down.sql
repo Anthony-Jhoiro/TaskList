@@ -1,0 +1,3 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE TRIGGER group_author_is_editor_trigger AFTER INSERT ON "group" FOR EACH ROW EXECUTE PROCEDURE group_author_is_editor();
