@@ -28,7 +28,7 @@ export const GroupEditor: React.VFC<GroupEditorProps> = ({onSubmit, disabled}: G
       <h3>Nouveau groupe</h3>
       <form onSubmit={handleSubmit} className={"flex items-center justify-between"}>
         <div className={"flex-1 mr-5"}>
-          <Input value={groupName} onChange={e => setGroupName(e.target.value)} icon={faUsers}
+          <Input value={groupName} onChange={e => setGroupName(e.target.value)} icon={faUsers} disabled={disabled}
                  placeholder={"Nom du groupe"}/>
         </div>
         <Button variant={'PRIMARY'} disabled={!isValid()} type={'submit'}>Créer</Button>
