@@ -1,5 +1,4 @@
 import {NextPage} from "next";
-import {FullScreenLoading} from "../../components/FullScreenLoading";
 import {useRouter} from "next/router";
 import {
   useGetGroupTaskQuery,
@@ -13,12 +12,13 @@ import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {AddUserToGroupDialog} from "../../components/AddUserToGroupDialog";
 import Head from "next/head";
 import Image from "next/image";
+import {LoadingIndicator} from "../../components/LoadingIndicator";
 
 
 const TaskListPage: NextPage = () => {
   const router = useRouter();
   const {groupId} = router.query;
-  const [{fetching, error, data}] = useGetGroupTaskQuery({variables: {groupId: groupId as string}});
+  const [{fetching, error, data}, refreshGroupeData] = useGetGroupTaskQuery({variables: {groupId: groupId as string}});
   const [{fetching: isInserting, error: insertError}, executeInsertMutation] = useInsertTaskMutation();
   const [{fetching: isUpdating, error: updateError}, executeUpdateMutation] = useUpdateTaskMutation();
   const [addUserModalOpen, setAddUserModalOpen] = useState(false)
@@ -27,14 +27,15 @@ const TaskListPage: NextPage = () => {
     if (!fetching && error) {
       router.push("/").then();
     }
-  }, [fetching, error, router])
+  }, [fetching, error, router]);
 
-
-  if (fetching) {
-    return <FullScreenLoading/>
+  const onUserAdded = () => {
+    refreshGroupeData();
+    setAddUserModalOpen(false);
   }
 
-  if (error || !data) {
+
+  if (error) {
     return <p>Error : Redirecting to home page...</p>
   }
 
@@ -47,27 +48,31 @@ const TaskListPage: NextPage = () => {
 
   return <div className={""}>
     <Head>
-      <title>{data.group_by_pk?.name}</title>
+      <title>{data ? data.group_by_pk?.name : "Chargement..."}</title>
     </Head>
 
     <div className="container bg-gray-100 mx-auto my-0 sm:my-5 p-5 flex justify-between items-center">
+      {fetching && <LoadingIndicator label={"Chargement des données du groupe..."} />}
 
-      <div className={"flex"}>
-        <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
-        {/* Member profile pictures */}
-        <div className={"ml-3"}>
-          {data.group_by_pk?.users.map(user => <div key={`pp_user_${user.id}`} className={"inline-block -ml-1"}>
-            <ProfilePicture user={user}/>
-          </div>)
-          }
-        </div>
-      </div>
-      <div className={""}>
-        <Button icon={faUserPlus} onClick={() => setAddUserModalOpen(true)}>Ajouter des utilisateurs</Button>
-      </div>
+      {data && <>
+          <div className={"flex"}>
+              <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
+            {/* Member profile pictures */}
+              <div className={"ml-3"}>
+                {data.group_by_pk?.users.map(user => <div key={`pp_user_${user.id}`} className={"inline-block -ml-1"}>
+                  <ProfilePicture user={user}/>
+                </div>)
+                }
+              </div>
+          </div>
+      </>}
+
+      {data && <div className={""}>
+          <Button icon={faUserPlus} onClick={() => setAddUserModalOpen(true)}>Ajouter des utilisateurs</Button>
+      </div>}
     </div>
     <TaskList
-      tasks={data.task}
+      tasks={data ? data.task : []}
       onCreate={createTask}
       onUpdate={modifyTask}
       createError={insertError}
@@ -76,7 +81,7 @@ const TaskListPage: NextPage = () => {
       updateFetching={isUpdating}
     />
     <AddUserToGroupDialog groupId={groupId as string} open={addUserModalOpen} closable={true}
-                          onClose={() => setAddUserModalOpen(false)}/>
+                          onClose={onUserAdded}/>
   </div>
 
 }

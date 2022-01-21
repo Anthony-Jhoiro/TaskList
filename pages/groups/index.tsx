@@ -1,5 +1,4 @@
 import {NextPage} from "next";
-import {FullScreenLoading} from "../../components/FullScreenLoading";
 import {useRouter} from "next/router";
 import {useGetGroupsQuery, useInsertGroupMutation} from "../../generated/data-schemas";
 import {GroupCard} from "../../components/GroupCard";
@@ -8,13 +7,16 @@ import Link from "next/link"
 import Head from "next/head";
 import {TaskCreateButton} from "../../components/TaskCreateButton";
 import {GroupEditor} from "../../components/GroupEditor";
+import {LoadingIndicator} from "../../components/LoadingIndicator";
+import {alert} from "../../utils/alert";
 
 
 const Groups: NextPage = () => {
   const router = useRouter();
-  const [{fetching, error, data}] = useGetGroupsQuery();
+  const [{fetching, error, data}, refreshLoading] = useGetGroupsQuery();
   const [isEditing, setIsEditing] = useState(false);
   const [{fetching: fetchingNewGroup}, doInsertGroup] = useInsertGroupMutation();
+
 
 
   useEffect(() => {
@@ -25,24 +27,27 @@ const Groups: NextPage = () => {
   }, [fetching, error, router])
 
 
-  if (fetching) {
-    return <FullScreenLoading/>
-  }
-
-  if (error || !data) {
+  if (error) {
     return <p>Error : Redirecting to home page...</p>
   }
 
   const onCreateNewGroup = ({name}: {name: string}) => {
-    doInsertGroup({name}).then();
+    doInsertGroup({name})
+      .then(() => {
+        alert("SUCCESS", "Succès", `Le groupe ${name} a été créé !`);
+        refreshLoading();
+      });
   }
 
   return <div>
     <Head>
-      <title>Liste de groupes</title>
+      <title>Liste des groupes</title>
     </Head>
     <main id={"group-list"} className="container mx-auto py-5">
-      {data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
+
+      {fetching && <LoadingIndicator label={"Chargement de vos groupes"} />}
+
+      {data && data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
         <div className={"mb-5"}>
           <GroupCard group={group}/>
         </div>
