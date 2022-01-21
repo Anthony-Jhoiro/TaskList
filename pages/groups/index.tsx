@@ -8,6 +8,7 @@ import Head from "next/head";
 import {TaskCreateButton} from "../../components/TaskCreateButton";
 import {GroupEditor} from "../../components/GroupEditor";
 import {LoadingIndicator} from "../../components/LoadingIndicator";
+import {alert} from "../../utils/alert";
 
 
 const Groups: NextPage = () => {
@@ -15,6 +16,7 @@ const Groups: NextPage = () => {
   const [{fetching, error, data}, refreshLoading] = useGetGroupsQuery();
   const [isEditing, setIsEditing] = useState(false);
   const [{fetching: fetchingNewGroup}, doInsertGroup] = useInsertGroupMutation();
+
 
 
   useEffect(() => {
@@ -31,7 +33,10 @@ const Groups: NextPage = () => {
 
   const onCreateNewGroup = ({name}: {name: string}) => {
     doInsertGroup({name})
-      .then(refreshLoading);
+      .then(() => {
+        alert("SUCCESS", "Succès", `Le groupe ${name} a été créé !`);
+        refreshLoading();
+      });
   }
 
   return <div>

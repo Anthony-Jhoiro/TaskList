@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import {Dialog, DialogProps, DialogTitle} from "../Dialog";
 import {Button} from "../Button";
 import {faCheck, faTimes, faUserPlus} from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Input} from "../Input";
 import {UserPossibility} from "./UserPossibility";
 import {Profile, useAddUserToGroupMutation, useSearchUserQuery} from "../../generated/data-schemas";
+import {alert} from "../../utils/alert";
 
 
 export type AddUserToGroupDialogProps = DialogProps & {
@@ -19,11 +20,14 @@ export const AddUserToGroupDialog: React.VFC<AddUserToGroupDialogProps> = ({
                                                                            }: AddUserToGroupDialogProps) => {
   const [searchText, setSearchText] = useState("");
   const [{fetching, data}, search] = useSearchUserQuery({variables: {pattern: `%${searchText}%`}});
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<{ id: string, name: string } | null>(null);
   const [, addUserToGroup] = useAddUserToGroupMutation();
 
   const addUser = (user: Profile) => {
-    setSelected(user.id ?? null)
+    setSelected(user.id && user.name && {
+      id: user.id,
+      name: user.name
+    } || null)
   }
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -38,8 +42,8 @@ export const AddUserToGroupDialog: React.VFC<AddUserToGroupDialogProps> = ({
 
   const onSubmit = () => {
     if (selected) {
-      addUserToGroup({groupId, userId: selected}).then(() => {
-        alert("L'utilisateur a bien été ajouté au groupe !");
+      addUserToGroup({groupId, userId: selected.id}).then(() => {
+        alert("INFO", "Information", `${selected.name} a bien été ajouté au groupe !`);
         if (onClose) {
           onClose()
         }
@@ -59,14 +63,16 @@ export const AddUserToGroupDialog: React.VFC<AddUserToGroupDialogProps> = ({
           {fetching && <p>Recherche en cours...</p>}
           <div>
             {data && data.profile.map(profile =>
-              <UserPossibility key={profile.id} user={profile} onAdd={addUser} selected={selected === profile.id}/>
+              <UserPossibility key={profile.id} user={profile} onAdd={addUser}
+                               selected={!!selected && selected.id === profile.id}/>
             )}
 
           </div>
         </div>
         <div className={'text-right mt-5 p-2'}>
           <Button variant={'SECONDARY'} className={'mx-2'} icon={faTimes} onClick={onClose}>Anuler</Button>
-          {selected && <Button variant={'SUCCESS'} className={'mx-2'} icon={faCheck} onClick={onSubmit}>Valider</Button>}
+          {selected &&
+          <Button variant={'SUCCESS'} className={'mx-2'} icon={faCheck} onClick={onSubmit}>Valider</Button>}
         </div>
 
       </div>
