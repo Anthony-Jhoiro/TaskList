@@ -6,6 +6,6 @@ import {ReactNode} from "react";
 
 
 export function alert(type: AlertType, title: string, content: ReactNode) {
-  toast.custom(<Alert alertType={type} title={title} className={'w-1/4'} >{content}</Alert>, {position: 'top-right'});
+  toast.custom(<Alert alertType={type} title={title} className={'w-80'} >{content}</Alert>, {position: 'top-right'});
 
 }
