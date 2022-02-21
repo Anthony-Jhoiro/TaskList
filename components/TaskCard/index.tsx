@@ -1,16 +1,16 @@
 import React, {useState} from "react";
-import {PublicTaskFragment} from "../../generated/data-schemas";
 import dynamic from "next/dynamic";
 import {Button} from "../Button";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import {Task} from "../../types/task";
 
 
 const Editor = dynamic(() => import("../CustomEditor"), {ssr: false})
 
 
 export interface TaskCardProps {
-  task: PublicTaskFragment,
-  onEdit: (task: PublicTaskFragment) => void
+  task: Task,
+  onEdit: (task: Task) => void
   unread?: boolean
 }
 
@@ -41,7 +41,7 @@ export const TaskCard: React.VFC<TaskCardProps> = ({task, unread, onEdit}: TaskC
         </div>
         <div className={"flex items-end flex-col "}>
           <p className={"text-sm"}>Dernière mise à jour : {new Date(task.updated_at).toLocaleDateString()} </p>
-          <p className={"text-sm"}>Par {task.userByUpdatedBy.name}</p>
+          {task.updatedByUser && <p className={"text-sm"}>Par {task.updatedByUser.name}</p>}
         </div>
       </div>
       <div

@@ -1,20 +1,20 @@
 import React, {useState} from "react";
-import {PublicTaskFragment} from "../../generated/data-schemas";
 import {OutputData} from "@editorjs/editorjs";
 import {TaskEditor} from "../TaskEditor";
 import {TaskCard} from "../TaskCard";
 import {TaskCreateButton} from "../TaskCreateButton";
 import {CombinedError} from "urql";
+import {Task} from "../../types/task";
 
 type IEditionState = {
   isCreation: false,
-  task: PublicTaskFragment
+  task: Task
 } | {
   isCreation: true,
 }
 
 export interface TaskListProps {
-  tasks: PublicTaskFragment[],
+  tasks: Array<Task|undefined|null>,
   onCreate: (task: { icon: string, title: string, content: any }) => Promise<any>,
   onUpdate: (task: { taskId: string, icon: string, title: string, content: any }) => Promise<any>,
   createError?: CombinedError,
@@ -63,7 +63,7 @@ export const TaskList: React.VFC<TaskListProps> = ({
     })
   }
 
-  const handleEdit = (task: PublicTaskFragment) => {
+  const handleEdit = (task: Task) => {
     if (preventDoubleEdition()) return;
     setEditionState({
       isCreation: false,
@@ -72,7 +72,7 @@ export const TaskList: React.VFC<TaskListProps> = ({
   }
 
   return <main id={"group-list"} className="container mx-auto py-5">
-    {tasks.map(task => <div key={task.id} className={"mb-3"}>
+    {tasks.map(task => task && <div key={task.id} className={"mb-3"}>
       {editionState && !editionState?.isCreation && editionState?.task?.id === task.id
         ?
         <TaskEditor onSubmit={handleSubmit} onCancel={handleCancel} defaultTask={editionState.task} error={updateError}

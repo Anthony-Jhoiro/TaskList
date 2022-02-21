@@ -1,6 +1,39 @@
-actions: []
+actions:
+- name: tasksByGroup
+  definition:
+    kind: ""
+    handler: '{{ACTION_ENDPOINT}}/api/tasks'
+  permissions:
+  - role: user
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+  - name: SampleOutput
+  - name: FormattedTask
+    relationships:
+    - remote_table:
+        schema: public
+        name: group
+      name: group
+      source: default
+      type: object
+      field_mapping:
+        group_id: id
+    - remote_table:
+        schema: public
+        name: user
+      name: createdByUser
+      source: default
+      type: object
+      field_mapping:
+        created_by: id
+    - remote_table:
+        schema: public
+        name: user
+      name: updatedByUser
+      source: default
+      type: object
+      field_mapping:
+        updated_by: id
   scalars: []
