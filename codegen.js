@@ -28,7 +28,10 @@ module.exports = {
             }
         },
         './generated/config-schemas.ts': {
-            documents: ['./config/**/*.graphql'],
+            documents: [
+                './config/**/*.graphql',
+                './server/**/*.graphql',
+            ],
             plugins: [
                 'typescript',
                 'typescript-operations',

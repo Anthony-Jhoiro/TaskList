@@ -13,6 +13,27 @@ directive @cached(
   ttl: Int! = 60
 ) on QUERY
 
+type FormattedTask {
+  content: jsonb!
+
+  """An object relationship"""
+  createdByUser: user!
+  created_at: String!
+  created_by: ID!
+
+  """An object relationship"""
+  group: group!
+  group_id: ID!
+  icon: String!
+  id: ID!
+  title: String!
+
+  """An object relationship"""
+  updatedByUser: user!
+  updated_at: String!
+  updated_by: ID!
+}
+
 """
 Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
 """
@@ -26,6 +47,10 @@ input Int_comparison_exp {
   _lte: Int
   _neq: Int
   _nin: [Int!]
+}
+
+type SampleOutput {
+  temporaryUrl: String!
 }
 
 """
@@ -579,7 +604,7 @@ type group {
   """An array relationship"""
   tasks(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -588,16 +613,16 @@ type group {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): [task!]!
+    where: raw_task_bool_exp
+  ): [raw_task!]!
 
   """An aggregate relationship"""
   tasks_aggregate(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -606,11 +631,11 @@ type group {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): task_aggregate!
+    where: raw_task_bool_exp
+  ): raw_task_aggregate!
   updated_at: timestamptz!
 
   """An object relationship"""
@@ -736,7 +761,7 @@ input group_bool_exp {
   created_by: uuid_comparison_exp
   id: uuid_comparison_exp
   name: String_comparison_exp
-  tasks: task_bool_exp
+  tasks: raw_task_bool_exp
   updated_at: timestamptz_comparison_exp
   user: user_bool_exp
   user_groups: user_group_bool_exp
@@ -759,7 +784,7 @@ input group_insert_input {
   created_by: uuid
   id: uuid
   name: String
-  tasks: task_arr_rel_insert_input
+  tasks: raw_task_arr_rel_insert_input
   updated_at: timestamptz
   user: user_obj_rel_insert_input
   user_groups: user_group_arr_rel_insert_input
@@ -842,7 +867,7 @@ input group_order_by {
   created_by: order_by
   id: order_by
   name: order_by
-  tasks_aggregate: task_aggregate_order_by
+  tasks_aggregate: raw_task_aggregate_order_by
   updated_at: order_by
   user: user_order_by
   user_groups_aggregate: user_group_aggregate_order_by
@@ -1146,15 +1171,15 @@ type mutation_root {
   """
   delete data from the table: "task"
   """
-  delete_task(
+  delete_raw_task(
     """filter the rows which have to be deleted"""
-    where: task_bool_exp!
-  ): task_mutation_response
+    where: raw_task_bool_exp!
+  ): raw_task_mutation_response
 
   """
   delete single row from the table: "task"
   """
-  delete_task_by_pk(id: uuid!): task
+  delete_raw_task_by_pk(id: uuid!): raw_task
 
   """
   delete data from the table: "user"
@@ -1266,24 +1291,24 @@ type mutation_root {
   """
   insert data into the table: "task"
   """
-  insert_task(
+  insert_raw_task(
     """the rows to be inserted"""
-    objects: [task_insert_input!]!
+    objects: [raw_task_insert_input!]!
 
     """on conflict condition"""
-    on_conflict: task_on_conflict
-  ): task_mutation_response
+    on_conflict: raw_task_on_conflict
+  ): raw_task_mutation_response
 
   """
   insert a single row into the table: "task"
   """
-  insert_task_one(
+  insert_raw_task_one(
     """the row to be inserted"""
-    object: task_insert_input!
+    object: raw_task_insert_input!
 
     """on conflict condition"""
-    on_conflict: task_on_conflict
-  ): task
+    on_conflict: raw_task_on_conflict
+  ): raw_task
 
   """
   insert data into the table: "user"
@@ -1427,64 +1452,64 @@ type mutation_root {
   """
   update data of the table: "task"
   """
-  update_task(
+  update_raw_task(
     """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: task_append_input
+    _append: raw_task_append_input
 
     """
     delete the field or element with specified path (for JSON arrays, negative integers count from the end)
     """
-    _delete_at_path: task_delete_at_path_input
+    _delete_at_path: raw_task_delete_at_path_input
 
     """
     delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
     """
-    _delete_elem: task_delete_elem_input
+    _delete_elem: raw_task_delete_elem_input
 
     """
     delete key/value pair or string element. key/value pairs are matched based on their key value
     """
-    _delete_key: task_delete_key_input
+    _delete_key: raw_task_delete_key_input
 
     """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: task_prepend_input
+    _prepend: raw_task_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
-    _set: task_set_input
+    _set: raw_task_set_input
 
     """filter the rows which have to be updated"""
-    where: task_bool_exp!
-  ): task_mutation_response
+    where: raw_task_bool_exp!
+  ): raw_task_mutation_response
 
   """
   update single row of the table: "task"
   """
-  update_task_by_pk(
+  update_raw_task_by_pk(
     """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: task_append_input
+    _append: raw_task_append_input
 
     """
     delete the field or element with specified path (for JSON arrays, negative integers count from the end)
     """
-    _delete_at_path: task_delete_at_path_input
+    _delete_at_path: raw_task_delete_at_path_input
 
     """
     delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
     """
-    _delete_elem: task_delete_elem_input
+    _delete_elem: raw_task_delete_elem_input
 
     """
     delete key/value pair or string element. key/value pairs are matched based on their key value
     """
-    _delete_key: task_delete_key_input
+    _delete_key: raw_task_delete_key_input
 
     """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: task_prepend_input
+    _prepend: raw_task_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
-    _set: task_set_input
-    pk_columns: task_pk_columns_input!
-  ): task
+    _set: raw_task_set_input
+    pk_columns: raw_task_pk_columns_input!
+  ): raw_task
 
   """
   update data of the table: "user"
@@ -1867,9 +1892,9 @@ type query_root {
   """
   fetch data from the table: "task"
   """
-  task(
+  raw_task(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -1878,18 +1903,18 @@ type query_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): [task!]!
+    where: raw_task_bool_exp
+  ): [raw_task!]!
 
   """
   fetch aggregated fields from the table: "task"
   """
-  task_aggregate(
+  raw_task_aggregate(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -1898,436 +1923,16 @@ type query_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): task_aggregate!
+    where: raw_task_bool_exp
+  ): raw_task_aggregate!
 
   """fetch data from the table: "task" using primary key columns"""
-  task_by_pk(id: uuid!): task
-
-  """
-  fetch data from the table: "user"
-  """
-  user(
-    """distinct select on columns"""
-    distinct_on: [user_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_order_by!]
-
-    """filter the rows returned"""
-    where: user_bool_exp
-  ): [user!]!
-
-  """
-  fetch aggregated fields from the table: "user"
-  """
-  user_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_order_by!]
-
-    """filter the rows returned"""
-    where: user_bool_exp
-  ): user_aggregate!
-
-  """fetch data from the table: "user" using primary key columns"""
-  user_by_pk(id: uuid!): user
-
-  """
-  fetch data from the table: "user_group"
-  """
-  user_group(
-    """distinct select on columns"""
-    distinct_on: [user_group_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_group_order_by!]
-
-    """filter the rows returned"""
-    where: user_group_bool_exp
-  ): [user_group!]!
-
-  """
-  fetch aggregated fields from the table: "user_group"
-  """
-  user_group_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_group_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_group_order_by!]
-
-    """filter the rows returned"""
-    where: user_group_bool_exp
-  ): user_group_aggregate!
-
-  """fetch data from the table: "user_group" using primary key columns"""
-  user_group_by_pk(id: Int!): user_group
-
-  """
-  fetch data from the table: "user_groups_view"
-  """
-  user_groups_view(
-    """distinct select on columns"""
-    distinct_on: [user_groups_view_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_groups_view_order_by!]
-
-    """filter the rows returned"""
-    where: user_groups_view_bool_exp
-  ): [user_groups_view!]!
-
-  """
-  fetch aggregated fields from the table: "user_groups_view"
-  """
-  user_groups_view_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_groups_view_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_groups_view_order_by!]
-
-    """filter the rows returned"""
-    where: user_groups_view_bool_exp
-  ): user_groups_view_aggregate!
-
-  """
-  fetch data from the table: "user_private"
-  """
-  user_private(
-    """distinct select on columns"""
-    distinct_on: [user_private_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_private_order_by!]
-
-    """filter the rows returned"""
-    where: user_private_bool_exp
-  ): [user_private!]!
-
-  """
-  fetch aggregated fields from the table: "user_private"
-  """
-  user_private_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_private_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_private_order_by!]
-
-    """filter the rows returned"""
-    where: user_private_bool_exp
-  ): user_private_aggregate!
-
-  """
-  fetch data from the table: "verification_token"
-  """
-  verification_token(
-    """distinct select on columns"""
-    distinct_on: [verification_token_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [verification_token_order_by!]
-
-    """filter the rows returned"""
-    where: verification_token_bool_exp
-  ): [verification_token!]!
-
-  """
-  fetch aggregated fields from the table: "verification_token"
-  """
-  verification_token_aggregate(
-    """distinct select on columns"""
-    distinct_on: [verification_token_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [verification_token_order_by!]
-
-    """filter the rows returned"""
-    where: verification_token_bool_exp
-  ): verification_token_aggregate!
-
-  """
-  fetch data from the table: "verification_token" using primary key columns
-  """
-  verification_token_by_pk(token: String!): verification_token
-}
-
-type subscription_root {
-  """
-  fetch data from the table: "account"
-  """
-  account(
-    """distinct select on columns"""
-    distinct_on: [account_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [account_order_by!]
-
-    """filter the rows returned"""
-    where: account_bool_exp
-  ): [account!]!
-
-  """
-  fetch aggregated fields from the table: "account"
-  """
-  account_aggregate(
-    """distinct select on columns"""
-    distinct_on: [account_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [account_order_by!]
-
-    """filter the rows returned"""
-    where: account_bool_exp
-  ): account_aggregate!
-
-  """fetch data from the table: "account" using primary key columns"""
-  account_by_pk(id: Int!): account
-
-  """
-  fetch data from the table: "group"
-  """
-  group(
-    """distinct select on columns"""
-    distinct_on: [group_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [group_order_by!]
-
-    """filter the rows returned"""
-    where: group_bool_exp
-  ): [group!]!
-
-  """
-  fetch aggregated fields from the table: "group"
-  """
-  group_aggregate(
-    """distinct select on columns"""
-    distinct_on: [group_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [group_order_by!]
-
-    """filter the rows returned"""
-    where: group_bool_exp
-  ): group_aggregate!
-
-  """fetch data from the table: "group" using primary key columns"""
-  group_by_pk(id: uuid!): group
-
-  """
-  fetch data from the table: "group_users_view"
-  """
-  group_users_view(
-    """distinct select on columns"""
-    distinct_on: [group_users_view_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [group_users_view_order_by!]
-
-    """filter the rows returned"""
-    where: group_users_view_bool_exp
-  ): [group_users_view!]!
-
-  """
-  fetch aggregated fields from the table: "group_users_view"
-  """
-  group_users_view_aggregate(
-    """distinct select on columns"""
-    distinct_on: [group_users_view_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [group_users_view_order_by!]
-
-    """filter the rows returned"""
-    where: group_users_view_bool_exp
-  ): group_users_view_aggregate!
-
-  """
-  fetch data from the table: "profile"
-  """
-  profile(
-    """distinct select on columns"""
-    distinct_on: [profile_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [profile_order_by!]
-
-    """filter the rows returned"""
-    where: profile_bool_exp
-  ): [profile!]!
-
-  """
-  fetch aggregated fields from the table: "profile"
-  """
-  profile_aggregate(
-    """distinct select on columns"""
-    distinct_on: [profile_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [profile_order_by!]
-
-    """filter the rows returned"""
-    where: profile_bool_exp
-  ): profile_aggregate!
-
-  """
-  fetch data from the table: "task"
-  """
-  task(
-    """distinct select on columns"""
-    distinct_on: [task_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
-
-    """filter the rows returned"""
-    where: task_bool_exp
-  ): [task!]!
-
-  """
-  fetch aggregated fields from the table: "task"
-  """
-  task_aggregate(
-    """distinct select on columns"""
-    distinct_on: [task_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
-
-    """filter the rows returned"""
-    where: task_bool_exp
-  ): task_aggregate!
-
-  """fetch data from the table: "task" using primary key columns"""
-  task_by_pk(id: uuid!): task
+  raw_task_by_pk(id: uuid!): raw_task
+  tasksByGroup(groupId: uuid!): [FormattedTask]
+  temporaryLink(imageName: String!): SampleOutput
 
   """
   fetch data from the table: "user"
@@ -2544,7 +2149,7 @@ type subscription_root {
 """
 columns and relationships of "task"
 """
-type task {
+type raw_task {
   content(
     """JSON select path"""
     path: String
@@ -2571,51 +2176,51 @@ type task {
 """
 aggregated selection of "task"
 """
-type task_aggregate {
-  aggregate: task_aggregate_fields
-  nodes: [task!]!
+type raw_task_aggregate {
+  aggregate: raw_task_aggregate_fields
+  nodes: [raw_task!]!
 }
 
 """
 aggregate fields of "task"
 """
-type task_aggregate_fields {
-  count(columns: [task_select_column!], distinct: Boolean): Int!
-  max: task_max_fields
-  min: task_min_fields
+type raw_task_aggregate_fields {
+  count(columns: [raw_task_select_column!], distinct: Boolean): Int!
+  max: raw_task_max_fields
+  min: raw_task_min_fields
 }
 
 """
 order by aggregate values of table "task"
 """
-input task_aggregate_order_by {
+input raw_task_aggregate_order_by {
   count: order_by
-  max: task_max_order_by
-  min: task_min_order_by
+  max: raw_task_max_order_by
+  min: raw_task_min_order_by
 }
 
 """append existing jsonb value of filtered columns with new jsonb value"""
-input task_append_input {
+input raw_task_append_input {
   content: jsonb
 }
 
 """
 input type for inserting array relation for remote table "task"
 """
-input task_arr_rel_insert_input {
-  data: [task_insert_input!]!
+input raw_task_arr_rel_insert_input {
+  data: [raw_task_insert_input!]!
 
   """on conflict condition"""
-  on_conflict: task_on_conflict
+  on_conflict: raw_task_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "task". All fields are combined with a logical 'AND'.
 """
-input task_bool_exp {
-  _and: [task_bool_exp!]
-  _not: task_bool_exp
-  _or: [task_bool_exp!]
+input raw_task_bool_exp {
+  _and: [raw_task_bool_exp!]
+  _not: raw_task_bool_exp
+  _or: [raw_task_bool_exp!]
   content: jsonb_comparison_exp
   created_at: timestamptz_comparison_exp
   created_by: uuid_comparison_exp
@@ -2633,7 +2238,7 @@ input task_bool_exp {
 """
 unique or primary key constraints on table "task"
 """
-enum task_constraint {
+enum raw_task_constraint {
   """unique or primary key constraint"""
   task_pkey
 }
@@ -2641,28 +2246,28 @@ enum task_constraint {
 """
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
-input task_delete_at_path_input {
+input raw_task_delete_at_path_input {
   content: [String!]
 }
 
 """
 delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
 """
-input task_delete_elem_input {
+input raw_task_delete_elem_input {
   content: Int
 }
 
 """
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
-input task_delete_key_input {
+input raw_task_delete_key_input {
   content: String
 }
 
 """
 input type for inserting data into table "task"
 """
-input task_insert_input {
+input raw_task_insert_input {
   content: jsonb
   created_at: timestamptz
   created_by: uuid
@@ -2678,7 +2283,7 @@ input task_insert_input {
 }
 
 """aggregate max on columns"""
-type task_max_fields {
+type raw_task_max_fields {
   created_at: timestamptz
   created_by: uuid
   group_id: uuid
@@ -2692,7 +2297,7 @@ type task_max_fields {
 """
 order by max() on columns of table "task"
 """
-input task_max_order_by {
+input raw_task_max_order_by {
   created_at: order_by
   created_by: order_by
   group_id: order_by
@@ -2704,7 +2309,7 @@ input task_max_order_by {
 }
 
 """aggregate min on columns"""
-type task_min_fields {
+type raw_task_min_fields {
   created_at: timestamptz
   created_by: uuid
   group_id: uuid
@@ -2718,7 +2323,7 @@ type task_min_fields {
 """
 order by min() on columns of table "task"
 """
-input task_min_order_by {
+input raw_task_min_order_by {
   created_at: order_by
   created_by: order_by
   group_id: order_by
@@ -2732,25 +2337,25 @@ input task_min_order_by {
 """
 response of any mutation on the table "task"
 """
-type task_mutation_response {
+type raw_task_mutation_response {
   """number of rows affected by the mutation"""
   affected_rows: Int!
 
   """data from the rows affected by the mutation"""
-  returning: [task!]!
+  returning: [raw_task!]!
 }
 
 """
 on conflict condition type for table "task"
 """
-input task_on_conflict {
-  constraint: task_constraint!
-  update_columns: [task_update_column!]! = []
-  where: task_bool_exp
+input raw_task_on_conflict {
+  constraint: raw_task_constraint!
+  update_columns: [raw_task_update_column!]! = []
+  where: raw_task_bool_exp
 }
 
 """Ordering options when selecting data from "task"."""
-input task_order_by {
+input raw_task_order_by {
   content: order_by
   created_at: order_by
   created_by: order_by
@@ -2765,20 +2370,20 @@ input task_order_by {
   userByUpdatedBy: user_order_by
 }
 
-"""primary key columns input for table: task"""
-input task_pk_columns_input {
+"""primary key columns input for table: raw_task"""
+input raw_task_pk_columns_input {
   id: uuid!
 }
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
-input task_prepend_input {
+input raw_task_prepend_input {
   content: jsonb
 }
 
 """
 select columns of table "task"
 """
-enum task_select_column {
+enum raw_task_select_column {
   """column name"""
   content
 
@@ -2810,7 +2415,7 @@ enum task_select_column {
 """
 input type for updating data in table "task"
 """
-input task_set_input {
+input raw_task_set_input {
   content: jsonb
   created_at: timestamptz
   created_by: uuid
@@ -2825,7 +2430,7 @@ input task_set_input {
 """
 update columns of table "task"
 """
-enum task_update_column {
+enum raw_task_update_column {
   """column name"""
   content
 
@@ -2852,6 +2457,428 @@ enum task_update_column {
 
   """column name"""
   updated_by
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "account"
+  """
+  account(
+    """distinct select on columns"""
+    distinct_on: [account_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [account_order_by!]
+
+    """filter the rows returned"""
+    where: account_bool_exp
+  ): [account!]!
+
+  """
+  fetch aggregated fields from the table: "account"
+  """
+  account_aggregate(
+    """distinct select on columns"""
+    distinct_on: [account_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [account_order_by!]
+
+    """filter the rows returned"""
+    where: account_bool_exp
+  ): account_aggregate!
+
+  """fetch data from the table: "account" using primary key columns"""
+  account_by_pk(id: Int!): account
+
+  """
+  fetch data from the table: "group"
+  """
+  group(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): [group!]!
+
+  """
+  fetch aggregated fields from the table: "group"
+  """
+  group_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_order_by!]
+
+    """filter the rows returned"""
+    where: group_bool_exp
+  ): group_aggregate!
+
+  """fetch data from the table: "group" using primary key columns"""
+  group_by_pk(id: uuid!): group
+
+  """
+  fetch data from the table: "group_users_view"
+  """
+  group_users_view(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): [group_users_view!]!
+
+  """
+  fetch aggregated fields from the table: "group_users_view"
+  """
+  group_users_view_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_users_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_users_view_order_by!]
+
+    """filter the rows returned"""
+    where: group_users_view_bool_exp
+  ): group_users_view_aggregate!
+
+  """
+  fetch data from the table: "profile"
+  """
+  profile(
+    """distinct select on columns"""
+    distinct_on: [profile_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [profile_order_by!]
+
+    """filter the rows returned"""
+    where: profile_bool_exp
+  ): [profile!]!
+
+  """
+  fetch aggregated fields from the table: "profile"
+  """
+  profile_aggregate(
+    """distinct select on columns"""
+    distinct_on: [profile_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [profile_order_by!]
+
+    """filter the rows returned"""
+    where: profile_bool_exp
+  ): profile_aggregate!
+
+  """
+  fetch data from the table: "task"
+  """
+  raw_task(
+    """distinct select on columns"""
+    distinct_on: [raw_task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [raw_task_order_by!]
+
+    """filter the rows returned"""
+    where: raw_task_bool_exp
+  ): [raw_task!]!
+
+  """
+  fetch aggregated fields from the table: "task"
+  """
+  raw_task_aggregate(
+    """distinct select on columns"""
+    distinct_on: [raw_task_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [raw_task_order_by!]
+
+    """filter the rows returned"""
+    where: raw_task_bool_exp
+  ): raw_task_aggregate!
+
+  """fetch data from the table: "task" using primary key columns"""
+  raw_task_by_pk(id: uuid!): raw_task
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(id: uuid!): user
+
+  """
+  fetch data from the table: "user_group"
+  """
+  user_group(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): [user_group!]!
+
+  """
+  fetch aggregated fields from the table: "user_group"
+  """
+  user_group_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_group_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_group_order_by!]
+
+    """filter the rows returned"""
+    where: user_group_bool_exp
+  ): user_group_aggregate!
+
+  """fetch data from the table: "user_group" using primary key columns"""
+  user_group_by_pk(id: Int!): user_group
+
+  """
+  fetch data from the table: "user_groups_view"
+  """
+  user_groups_view(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): [user_groups_view!]!
+
+  """
+  fetch aggregated fields from the table: "user_groups_view"
+  """
+  user_groups_view_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_groups_view_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_groups_view_order_by!]
+
+    """filter the rows returned"""
+    where: user_groups_view_bool_exp
+  ): user_groups_view_aggregate!
+
+  """
+  fetch data from the table: "user_private"
+  """
+  user_private(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): [user_private!]!
+
+  """
+  fetch aggregated fields from the table: "user_private"
+  """
+  user_private_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): user_private_aggregate!
+
+  """
+  fetch data from the table: "verification_token"
+  """
+  verification_token(
+    """distinct select on columns"""
+    distinct_on: [verification_token_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [verification_token_order_by!]
+
+    """filter the rows returned"""
+    where: verification_token_bool_exp
+  ): [verification_token!]!
+
+  """
+  fetch aggregated fields from the table: "verification_token"
+  """
+  verification_token_aggregate(
+    """distinct select on columns"""
+    distinct_on: [verification_token_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [verification_token_order_by!]
+
+    """filter the rows returned"""
+    where: verification_token_bool_exp
+  ): verification_token_aggregate!
+
+  """
+  fetch data from the table: "verification_token" using primary key columns
+  """
+  verification_token_by_pk(token: String!): verification_token
 }
 
 scalar timestamptz
@@ -2999,7 +3026,7 @@ type user {
   """An array relationship"""
   tasks(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -3008,16 +3035,16 @@ type user {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): [task!]!
+    where: raw_task_bool_exp
+  ): [raw_task!]!
 
   """An array relationship"""
   tasksByUpdatedBy(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -3026,16 +3053,16 @@ type user {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): [task!]!
+    where: raw_task_bool_exp
+  ): [raw_task!]!
 
   """An aggregate relationship"""
   tasksByUpdatedBy_aggregate(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -3044,16 +3071,16 @@ type user {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): task_aggregate!
+    where: raw_task_bool_exp
+  ): raw_task_aggregate!
 
   """An aggregate relationship"""
   tasks_aggregate(
     """distinct select on columns"""
-    distinct_on: [task_select_column!]
+    distinct_on: [raw_task_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -3062,11 +3089,11 @@ type user {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [task_order_by!]
+    order_by: [raw_task_order_by!]
 
     """filter the rows returned"""
-    where: task_bool_exp
-  ): task_aggregate!
+    where: raw_task_bool_exp
+  ): raw_task_aggregate!
   updatedAt: timestamptz!
 
   """An array relationship"""
@@ -3140,8 +3167,8 @@ input user_bool_exp {
   image: String_comparison_exp
   name: String_comparison_exp
   private_infos: user_private_bool_exp
-  tasks: task_bool_exp
-  tasksByUpdatedBy: task_bool_exp
+  tasks: raw_task_bool_exp
+  tasksByUpdatedBy: raw_task_bool_exp
   updatedAt: timestamptz_comparison_exp
   user_groups: user_group_bool_exp
 }
@@ -3631,8 +3658,8 @@ input user_insert_input {
   image: String
   name: String
   private_infos: user_private_obj_rel_insert_input
-  tasks: task_arr_rel_insert_input
-  tasksByUpdatedBy: task_arr_rel_insert_input
+  tasks: raw_task_arr_rel_insert_input
+  tasksByUpdatedBy: raw_task_arr_rel_insert_input
   updatedAt: timestamptz
   user_groups: user_group_arr_rel_insert_input
 }
@@ -3701,8 +3728,8 @@ input user_order_by {
   image: order_by
   name: order_by
   private_infos: user_private_order_by
-  tasksByUpdatedBy_aggregate: task_aggregate_order_by
-  tasks_aggregate: task_aggregate_order_by
+  tasksByUpdatedBy_aggregate: raw_task_aggregate_order_by
+  tasks_aggregate: raw_task_aggregate_order_by
   updatedAt: order_by
   user_groups_aggregate: user_group_aggregate_order_by
 }

@@ -1,4 +1,4 @@
-fragment PublicTask on task {
+fragment PublicTask on raw_task {
     id
     icon
     content
@@ -14,8 +14,19 @@ fragment PublicTask on task {
 }
 
 query getGroupTask($groupId: uuid!) {
-    task (where: {group_id: {_eq: $groupId}}) {
-        ...PublicTask
+    tasksByGroup(groupId: $groupId) {
+        id
+        icon
+        content
+        title
+        createdByUser {
+            ...PublicUser
+        }
+        updatedByUser {
+            ...PublicUser
+        }
+        created_at
+        updated_at
     }
     group_by_pk (id: $groupId) {
         ...PublicGroup
@@ -28,18 +39,18 @@ query getGroupTask($groupId: uuid!) {
 }
 
 mutation insertTask($groupId: uuid!, $icon: String!, $title: String!, $content: jsonb!) {
-    insert_task_one(object: {
+    insert_raw_task_one(object: {
         group_id: $groupId,
         icon: $icon,
         title: $title,
         content: $content
     }) {
-        ...PublicTask
+        id
     }
 }
 
 mutation updateTask($taskId: uuid!, $icon: String!, $title: String!, $content: jsonb!) {
-    update_task_by_pk(
+    update_raw_task_by_pk(
         _set: {
             content: $content,
             title: $title,
@@ -47,7 +58,7 @@ mutation updateTask($taskId: uuid!, $icon: String!, $title: String!, $content: j
         }
         pk_columns: {id: $taskId}
     ) {
-        ...PublicTask
+        id
     }
 }
 

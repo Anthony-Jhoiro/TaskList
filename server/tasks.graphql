@@ -1,0 +1,17 @@
+fragment ServerTask on raw_task {
+    id
+    icon
+    content
+    title
+    created_by
+    updated_by
+    group_id
+    created_at
+    updated_at
+}
+
+query getTasksByGroup($groupId: uuid!) {
+    raw_task (where: {group_id: {_eq: $groupId}}) {
+        ...ServerTask
+    }
+}

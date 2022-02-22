@@ -1,0 +1,22 @@
+type Query {
+  tasksByGroup(
+    groupId: uuid!
+  ): [FormattedTask]
+}
+
+type SampleOutput {
+  temporaryUrl: String!
+}
+
+type FormattedTask {
+  id: ID!
+  created_at: String!
+  updated_at: String!
+  group_id: ID!
+  title: String!
+  content: jsonb!
+  icon: String!
+  created_by: ID!
+  updated_by: ID!
+}
+

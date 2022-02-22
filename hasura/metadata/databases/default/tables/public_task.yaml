@@ -1,6 +1,13 @@
 table:
   name: task
   schema: public
+configuration:
+  custom_column_names: {}
+  custom_name: raw_task
+  custom_root_fields:
+    select: raw_task
+    select_aggregate: raw_task_aggregate
+    select_by_pk: raw_task_by_pk
 object_relationships:
 - name: group
   using:
@@ -31,15 +38,7 @@ insert_permissions:
 select_permissions:
 - permission:
     columns:
-    - icon
-    - title
-    - content
-    - created_at
-    - updated_at
-    - created_by
-    - group_id
     - id
-    - updated_by
     filter:
       group:
         user_groups:

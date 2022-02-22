@@ -5,8 +5,8 @@ import {Button} from "../Button";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {IEmojiData} from 'emoji-picker-react';
 import EditorJS, {OutputData} from "@editorjs/editorjs";
-import {PublicTaskFragment} from "../../generated/data-schemas";
 import {CombinedError} from "urql";
+import {Task} from "../../types/task";
 
 
 const Editor = dynamic(() => import("../CustomEditor"), {ssr: false});
@@ -16,7 +16,7 @@ const EmojiPicker = dynamic(() => import("../EmojiPicker"), {ssr: false});
 export interface TaskEditorProps {
   onSubmit: (title: string, icon: string, content: OutputData) => void,
   onCancel: () => void,
-  defaultTask?: PublicTaskFragment,
+  defaultTask?: Task,
   error?: CombinedError,
   isLoading?: boolean
 }
@@ -43,7 +43,7 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
 
   const isValid = useCallback(() => icon.length > 0 && title.length > 0 && !isLoading, [icon, title, isLoading])
 
-  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = useCallback(async (e) => {
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = useCallback(async (_e) => {
     if (editorCore.current && isValid()) {
       const savedData = await editorCore.current.save();
       onSubmit(title, icon, savedData)

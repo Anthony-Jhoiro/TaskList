@@ -3,7 +3,7 @@ import Embed from '@editorjs/embed'
 import Table from '@editorjs/table'
 // import Warning from '@editorjs/warning'
 import LinkTool from '@editorjs/link'
-// import Image from '@editorjs/image'
+import Image from '@editorjs/image'
 import Raw from '@editorjs/raw'
 import Header from '@editorjs/header'
 import Quote from '@editorjs/quote'
@@ -16,7 +16,15 @@ export const EDITOR_JS_TOOLS = {
   table: Table,
   // warning: Warning,
   linkTool: LinkTool,
-  // image: Image,
+  image: {
+    class: Image,
+    config: {
+      endpoints: {
+        byFile: '/api/images/upload',
+        byUrl: '/api/images/upload',
+      }
+    }
+  },
   raw: Raw,
   header: Header,
   quote: Quote,

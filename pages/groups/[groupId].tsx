@@ -52,7 +52,7 @@ const TaskListPage: NextPage = () => {
     </Head>
 
     <div className="container bg-gray-100 mx-auto my-0 sm:my-5 p-5 flex justify-between items-center">
-      {fetching && <LoadingIndicator label={"Chargement des données du groupe..."} />}
+      {fetching && <LoadingIndicator label={"Chargement des données du groupe..."}/>}
 
       {data && <>
           <div className={"flex"}>
@@ -71,14 +71,14 @@ const TaskListPage: NextPage = () => {
           <Button icon={faUserPlus} onClick={() => setAddUserModalOpen(true)}>Ajouter des utilisateurs</Button>
       </div>}
     </div>
-    <TaskList
-      tasks={data ? data.task : []}
-      onCreate={createTask}
-      onUpdate={modifyTask}
-      createError={insertError}
-      updateError={updateError}
-      createFetching={isInserting}
-      updateFetching={isUpdating}
+    {/* @ts-ignore */}
+    <TaskList tasks={data && data.tasksByGroup ? data.tasksByGroup.filter(t => !!t) : []}
+              onCreate={createTask}
+              onUpdate={modifyTask}
+              createError={insertError}
+              updateError={updateError}
+              createFetching={isInserting}
+              updateFetching={isUpdating}
     />
     <AddUserToGroupDialog groupId={groupId as string} open={addUserModalOpen} closable={true}
                           onClose={onUserAdded}/>
