@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 import {File, IncomingForm} from "formidable";
 import {readFileSync} from "fs"
 import {generateFilename, getImageSignedLink, postImage} from "../../../utils/imageBucket";
+import {getToken} from "next-auth/jwt";
 
 
 export const config = {
@@ -10,9 +11,20 @@ export const config = {
   }
 };
 
+const secret = process.env.JWT_SECRET as string;
+
 
 export default async function handler(req: NextApiRequest,
                                       res: NextApiResponse<{}>) {
+
+
+  const token = await getToken({ req, secret })
+  if (!token) {
+    res.status(401)
+    res.end();
+  }
+
+
   const originalFileName = req.query.file as string ?? "rdm.jpeg";
 
   const fileName = generateFilename(originalFileName);
