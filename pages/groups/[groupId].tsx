@@ -6,13 +6,13 @@ import {
   useUpdateTaskMutation
 } from "../../generated/data-schemas";
 import {useEffect, useState} from "react";
-import {TaskList} from "../../components/TaskList";
-import {Button} from "../../components/Button";
+import {TaskList} from "../../components/tasks/TaskList";
+import {Button} from "../../components/shared/actions/Button";
 import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
-import {AddUserToGroupDialog} from "../../components/AddUserToGroupDialog";
+import {AddUserToGroupDialog} from "../../components/tasks/AddUserToGroupDialog";
 import Head from "next/head";
 import Image from "next/image";
-import {LoadingIndicator} from "../../components/LoadingIndicator";
+import {LoadingIndicator} from "../../components/shared/indicators/LoadingIndicator";
 
 
 const TaskListPage: NextPage = () => {

@@ -1,13 +1,13 @@
 import {NextPage} from "next";
 import {useRouter} from "next/router";
 import {useGetGroupsQuery, useInsertGroupMutation} from "../../generated/data-schemas";
-import {GroupCard} from "../../components/GroupCard";
+import {GroupCard} from "../../components/groups/GroupCard";
 import {useEffect, useState} from "react";
 import Link from "next/link"
 import Head from "next/head";
-import {TaskCreateButton} from "../../components/TaskCreateButton";
-import {GroupEditor} from "../../components/GroupEditor";
-import {LoadingIndicator} from "../../components/LoadingIndicator";
+import {TaskCreateButton} from "../../components/tasks/TaskCreateButton";
+import {GroupEditor} from "../../components/groups/GroupEditor";
+import {LoadingIndicator} from "../../components/shared/indicators/LoadingIndicator";
 import {alert} from "../../utils/alert";
 
 
