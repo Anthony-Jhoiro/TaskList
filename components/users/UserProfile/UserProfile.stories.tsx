@@ -1,28 +1,24 @@
 import React from "react"
 import {Story, Meta} from "@storybook/react/types-6-0"
-import {GroupCard, GroupCardProps} from "./index"
+import {UserProfile, UserProfileProps} from "."
 
 export default {
-  title: "Groups/GroupCard",
-  component: GroupCard,
+  title: "Users/UserProfile",
+  component: UserProfile,
   argTypes: {
     //...
   }
 } as Meta
 
-const Template: Story<GroupCardProps> = (args) => <GroupCard {...args} />
+const Template: Story<UserProfileProps> = (args) => <UserProfile {...args} />
 
 // Default scenario
 export const Default = Template.bind({})
 Default.args = {
-  group: {
-    name: "Some group",
-    id: "1234",
-    created_at: "2022-02-22",
-    user: {
+  user: {
       id: "1234",
       name: "John Doe",
       image: "/woman_1.jpg"
-    }
-  }
+  },
+  imageOnly: false
 }
