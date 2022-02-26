@@ -1,9 +1,7 @@
 // .storybook/preview.js
 import {themes} from "@storybook/theming"
-
+import * as NextImage from "next/image";
 import "../styles/globals.css"
-
-import * as nextImage from "next/image"
 
 export const decorators = [
     (Story) => (
@@ -186,8 +184,10 @@ export const parameters = {
     }
 }
 
+const OriginalNextImage = NextImage.default;
+
 // Replace next/image for Storybook
-Object.defineProperty(nextImage, "default", {
+Object.defineProperty(NextImage, "default", {
     configurable: true,
-    value: (props) => <img {...props} />
+    value: (props) => <OriginalNextImage {...props} unoptimized />,
 });
