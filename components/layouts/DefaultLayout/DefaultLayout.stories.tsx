@@ -10,7 +10,7 @@ export default {
   }
 } as Meta
 
-const Template: Story<DefaultLayoutProps> = (_) => <DefaultLayout><h1>Hello World !</h1></DefaultLayout>
+const Template: Story<DefaultLayoutProps> = (_) => <p>Story has been disabled for that component</p>
 
 // Default scenario
 export const Default = Template.bind({})
