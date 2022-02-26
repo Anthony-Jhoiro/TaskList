@@ -22,8 +22,8 @@ const defaultBody = <div className={'divide-y grid-cols-1'}>
       macaroon bear claw. Croissant croissant bonbon marzipan jujubes I love tart tootsie roll chupa chups.</p>
   </div>
   <div className={'text-right mt-5 p-2'}>
-    <Button variant={'SUCCESS'} className={'mx-2'} icon={faCheck}>Submit</Button>
     <Button variant={'SECONDARY'} className={'mx-2'} icon={faTimes}>Close</Button>
+    <Button variant={'SUCCESS'} className={'mx-2'} icon={faCheck}>Submit</Button>
   </div>
 
 </div>
@@ -52,8 +52,8 @@ export const Show = () => {
           <p>I love wafer sesame snaps chupa chups caramels tart brownie I love jujubes. I love marshmallow topping I love bear claw jelly beans oat cake. I love pastry cake I love toffee gummi bears. Chupa chups dragée candy canes I love jelly croissant chocolate bar marzipan sweet roll. Sweet roll I love ice cream I love jelly beans candy canes macaroon bear claw. Croissant croissant bonbon marzipan jujubes I love tart tootsie roll chupa chups.</p>
         </div>
         <div className={'text-right mt-5 p-2'}>
-          <Button variant={'SUCCESS'} className={'mx-2'} icon={faCheck}>Submit</Button>
           <Button variant={'SECONDARY'} className={'mx-2'} icon={faTimes}  onClick={() => setDialogOpened(false)}>Close</Button>
+          <Button variant={'SUCCESS'} className={'mx-2'} icon={faCheck}>Submit</Button>
         </div>
 
       </div>

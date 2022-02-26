@@ -9,7 +9,7 @@ export default {
   argTypes: {}
 } as Meta;
 
-const variants: ButtonVariant[] = ['PRIMARY', 'SECONDARY', 'WARNING', 'ERROR', 'SUCCESS', 'DISABLED']
+const variants: ButtonVariant[] = ['PRIMARY', 'SECONDARY', 'TERTIARY', 'DISABLED']
 
 const Template: Story<ButtonProps> = (args) => <Button {...args} />
 
@@ -20,10 +20,14 @@ Default.args = {
 }
 
 export const Show = () => {
-  return variants.map(v => (
-      <div key={`btn_var_${v}`}>
-        <Button variant={v} className={'m-1'}>Hello World !</Button>
-        <Button variant={v} className={'m-1'} icon={faCoffee}>Hello World !</Button>
+  return <div className={'bg-background w-full h-full p-10'}>
+    <div className={'bg-white shadow p-5'}>
+      {variants.map(v => (
+        <div key={`btn_var_${v}`} className={'flex items-center'}>
+          <p className={'w-32'}>{v}</p>
+          <Button variant={v} className={'m-1'}>Hello World !</Button>
+          <Button variant={v} className={'m-1'} icon={faCoffee}>Hello World !</Button>
+        </div>))}
       </div>
-    ))
-};
+    </div>
+    };

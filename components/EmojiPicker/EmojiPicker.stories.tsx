@@ -10,7 +10,7 @@ export default {
   }
 } as Meta
 
-const Template: Story<EmojiPickerProps> = (args) => <EmojiPicker {...args} />
+const Template: Story<EmojiPickerProps> = (_args) => <p>Story has been disabled for that component</p>
 
 // Default scenario
 export const Default = Template.bind({})
