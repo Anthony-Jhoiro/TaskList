@@ -16,7 +16,7 @@ export const Checkbox: React.VFC<CheckboxProps> = ({label, className, disabled, 
       <input type={"checkbox"}
              disabled={disabled}
              className={clsx(
-               'form-checkbox h-5 w-5  outline-none',
+               'form-checkbox h-5 w-5  outline-none paper-square',
                {
                  'cursor-pointer text-primary': !disabled,
                  'cursor-default text-gray-300 border-gray-400': disabled,

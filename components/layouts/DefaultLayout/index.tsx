@@ -37,7 +37,7 @@ export const DefaultLayout = ({children,}: DefaultLayoutProps) => {
   }
 
   return (
-    <div className={"bg-background min-h-screen"}>
+    <div className={"min-h-screen"}>
       <NavBar user={user}/>
       {children}
     </div>

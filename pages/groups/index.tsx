@@ -18,7 +18,6 @@ const Groups: NextPage = () => {
   const [{fetching: fetchingNewGroup}, doInsertGroup] = useInsertGroupMutation();
 
 
-
   useEffect(() => {
     if (!fetching && error) {
       router.push("/").then();
@@ -31,7 +30,7 @@ const Groups: NextPage = () => {
     return <p>Error : Redirecting to home page...</p>
   }
 
-  const onCreateNewGroup = ({name}: {name: string}) => {
+  const onCreateNewGroup = ({name}: { name: string }) => {
     doInsertGroup({name})
       .then(() => {
         alert("SUCCESS", "Succès", `Le groupe ${name} a été créé !`);
@@ -45,21 +44,29 @@ const Groups: NextPage = () => {
     </Head>
     <main id={"group-list"} className="container mx-auto py-5">
 
-      {fetching && <LoadingIndicator label={"Chargement de vos groupes"} />}
+      {fetching && <LoadingIndicator label={"Chargement de vos groupes"}/>}
 
-      {data && data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
-        <div className={"mb-5"}>
-          <GroupCard group={group}/>
+      <div className={'container mx-auto px-5'}>
+
+        <div className={"grid grid-cols-1 auto-rows-fr sm:grid-cols-2 md:grid-cols-3 lg:px-16 gap-3"}>
+          {data && data.group.map(group => <Link key={group.id} href={`/groups/${group.id}`} passHref>
+            <div className={"mb-5"}>
+              <GroupCard group={group}/>
+            </div>
+          </Link>)}
+
+          <div className={"mb-5"}>
+            {isEditing
+
+              ? <GroupEditor onSubmit={onCreateNewGroup} disabled={fetchingNewGroup}/>
+              : <TaskCreateButton onClick={() => setIsEditing(!isEditing)} label={"Nouveau groupe"} className={"h-full"}/>
+            }
+          </div>
+
         </div>
-      </Link>)}
-
-      <div className={"mb-5"}>
-        {isEditing
-
-  ? <GroupEditor onSubmit={onCreateNewGroup} disabled={fetchingNewGroup} />
-          :<TaskCreateButton onClick={() => setIsEditing(!isEditing)} />
-        }
       </div>
+
+
     </main>
   </div>
 

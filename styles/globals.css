@@ -1,3 +1,135 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    h1,h2,h3,h4,h5,h6 {
+        font-family: 'Gloria Hallelujah', cursive;
+    }
+    html {
+        font-family: 'Neucha', cursive;
+    }
+}
+
+@layer utilities {
+    .paper,
+    .paper-1 {
+        border-bottom-left-radius: 15px 255px;
+        border-bottom-right-radius: 225px 15px;
+        border-top-left-radius: 255px 15px;
+        border-top-right-radius: 15px 225px;
+    }
+
+    .paper-2 {
+        border-bottom-left-radius: 185px 25px;
+        border-bottom-right-radius: 20px 205px;
+        border-top-left-radius: 125px 25px;
+        border-top-right-radius: 10px 205px;
+    }
+
+    .paper-3 {
+        border-bottom-left-radius: 225px 15px;
+        border-bottom-right-radius: 15px 255px;
+        border-top-left-radius: 15px 225px;
+        border-top-right-radius: 255px 15px;
+    }
+
+    .paper-4 {
+        border-bottom-left-radius: 25px 115px;
+        border-bottom-right-radius: 155px 25px;
+        border-top-left-radius: 15px 225px;
+        border-top-right-radius: 25px 150px;
+    }
+
+    .paper-5 {
+        border-bottom-left-radius: 20px 115px;
+        border-bottom-right-radius: 15px 105px;
+        border-top-left-radius: 250px 15px;
+        border-top-right-radius: 25px 80px;
+    }
+    .paper-6 {
+        border-bottom-left-radius: 15px 225px;
+        border-bottom-right-radius: 20px 205px;
+        border-top-left-radius: 28px 125px;
+        border-top-right-radius: 100px 30px;
+    }
+
+    .paper-circle {
+        border-radius: 43% 57% 39% 61% / 49% 38% 62% 51% ;
+    }
+
+    .paper-square {
+        border-radius: 7% 93% 6% 94% / 95% 4% 96% 5%  ;
+    }
+
+    .no-stroke {
+        stroke-dashoffset: 60;
+        stroke-dasharray: 60;
+    }
+
+    .svg-underline {
+        position: relative;
+        /*width: min-content;*/
+    }
+
+    .svg-underline:after {
+        content: '';
+        background-image: url("/underline.svg");
+        background-repeat: no-repeat;
+        position: absolute;
+        bottom: -0.4rem;
+        left: -0.5rem;
+        right: -0.5rem;
+        height: 0.75rem;
+        display: block;
+        background-size: 100% 5px;
+    }
+}
+
+body {
+    background-image: url("/background.png");
+    background-repeat: repeat;
+}
+
+
+
+.cdx-marker {
+    background-color: theme('colors.tertiary.200') !important;
+}
+
+h1.ce-header {
+    font-size: theme("fontSize.2xl");
+    margin: theme("margin.5") 0;
+    color: theme('colors.primary.600');
+}
+
+h2.ce-header {
+    @apply svg-underline;
+    font-size: theme("fontSize.xl");
+    width: max-content;
+    margin: theme("margin.3") auto;
+    color: theme('colors.primary.600');
+}
+
+h3.ce-header {
+    font-size: theme("fontSize.lg");
+    color: theme('colors.secondary.600');
+
+}
+
+h4.ce-header {
+    font-size: theme("fontSize.base");
+    color: theme('colors.tertiary.600');
+
+}
+
+h5.ce-header {
+    font-size: theme("fontSize.sm");
+    color: theme('colors.tertiary.600');
+
+}
+h6.ce-header {
+    font-size: theme("fontSize.xs");
+    color: theme('colors.tertiary.600');
+}

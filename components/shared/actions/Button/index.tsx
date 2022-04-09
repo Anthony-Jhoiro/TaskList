@@ -17,10 +17,10 @@ type VariantStylesType = {
 };
 
 const variantStyles: VariantStylesType = {
-  PRIMARY: 'text-white bg-primary-700 border-primary-700 hover:bg-primary hover:border-primary focus:outline-none focus:border-primary focus:ring-primary active:bg-primary',
-  SECONDARY: 'ext-text-default border-secondary transition-colors hover:bg-secondary hover:text-white focus:outline-none focus:border-secondary-700 focus:ring-secondary active:bg-secondary-700',
-  TERTIARY: 'text-white bg-tertiary-600 border-tertiary-600 hover:bg-tertiary hover:border-tertiary focus:outline-none focus:border-tertiary focus:ring-tertiary active:bg-tertiary',
-  DISABLED: 'text-black bg-gray-400 border-gray-400 cursor-default',
+  PRIMARY: 'paper-1 text-white bg-primary-700 border-primary-700 hover:bg-primary hover:border-primary focus:outline-none focus:border-primary focus:ring-primary active:bg-primary',
+  SECONDARY: 'paper-2 ext-text-default border-secondary transition-colors hover:bg-secondary hover:text-white focus:outline-none focus:border-secondary-700 focus:ring-secondary active:bg-secondary-700',
+  TERTIARY: 'paper-3 text-white bg-tertiary-600 border-tertiary-600 hover:bg-tertiary hover:border-tertiary focus:outline-none focus:border-tertiary focus:ring-tertiary active:bg-tertiary',
+  DISABLED: 'paper-4 text-black bg-gray-400 border-gray-400 cursor-default',
 
   WARNING: 'text-white bg-warning-600 hover:bg-warning focus:outline-none focus:border-warning-700 focus:ring-warning active:bg-warning-700',
   ERROR: 'text-white bg-error-600 hover:bg-error focus:outline-none focus:border-error-700 focus:ring-error active:bg-error-700',
@@ -40,7 +40,7 @@ export function Button({
   const usedVariant = disabled ? 'DISABLED' : variant;
 
   return (
-    <button {...defaultProps} className={`rounded-lg py-1 px-3 border-4 ${variantStyles[usedVariant]} ${className}`}
+    <button {...defaultProps} className={`paper-1 overflow-hidden py-1 px-3 border-4 ${variantStyles[usedVariant]} ${className}`}
             disabled={disabled}>
       {icon && <FontAwesomeIcon icon={icon} className={'mr-2'}/>}
       {children}

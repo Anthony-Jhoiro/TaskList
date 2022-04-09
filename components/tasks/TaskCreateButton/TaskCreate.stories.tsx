@@ -15,5 +15,5 @@ const Template: Story<TaskCreateButtonProps> = (args) => <TaskCreateButton {...a
 // Default scenario
 export const Default = Template.bind({})
 Default.args = {
-  //...
+  label: "Hello World !"
 }

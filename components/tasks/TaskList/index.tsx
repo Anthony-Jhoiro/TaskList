@@ -71,7 +71,9 @@ export const TaskList: React.VFC<TaskListProps> = ({
     })
   }
 
-  return <main id={"group-list"} className="container mx-auto py-5">
+  return <div id={"task-list"} className="container mx-auto py-5 ">
+
+
     {tasks.map(task => task && <div key={task.id} className={"mb-3"}>
       {editionState && !editionState?.isCreation && editionState?.task?.id === task.id
         ?
@@ -83,8 +85,8 @@ export const TaskList: React.VFC<TaskListProps> = ({
       {editionState
         ? editionState.isCreation &&
           <TaskEditor onSubmit={handleSubmit} onCancel={handleCancel} error={createError} isLoading={createFetching}/>
-        : <TaskCreateButton onClick={handleNewTask}/>
+        : <TaskCreateButton onClick={handleNewTask} label={"Nouvelle tâche"} className={"h-16"}/>
       }
     </div>
-  </main>
+  </div>
 }

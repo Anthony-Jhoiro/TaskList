@@ -33,7 +33,7 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
   const [title, setTitle] = useState(defaultTask ? defaultTask.title : "");
   const editorCore = React.useRef<EditorJS>(null);
 
-  const isCreation = !!defaultTask;
+  const isCreation = !defaultTask;
 
 
   const onEmojiClick = (event: React.MouseEvent<Element, MouseEvent>, emojiObject: IEmojiData) => {
@@ -83,9 +83,12 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
         </div>
         <div className={"overflow-hidden bg-gray-100 text-center p-2"}>
           {error && <p className={"text-error"}>{error.message}</p>}
-          <div className={"bg-gray-50 container max-h-64 overflow-y-scroll"}>
-            <Editor onInitialize={handleInitialize} blocks={defaultTask ? defaultTask.content : {}}
-                    readonly={!!isLoading}/>
+          <div className={"flex flex-col items-center"}>
+
+            <div className={"bg-gray-50 container"}>
+              <Editor onInitialize={handleInitialize} blocks={defaultTask ? defaultTask.content : {}}
+                      readonly={!!isLoading}/>
+            </div>
           </div>
 
           <div className={"mt-2 text-right"}>
@@ -97,13 +100,15 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
         </div>
       </div>
 
-      {isLoading && <div className={"absolute top-0 left-0 w-full h-full"}>
-          <div className="text-center mt-10">
-              <div className="spinner-border text-primary-400 animate-spin inline-block w-36 h-36 border-4 rounded-full"
+
+
+      {isLoading && <div className={"absolute top-0 left-0 w-full h-full z-50 bg-gray-400 bg-opacity-20"}>
+          <div className="flex items-center justify-center flex-col h-full w-full">
+              <div className="spinner-border text-primary animate-spin inline-block w-36 h-36 border-4 rounded-full"
                    role="status">
                   <span className="visually-hidden">Loading...</span>
               </div>
-              <p className="text-xl mt-5 text-primary">Chargement...</p>
+              <p className="text-xl mt-5 text-primary-600 font-semibold">Création...</p>
           </div>
       </div>}
     </div>
