@@ -87,45 +87,44 @@
     }
 }
 
-@layer components {
 
-    .cdx-marker {
-        background-color: theme('colors.tertiary.200') !important;
-    }
 
-    h1.ce-header {
-        font-size: theme("fontSize.2xl");
-        margin: theme("margin.5") 0;
-        color: theme('colors.primary.600');
-    }
+.cdx-marker {
+    background-color: theme('colors.tertiary.200') !important;
+}
 
-    h2.ce-header {
-        @apply svg-underline;
-        font-size: theme("fontSize.xl");
-        width: max-content;
-        margin: theme("margin.3") auto;
-        color: theme('colors.primary.600');
-    }
+h1.ce-header {
+    font-size: theme("fontSize.2xl");
+    margin: theme("margin.5") 0;
+    color: theme('colors.primary.600');
+}
 
-    h3.ce-header {
-        font-size: theme("fontSize.lg");
-        color: theme('colors.secondary.600');
+h2.ce-header {
+    @apply svg-underline;
+    font-size: theme("fontSize.xl");
+    width: max-content;
+    margin: theme("margin.3") auto;
+    color: theme('colors.primary.600');
+}
 
-    }
+h3.ce-header {
+    font-size: theme("fontSize.lg");
+    color: theme('colors.secondary.600');
 
-    h4.ce-header {
-        font-size: theme("fontSize.base");
-        color: theme('colors.tertiary.600');
+}
 
-    }
+h4.ce-header {
+    font-size: theme("fontSize.base");
+    color: theme('colors.tertiary.600');
 
-    h5.ce-header {
-        font-size: theme("fontSize.sm");
-        color: theme('colors.tertiary.600');
+}
 
-    }
-    h6.ce-header {
-        font-size: theme("fontSize.xs");
-        color: theme('colors.tertiary.600');
-    }
+h5.ce-header {
+    font-size: theme("fontSize.sm");
+    color: theme('colors.tertiary.600');
+
+}
+h6.ce-header {
+    font-size: theme("fontSize.xs");
+    color: theme('colors.tertiary.600');
 }
