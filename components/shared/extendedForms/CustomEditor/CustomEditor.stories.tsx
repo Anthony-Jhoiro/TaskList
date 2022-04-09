@@ -80,13 +80,6 @@ Default.args = {
         }
       },
       {
-        "id": "sfOKBTDkjG",
-        "type": "paragraph",
-        "data": {
-          "text": "Given data can be used as you want: render with HTML for <code class=\"inline-code\">Web clients</code>, render natively for <code class=\"inline-code\">mobile apps</code>, create markup for <code class=\"inline-code\">Facebook Instant Articles</code> or <code class=\"inline-code\">Google AMP</code>, generate an <code class=\"inline-code\">audio version</code> and so on."
-        }
-      },
-      {
         "id": "JL-6qdFeiw",
         "type": "paragraph",
         "data": {
