@@ -59,6 +59,10 @@
         border-radius: 43% 57% 39% 61% / 49% 38% 62% 51% ;
     }
 
+    .paper-square {
+        border-radius: 7% 93% 6% 94% / 95% 4% 96% 5%  ;
+    }
+
     .no-stroke {
         stroke-dashoffset: 60;
         stroke-dasharray: 60;
