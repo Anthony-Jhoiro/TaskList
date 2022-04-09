@@ -23,7 +23,7 @@ export const GroupEditor: React.VFC<GroupEditorProps> = ({onSubmit, disabled}: G
   }
 
   return (
-    <div className="bg-white p-5 shadow w-full">
+    <div className="bg-white p-5 shadow w-full paper-2">
       {/* Title view */}
       <h3>Nouveau groupe</h3>
       <form onSubmit={handleSubmit} className={"flex items-center justify-between"}>
