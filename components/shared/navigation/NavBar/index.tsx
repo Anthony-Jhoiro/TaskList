@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import {useState} from "react";
 import {signOut} from "next-auth/react";
+import {UserProfile} from "../../../users/UserProfile";
 
 export interface NavBarProps {
   user?: any
@@ -15,7 +15,7 @@ export function NavBar({user}: NavBarProps) {
   return (
     <div className="relative bg-white">
 
-      {user && signOutOpen && <div className="absolute bg-gray-50 right-0 shadow top-full z-50">
+      {user && signOutOpen && <div className="absolute bg-white right-0 shadow top-full z-50 border-t-2 border-t-gray-500">
           <button className="flex gap-4 items-center text-primary-600 p-3 " onClick={() => signOut()}>
               <div className="text-xl transition-">
                   <FontAwesomeIcon icon={faSignOutAlt}/>
@@ -27,15 +27,10 @@ export function NavBar({user}: NavBarProps) {
       <div className={"flex w-full bg-white shadow h-14 items-center justify-between px-5 z-50"}>
         <Link href={"/groups"}><a className="text-primary text-xl" id={"logo-title"}>Les Trucs à faire</a></Link>
         {user &&
-        <div className={"flex items-center cursor-pointer z-50"} onClick={() => setSignoutOpen(!signOutOpen)}>
+            <button onClick={() => setSignoutOpen(!signOutOpen)}>
+                <UserProfile user={user} />
+            </button>}
 
-            <div className={"rounded-full h-10 w-10 bg-gray-200 overflow-hidden relative"}>
-              {user.image &&
-              <Image src={user.image} alt={`Photo de profil de ${user.name}`} objectFit={'cover'} layout={'fill'}/>}
-            </div>
-            <h3 className={"text-primary-400 text-lg ml-2  sm:block hidden"}>{user.name}</h3>
-
-        </div>}
       </div>
 
 
@@ -46,4 +41,12 @@ export function NavBar({user}: NavBarProps) {
 
   )
 }
-
+// <div className={"flex items-center cursor-pointer z-50"} >
+//
+//     <div className={"rounded-full h-10 w-10 bg-gray-200 overflow-hidden relative"}>
+//       {user.image &&
+//       <Image src={user.image} alt={`Photo de profil de ${user.name}`} objectFit={'cover'} layout={'fill'}/>}
+//     </div>
+//     <h3 className={"text-primary-400 text-lg ml-2  sm:block hidden"}>{user.name}</h3>
+//
+// </div>}

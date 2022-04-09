@@ -15,5 +15,6 @@ const Template: Story<AddUserToGroupDialogProps> = (args) => <AddUserToGroupDial
 // Default scenario
 export const Default = Template.bind({})
 Default.args = {
-  //...
+  open: true,
+  closable: true
 }

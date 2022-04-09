@@ -17,13 +17,14 @@ export const Input: React.VFC<InputProps> = ({label, id, multiline, disabled, ic
 
   return (
     <div className={clsx('block', {
-      'text-primary-400': focused
+      'text-primary': focused,
+      'text-gray-500': !focused
     })}>
-      {label && <label htmlFor={id} className={clsx('text-sm ml-2', )}>{label}</label>}
+      {label && <label htmlFor={id} className={clsx('text-sm ml-1 font-semibold', )}>{label}</label>}
       <div className={clsx(
-        'flex items-center border-2 border-gray-400 py-2 px-3',
+        'flex items-center border-2 border-gray-400 py-2 px-3 paper-3',
         {
-          'focus-within:border-primary-400': !disabled,
+          'focus-within:border-primary': !disabled,
           'bg-white': !disabled,
           'bg-gray-50': disabled
         }

@@ -5,10 +5,8 @@ import "../styles/globals.css"
 
 export const decorators = [
     (Story) => (
-        <div className={'bg-background w-full h-full p-10'}>
-            <div className={'bg-white shadow p-5'}>
-                <Story/>
-            </div>
+        <div className={'w-full h-full p-10'}>
+            <Story/>
         </div>
     )
 ]

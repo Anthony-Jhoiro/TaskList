@@ -22,9 +22,3 @@ Default.args = {
 
   }
 }
-
-// export const Show = () => {
-//   return variants.map(variant => <div key={`alert_v_${variant}`} className={'m-1'}>
-//     <Alert alertType={variant} title={defaultTitle}  className={'max-w-2xl'} >{defaultBody}</Alert>
-//   </div>)
-// }
