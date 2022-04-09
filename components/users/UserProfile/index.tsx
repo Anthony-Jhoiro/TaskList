@@ -18,7 +18,7 @@ export const UserProfile: React.VFC<UserProfileProps> = ({user, imageOnly}: User
 
   return (
     <div className={"flex items-center"}>
-      <div className={"rounded-full h-8 w-8 bg-gray-200 overflow-hidden relative"}>
+      <div className={"paper-circle h-8 w-8 bg-gray-200 overflow-hidden relative"}>
         {user.image &&
         <Image src={user.image} alt={`Photo de profil de ${name}`} objectFit={'cover'}
                layout={'fill'}/>}

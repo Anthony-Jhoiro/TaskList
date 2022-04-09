@@ -5,7 +5,7 @@ import "../styles/globals.css"
 
 export const decorators = [
     (Story) => (
-        <div className={'w-full h-full p-10'}>
+        <div className={'w-full h-full p-10 bg-background'}>
             <Story/>
         </div>
     )
