@@ -19,7 +19,6 @@ export function useEditorToolbarTheme(): [ToolbarTheme, () => void] {
   const updateToolbar = () => {
     const selection = $getSelection();
 
-
     if (!selection) return;
 
     if (isRangeSelection(selection)){
