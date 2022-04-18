@@ -3,14 +3,17 @@ import {Input} from "../../shared/forms/Input";
 import dynamic from "next/dynamic";
 import {Button} from "../../shared/actions/Button";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
-import {IEmojiData} from 'emoji-picker-react';
 import EditorJS, {OutputData} from "@editorjs/editorjs";
 import {CombinedError} from "urql";
 import {Task} from "../../../types/task";
+import * as Popover from '@radix-ui/react-popover';
+import EmojiPicker from "../../shared/extendedForms/EmojiPicker"
+import {EmojiData} from "emoji-mart";
 
 
 const Editor = dynamic(() => import("../../shared/extendedForms/CustomEditor"), {ssr: false});
-const EmojiPicker = dynamic(() => import("../../shared/extendedForms/EmojiPicker"), {ssr: false});
+
+// const EmojiPicker = dynamic(() => import("../../shared/extendedForms/EmojiPicker"), {ssr: false});
 
 
 export interface TaskEditorProps {
@@ -36,8 +39,8 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
   const isCreation = !defaultTask;
 
 
-  const onEmojiClick = (event: React.MouseEvent<Element, MouseEvent>, emojiObject: IEmojiData) => {
-    setIcon(emojiObject.emoji);
+  const onEmojiClick = (emoji: EmojiData) => {
+    setIcon("native" in emoji ? emoji.native : '🤷')
     setEmojiPickerOpen(false);
   };
 
@@ -52,6 +55,7 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setTitle(e.target.value)
+
   }
 
   const handleInitialize = React.useCallback((instance) => {
@@ -69,10 +73,14 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
           <div className={""}>
             <Button variant={"PRIMARY"} onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
                     disabled={isLoading}>{icon}</Button>
-            {emojiPickerOpen && !isLoading && <div className={"absolute z-50"}>
-                <EmojiPicker onEmojiClick={onEmojiClick} native={true}/>
-            </div>
-            }
+                <Popover.Root open={emojiPickerOpen} onOpenChange={setEmojiPickerOpen}>
+                    <Popover.Anchor/>
+                    <Popover.Content>
+                      <div>
+                        <EmojiPicker emoji={icon} onSelect={onEmojiClick} title={"Choisis un emoji"}/>
+                      </div>
+                    </Popover.Content>
+                </Popover.Root>
           </div>
 
           {/* Title Middle */}
@@ -99,7 +107,6 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
           </div>
         </div>
       </div>
-
 
 
       {isLoading && <div className={"absolute top-0 left-0 w-full h-full z-50 bg-gray-400 bg-opacity-20"}>
