@@ -6,13 +6,14 @@ import {
   useUpdateTaskMutation
 } from "../../generated/data-schemas";
 import {useEffect, useState} from "react";
-import {TaskList} from "../../components/TaskList";
-import {Button} from "../../components/Button";
+import {TaskList} from "../../components/tasks/TaskList";
+import {Button} from "../../components/shared/actions/Button";
 import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
-import {AddUserToGroupDialog} from "../../components/AddUserToGroupDialog";
+import {AddUserToGroupDialog} from "../../components/tasks/AddUserToGroupDialog";
 import Head from "next/head";
 import Image from "next/image";
-import {LoadingIndicator} from "../../components/LoadingIndicator";
+import {LoadingIndicator} from "../../components/shared/indicators/LoadingIndicator";
+import Twemoji from "react-twemoji";
 
 
 const TaskListPage: NextPage = () => {
@@ -56,9 +57,9 @@ const TaskListPage: NextPage = () => {
 
       {data && <>
           <div className={"flex"}>
-              <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
+              <Twemoji options={{ className: 'twemoji' }}><h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2></Twemoji>
             {/* Member profile pictures */}
-              <div className={"ml-3"}>
+              <div className={"ml-5"}>
                 {data.group_by_pk?.users.map(user => <div key={`pp_user_${user.id}`} className={"inline-block -ml-1"}>
                   <ProfilePicture user={user}/>
                 </div>)
@@ -87,7 +88,7 @@ const TaskListPage: NextPage = () => {
 }
 
 const ProfilePicture = ({user}: { user: any }) => {
-  return <div className={"rounded-full h-8 w-8 bg-gray-200 overflow-hidden relative"}>
+  return <div className={"paper-circle h-8 w-8 bg-gray-200 overflow-hidden relative"}>
     {user.image &&
     <Image src={user.image} alt={`Photo de profil de ${user.name}`} objectFit={'cover'} layout={'fill'}/>}
   </div>

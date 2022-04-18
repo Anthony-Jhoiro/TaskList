@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect} from "react";
 import {useCurrentUser} from "../../../hooks/useCurrentUser";
-import {FullScreenLoading} from "../../FullScreenLoading";
+import {FullScreenLoading} from "../../shared/indicators/FullScreenLoading";
 import {signIn} from "next-auth/react";
-import {NavBar} from "../../NavBar";
+import {NavBar} from "../../shared/navigation/NavBar";
 import {useRouter} from "next/router";
 
 
@@ -37,7 +37,7 @@ export const DefaultLayout = ({children,}: DefaultLayoutProps) => {
   }
 
   return (
-    <div className={"bg-background min-h-screen"}>
+    <div className={"min-h-screen"}>
       <NavBar user={user}/>
       {children}
     </div>

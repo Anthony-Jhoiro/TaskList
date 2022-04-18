@@ -32,7 +32,7 @@ export default function LoginPage() {
       </div>
 
       <div id={"login-page-form"}>
-        <button className="bg-white p-5 flex gap-4 items-center transition-shadow shadow hover:shadow-lg" onClick={() => signIn("google")}>
+        <button className="bg-white p-5 flex gap-4 items-center transition-shadow shadow hover:shadow-lg paper-1" onClick={() => signIn("google")}>
           <div className={"text-xl"}>
             <FontAwesomeIcon icon={faGoogle} color={"#DB4437"}/>
           </div>

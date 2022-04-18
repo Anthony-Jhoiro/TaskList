@@ -1,18 +1,19 @@
 import React from "react"
 import {Story, Meta} from "@storybook/react/types-6-0"
-import {DefaultLayout, DefaultLayoutProps} from "."
+import {GroupEditor, GroupEditorProps} from "./index"
 
 export default {
-  title: "Layouts/DefaultLayout",
-  component: DefaultLayout,
+  title: "Groups/GroupEditor",
+  component: GroupEditor,
   argTypes: {
     //...
   }
 } as Meta
 
-const Template: Story<DefaultLayoutProps> = (_) => <p>Story has been disabled for that component</p>
+const Template: Story<GroupEditorProps> = (args) => <GroupEditor {...args} />
 
 // Default scenario
 export const Default = Template.bind({})
 Default.args = {
+  //...
 }

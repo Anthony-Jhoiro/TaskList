@@ -1,5 +1,5 @@
 import {toast} from "react-hot-toast";
-import {Alert} from "../components/Alert";
+import {Alert} from "../components/shared/overlays/Alert";
 import {AlertType} from "../types/alerts";
 import {ReactNode} from "react";
 

@@ -1,7 +1,8 @@
 module.exports = {
     purge: [
         './pages/**/*.{js,ts,jsx,tsx}',
-        './components/**/*.{js,ts,jsx,tsx}'
+        './components/**/*.{js,ts,jsx,tsx}',
+        './.storybook/**/*.{js,ts,jsx,tsx}',
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
@@ -10,30 +11,43 @@ module.exports = {
                 'logo-background': '#BDD3EF',
                 'background': '#ebe6e6',
                 'secondary': {
-                    DEFAULT: '#B34F30',
-                    '50': '#EABEB1',
-                    '100': '#E6B1A1',
-                    '200': '#DD9680',
-                    '300': '#D47C60',
-                    '400': '#CC6140',
-                    '500': '#B34F30',
-                    '600': '#873B24',
-                    '700': '#5B2818',
-                    '800': '#2E140C',
-                    '900': '#020101'
+                    DEFAULT: '#EBA783',
+                    '50': '#FFFFFF',
+                    '100': '#FFFFFF',
+                    '200': '#FCF2EC',
+                    '300': '#F6D9C9',
+                    '400': '#F1C0A6',
+                    '500': '#EBA783',
+                    '600': '#E38553',
+                    '700': '#DB6323',
+                    '800': '#AA4D1B',
+                    '900': '#7A3714'
                 },
                 'primary': {
-                    DEFAULT: '#0F7391',
-                    '50': '#68D0EF',
-                    '100': '#56CAED',
-                    '200': '#31BFEA',
-                    '300': '#17AEDB',
-                    '400': '#1390B6',
-                    '500': '#0F7391',
-                    '600': '#0A4B5E',
-                    '700': '#04222B',
-                    '800': '#000000',
-                    '900': '#000000'
+                    DEFAULT: '#6CADEB',
+                    '50': '#FFFFFF',
+                    '100': '#FCFDFF',
+                    '200': '#D8E9FA',
+                    '300': '#B4D5F5',
+                    '400': '#90C1F0',
+                    '500': '#6CADEB',
+                    '600': '#3B91E4',
+                    '700': '#1C75CB',
+                    '800': '#15599A',
+                    '900': '#0E3C68'
+                },
+                'tertiary': {
+                    DEFAULT: '#AF7AEB',
+                    '50': '#FFFFFF',
+                    '100': '#FFFFFF',
+                    '200': '#EFE4FB',
+                    '300': '#DAC1F6',
+                    '400': '#C49DF0',
+                    '500': '#AF7AEB',
+                    '600': '#9249E4',
+                    '700': '#7520D5',
+                    '800': '#5A19A4',
+                    '900': '#3F1173'
                 },
                 'success': {
                     DEFAULT: '#94AD40',
@@ -76,11 +90,32 @@ module.exports = {
                 },
                 'text-default': '#03141a',
                 'text-light': '#B4C4CCFF'
+            },
+            animation: {
+                'bounce-horizontal': 'bounce-horizontal 1s infinite',
+                'underline': '500ms cubic-bezier(0.27, 0.22, 0.44, 1.03) 250ms 1 normal both running underline',
+            },
+            keyframes: {
+                'bounce-horizontal': {
+                    '0%, 100%': {
+                        transform: 'translateX(-25%)',
+                        animationTimingFunction: 'cubic-bezier(0.8,0,1,1)',
+                    },
+                    '50%': {
+                        transform: 'none',
+                        animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
+                    },
+                },
+                underline: {
+                    '100%': {strokeDashoffset: 0}
+                }
             }
         },
     },
     variants: {
-        extend: {},
+        extend: {
+            animation: ['hover', 'group-hover']
+        },
     },
     plugins: [
         require("@tailwindcss/forms")({
