@@ -9,11 +9,11 @@ import {Task} from "../../../types/task";
 import * as Popover from '@radix-ui/react-popover';
 import EmojiPicker from "../../shared/extendedForms/EmojiPicker"
 import {EmojiData} from "emoji-mart";
+import Twemoji from 'react-twemoji';
+
 
 
 const Editor = dynamic(() => import("../../shared/extendedForms/CustomEditor"), {ssr: false});
-
-// const EmojiPicker = dynamic(() => import("../../shared/extendedForms/EmojiPicker"), {ssr: false});
 
 
 export interface TaskEditorProps {
@@ -72,7 +72,7 @@ export const TaskEditor: React.VFC<TaskEditorProps> = ({
           {/* Icon left side */}
           <div className={""}>
             <Button variant={"PRIMARY"} onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
-                    disabled={isLoading}>{icon}</Button>
+                    disabled={isLoading}><Twemoji options={{ className: 'twemoji' }}>{icon}</Twemoji></Button>
                 <Popover.Root open={emojiPickerOpen} onOpenChange={setEmojiPickerOpen}>
                     <Popover.Anchor/>
                     <Popover.Content>
