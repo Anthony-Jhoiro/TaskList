@@ -13,6 +13,7 @@ import {AddUserToGroupDialog} from "../../components/tasks/AddUserToGroupDialog"
 import Head from "next/head";
 import Image from "next/image";
 import {LoadingIndicator} from "../../components/shared/indicators/LoadingIndicator";
+import Twemoji from "react-twemoji";
 
 
 const TaskListPage: NextPage = () => {
@@ -56,7 +57,7 @@ const TaskListPage: NextPage = () => {
 
       {data && <>
           <div className={"flex"}>
-              <h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2>
+              <Twemoji options={{ className: 'twemoji' }}><h2 className={"text-primary text-xl"}>{data.group_by_pk?.name}</h2></Twemoji>
             {/* Member profile pictures */}
               <div className={"ml-5"}>
                 {data.group_by_pk?.users.map(user => <div key={`pp_user_${user.id}`} className={"inline-block -ml-1"}>

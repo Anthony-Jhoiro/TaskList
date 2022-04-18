@@ -133,3 +133,8 @@ h6.ce-header {
     font-size: theme("fontSize.xs");
     color: theme('colors.tertiary.600');
 }
+
+.twemoji {
+    height: 1em;
+    display: inline-block;
+}

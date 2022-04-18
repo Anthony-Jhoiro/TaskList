@@ -1,6 +1,7 @@
 import React from "react";
 import {createReactEditorJS} from 'react-editor-js'
 import {EDITOR_JS_TOOLS} from "./tools";
+import Twemoji from "react-twemoji";
 
 
 export interface CustomEditorProps {
@@ -16,8 +17,10 @@ export const CustomEditor: React.VFC<CustomEditorProps> = ({blocks = {}, readonl
 
   return (
     <div className={"text-left bg-white custom-editor pt-3"}>
+      <Twemoji options={{ className: 'twemoji' }} >
       <ReactEditorJS defaultValue={blocks} tools={EDITOR_JS_TOOLS} readOnly={readonly}
                      placeholder={"Que souhaites-tu raconter ?"} {...reactEditorOptions} />
+      </Twemoji>
     </div>
   )
 }

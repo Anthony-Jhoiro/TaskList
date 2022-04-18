@@ -4,6 +4,7 @@ import {Button} from "../../shared/actions/Button";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import {Task} from "../../../types/task";
 import Image from "next/image"
+import Twemoji from "react-twemoji";
 
 
 const Editor = dynamic(() => import("../../shared/extendedForms/CustomEditor"), {ssr: false})
@@ -33,7 +34,7 @@ export const TaskCard: React.VFC<TaskCardProps> = ({task, unread, onEdit}: TaskC
 
         {/* Icon left side */}
         <div>
-          <b>{task.icon}</b>
+          <Twemoji options={{ className: 'twemoji' }}>{task.icon}</Twemoji>
         </div>
 
         {/* Title Middle */}
